@@ -15,7 +15,7 @@
 
 ?>
 
-<!--V3 Laravel -->
+<!--V4 Laravel -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
