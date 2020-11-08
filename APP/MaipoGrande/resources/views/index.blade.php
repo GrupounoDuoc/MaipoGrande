@@ -81,7 +81,7 @@
                     if (empty($_SESSION['datos'])) { ?>
                     <li><a href="/">Inicio</a></li>
                     <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"]?>">Entrar</a></li>
-                    <li><a href="registro.php?dato=3">Registrarse</a></li>
+                    <li><a href="registro">Registrarse</a></li>
                     <li><a href="contacto">Contacto</a></li>
                     <li><span class="icon-search" id="buscador"></span></li>
                     
@@ -252,20 +252,6 @@
                         <img src="imagenes/twitter1.png">
                         <label> Síguenos en Twitter</label>
                     </div>
-            </div>
-            <div class="columna3">
-                <h1> Cambiar Idioma </h1>
-                <div class="fila-columna3">
-                    <fieldset>
-                        <div class="form-group">
-                            <select class="custom-select">
-                                <option selected="">Español</option>
-                                <option value="1">Inglés</option>
-                                <option value="2">Portugés</option>
-                            </select>
-                        </div>
-                    </fieldset> 
-                </div>  
             </div>
         </div>
         <br><div class="cont-footer">

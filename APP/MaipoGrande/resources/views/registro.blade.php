@@ -1,14 +1,3 @@
-<?php
-
-    session_start();
-    sleep(2);
-
-    if (isset($_SESSION['datos'])) {
-        header("Location: /");
-    }
-
-?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,18 +35,6 @@
             </ul>
         </nav>  
     </div>
-    <?php if (isset($_SESSION['Error'])) { ?>
-        <div class="algun_error" id="ventana-emergente">
-            <?php echo $_SESSION['Error']; ?>
-            <span class="icon-cancel-circle" id="close-alert"></span>
-        </div>  
-    <?php session_unset(); } ?>
-    <?php
-        $condicion= $_GET["dato"]; 
-        //echo $condicion;
-        if ($condicion == 1) {
-            
-    ?>
 
 <div class="contenedor seccion contenido-centrado">
         <h2 class="centrar-texto">Registro de Cliente Nacional</h2>
@@ -121,108 +98,6 @@
             </fieldset>
         </form>
 </div>
-
-    <?php
-        }
-        elseif ($condicion == 2) {
-            
-    ?>
-
-<div class="contenedor seccion contenido-centrado">
-        <h2 class="centrar-texto">Registro de Cliente Internacional/Proveedor</h2>
-
-        <form action="php/insertarUser.php" method="POST" autocomplete="off" class="contacto" action=""> <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
-            <fieldset>
-                <Legend>Datos de contacto</Legend>
-
-                <label for="opciones">Tipo Proveedor:</label>
-                <select name="proveedoropcion" id="proveedor">
-                    <option value="" disabled selected>-- Seleccione --</option> 
-                </select>
-
-                <label for="nombre">Nombre: </label>  <!-- El for se pone para quien va hacer asignado el label, por ej este y el text q esta abajo con una ID"nombre"-->
-                <input class="nombre" type="text" id="nombre" placeholder="Ingresa tu nombre"> <!--- Aca entra solo tipo de texto al formulario-->
-
-                <label for="apellido">Apellido: </label>  <!-- El for se pone para quien va hacer asignado el label, por ej este y el text q esta abajo con una ID"nombre"-->
-                <input type="text" id="apellido" placeholder="Ingresa tu nombre"> <!--- Aca entra solo tipo de texto al formulario-->
-                
-                <label for="rut">Rut:</label>
-                <input type="id" min="0" placeholder="Rut"> <!-- Step: espara ir de 5 en 5-->
-
-                <label for="opciones">Pais:</label>
-                <select name="paisopcion" id="pais">
-                    <option value="" disabled selected>-- Seleccione --</option> 
-                </select>
-
-                <label for="opciones">Ciudad:</label>
-                <select name="ciudadopcion" id="ciudad">
-                    <option value="" disabled selected>-- Seleccione --</option> 
-                </select>
-
-                <label for="codigopostal">Codigo Postal:</label>
-                <input type="id" min="0" placeholder="Digite el codigo postal. . . ">
-
-                <label for="direccion">Direccion: </label>
-                <input type="text" id="direccion" placeholder="Ingrese direccion">
-
-                <label for="email">Email: </label>
-                <input type="email" id="email" placeholder="Ingresa tu email" required> <!---Al tener un type email, el arroba se muestra en el teclado del telefono valida q es un correo -->
-
-                <label for="contraseña">Contraseña:</label>
-                <input type="password" id="contraseña" placeholder="Ingresa tu contraseña" required>
-
-                <label for="telefono">Telefono:</label>
-                <input type="tel" id="telefono" placeholder="Ingresa tu numero" required>
-            </fieldset>
-
-            <fieldset>
-                <legend>Datos de Empresa</legend>
-                <label for="opciones">Tipo de persona</label>
-                <select name="opciones" id="opciones">
-                    <option value="" disabled selected>-- Seleccione --</option> 
-                    <option value="natural">Natural</option>
-                    <option value="empresa">Empresa</option>
-                </select>
-
-                <label for="tipo">Tipo de Persona:</label>
-                <input type="text" id="tipo" placeholder="Escriba el tipo de persona...">
-
-            </fieldset>
-            <fieldset>
-                <div class="container-boton">
-                    <input type="submit" name="" value="Solicitar Registro">
-                </div>
-                <div class="texto-login">
-                    <h4 class="texto-registro">¿Ya estás registrado?</h4> 
-                    <a class="btn-login1" href="login.php"> Inicia sesión</a> 
-                </div>
-            </fieldset>
-        </form>
-</div>
-    
-    <?php  
-        }
-    else {
-    ?>
-        <div class ="contenedor-login">
-        <div class="login1">
-            <div class="contenido-login">
-                <h2>Registrate como cliente nacional</h2>
-                
-                <a href="registro.php?dato=1" class="btn btn-login">Registrate</a>
-            </div>
-        </div>
-        <div class="login1">
-            <div class="contenido-login">
-                <h2>Registrate como cliente internacional/proveedor</h2>
-                <a href="registro.php?dato=2" class="btn btn-login">Registrate</a>
-            </div>
-        </div>
-    </div>
-    <?php
-    }
-    ?>
-
 
     <script src="js/ver_clave.js"></script>
     <script src="js/cerrarVentanita.js"></script>
