@@ -44,6 +44,11 @@ Route::get('/usuario', function () {
     return view('usuario');
 });
 
+// Post form data
+Route::post('/insertarUser', [
+    'uses' => 'App\Http\Controllers\UserController@insertarUser',
+    'as' => 'insertarUser'
+]);
 
 //VISTAS DE PRUEBA
 

@@ -23,6 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Maipo Grande</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/testimonios.css">
 
@@ -80,14 +81,12 @@
                 <?php 
                     if (empty($_SESSION['datos'])) { ?>
                     <li><a href="/">Inicio</a></li>
-                    <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"]?>">Entrar</a></li>
+                    <li><a href="login">Entrar</a></li>
                     <li><a href="registro">Registrarse</a></li>
-                    <li><a href="contacto">Contacto</a></li>
                     <li><span class="icon-search" id="buscador"></span></li>
                     
                 <?php }else { ?>
                 <li><a href="/">Inicio</a></li>
-                <li><a href="contacto">Contacto</a></li>
                 <li><span class="icon-search" id="buscador"></span></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
@@ -120,7 +119,6 @@
                      
                     <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"]?>">Entrar</a></li>
                     <li><a href="registro.php">Registrarse</a></li>
-                    <li><a href="contacto">Contacto</a></li>
                     <li><a href=""><span class="icon-search"></span></a></li>
                     <li><a href="catalogo">Catálogo</a></li>
                     <li><a href="maipogrande.html">Calidad Fruta</a></li>
@@ -131,7 +129,6 @@
                     <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
                     <p class="cantidad"><?php echo $cantidad ?></p>
                 <?php }else { ?>
-                <li><a href="contacto">Contacto</a></li>
                 <li><a href=""><span class="icon-search"></span></a></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
@@ -226,46 +223,14 @@
 
     <!--Footer-->
     <footer>
-    <div class="contenedor">
-        <div class="cont-body">                
-            <div class="columna1">    
-                    <div class="suscripcionfooter">
-                            <h1> Entérate de nuestros productos nuevos</h1>
-                            <input type="email" name="emailUser" id="suscribefooter" placeholder="Correo electrónico" required="">
-                            <input type="submit" id="submitfooter" name="" value="Suscríbete">
-                    </div>
-            </div>
-            <div class="columna2">
-        
-                    <h1> Nuestras Redes Sociales </h1>
-                    <div class="fila">
-                        <img src="imagenes/facebook1.png">
-                        <label> Síguenos en Facebook</label>
-                    </div> 
-
-                    <div class="fila">
-                        <img src="imagenes/google1.png">
-                        <label> Síguenos en Google+</label>
-                    </div>
-        
-                    <div class="fila">
-                        <img src="imagenes/twitter1.png">
-                        <label> Síguenos en Twitter</label>
-                    </div>
-            </div>
-        </div>
-        <br><div class="cont-footer">
-            <div class="alineacion">
+    <div class="contenedor" >
+        <div class="d-flex p-2 justify-content-center">
             <div class="copyright">
                 © 2019 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
             </div>
-            <div class="nosotros">
-                <a href=""> Preguntas Frecuentes |</a>
-                <a href=""> Términos y condiciones </a>
-            </div>
         </div>
     </div>
-</footer>
+    </footer>
 
 
     

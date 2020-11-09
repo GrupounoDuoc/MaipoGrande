@@ -10,9 +10,9 @@
   <head>
     <meta charset="utf-8">
     <title>Contacto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
     <link rel="stylesheet" href="css/contacto.css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
-    
     <link rel="stylesheet" href="iconos/style.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
   </head>
@@ -26,7 +26,7 @@
             <ul>
                 <?php if (empty($_SESSION['datos'])) { ?>
                     <li><a href="index.php">Inicio</a></li>
-                    <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"]?>">Entrar</a></li>
+                    <li><a href="login.php">Entrar</a></li>
                     <li><a href="registro.php?dato=3">Registrarse</a></li>
                     <li><a href="#">Contacto</a></li>
                     <li><a href=""><span class="icon-search"></span></a></li>
@@ -84,59 +84,13 @@
       </form>
     </div>
    </div> 
-   <!--Footer-->
+<!--Footer-->
     <footer>
-        <div class="contenedor">
-            <div class="cont-body">                
-                <div class="columna1">    
-                    <div class="suscripcionfooter">
-                        <h1> Entérate de nuevos eventos</h1>
-                        <input type="email" name="emailUser" id="suscribefooter" placeholder="Correo electrónico" required="">
-                        <input type="submit" id="submitfooter" name="" value="Suscríbete">
-                    </div>
-                </div>
-                <div class="columna2">
-            
-                        <h1> Nuestras Redes Sociales </h1>
-                        <div class="fila">
-                            <img src="imagenes/facebook1.png">
-                            <label> Síguenos en Facebook</label>
-                        </div> 
-
-                        <div class="fila">
-                            <img src="imagenes/google1.png">
-                            <label> Síguenos en Google+</label>
-                        </div>
-            
-                        <div class="fila">
-                            <img src="imagenes/twitter1.png">
-                            <label> Síguenos en Twitter</label>
-                        </div>
-                </div>
-                <div class="columna3">
-                    <h1> Cambiar Idioma </h1>
-                    <div class="fila-columna3">
-                        <fieldset>
-                            <div class="form-group">
-                                <select class="custom-select">
-                                    <option selected="">Español</option>
-                                    <option value="1">Inglés</option>
-                                    <option value="2">Portugés</option>
-                                </select>
-                            </div>
-                        </fieldset> 
-                    </div>  
-                </div>
-            </div>
-            <br><div class="cont-footer">
-                <div class="alineacion">
-                <div class="copyright">
-                    © 2019 Todos los derechos reservados | Diseñado por <a href="index.php"> Maipo Grande </a>
-                </div>
-                <div class="nosotros">
-                    <a href=""> Preguntas Frecuentes |</a>
-                    <a href=""> Términos y condiciones </a>
-                </div>
+        <div class="contenedor" >
+            <div class="d-flex p-2 justify-content-center">
+                 <div class="copyright">
+                    © 2019 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
+                 </div>
             </div>
         </div>
     </footer>
