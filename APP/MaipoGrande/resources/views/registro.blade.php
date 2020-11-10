@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="iconos/style.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
     <script src="https://kit.fontawesome.com/5dd90ee603.js" crossorigin="anonymous"></script>
+    <!-- PWA -->
+    @laravelPWA
 </head>
 
 <body>
