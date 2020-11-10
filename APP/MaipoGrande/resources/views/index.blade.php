@@ -119,7 +119,7 @@
                 if (empty($_SESSION['datos'])) { ?>
                      
                     <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"]?>">Entrar</a></li>
-                    <li><a href="registro.php">Registrarse</a></li>
+                    <li><a href="registro">Registrarse</a></li>
                     <li><a href=""><span class="icon-search"></span></a></li>
                     <li><a href="catalogo">Catálogo</a></li>
                     <li><a href="maipogrande.html">Calidad Fruta</a></li>

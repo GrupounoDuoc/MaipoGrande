@@ -40,7 +40,7 @@
     <div class="contenedor seccion contenido-centrado">
         <h2 class="centrar-texto">Registro de Comprador</h2>
 
-        <form action="{{ route('insertarUser') }}" method="POST"  autocomplete="off" action=""> <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
+        <form action="{{ route('insertarUser') }}" method="POST"  autocomplete="on" action=""> <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
         @csrf
             <fieldset>
             <p class="font-weight-bold">Para comenzar, ingresa tus datos personales...</p>
@@ -68,16 +68,16 @@
             </div>
             <div class="form-group">
                 <label for="exampleFormControlSelect1">¿Que tipo de compras realizarás?</label>
-                    <select class="form-control" id="exampleFormControlSelect1" name=tipocomprador>
+                    <select class="form-control" id="FormComprador" name=tipocomprador>
                         <option value=3>Compras Nacionales</option>
                         <option value=4>Compras Internacionales</option>
                     </select>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Escoge el tipo de persona</label>
-                    <select class="form-control" id="exampleFormControlSelect1" name=tipopersona>
-                        <option value=3>Persona Natural</option>
-                        <option value=4>Empresa</option>
+                    <select class="form-control" id="FormPersona" name=tipopersona>
+                        <option value=1>Persona Natural</option>
+                        <option value=2>Empresa</option>
                     </select>
             </div>
             <label for="Nombre">Ingresa tu nombre de fantasía</label>
@@ -107,7 +107,7 @@
                         <input type="text" class="form-control" name=correo placeholder="Correo">
                 </div>
                 <div class="col-xs-4">
-                    <input type="text" name=contrasenia class="form-control"  placeholder="Contraseña">
+                    <input type="password" name=contrasenia class="form-control"  placeholder="Contraseña">
                 </div>
             </div>
 
