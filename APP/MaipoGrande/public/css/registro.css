@@ -439,11 +439,19 @@ textarea {
     cursor: pointer;
 }
 
-.contenedor {
-    width: 95%; /*Para darle margen al header*/
-    max-width: 120rem; /*120rem es = a 1200px*/
-    /* margin: 0 auto 0 auto; para modificar el margen de una pagina tomando valores como arriba, izquierda, abajo, derecha*/
-    margin: 0 auto;
+.contenedor{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+
+footer{
+    width: 100%;
+    background: #202020;
+    color: white;
+    font-family: 'Encode Sans Condensed', sans-serif;
 }
 
 .texto-registro {
