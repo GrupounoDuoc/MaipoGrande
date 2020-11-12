@@ -13,5 +13,10 @@ use App\tipo_pedido;
 
 class pedidoController extends Controller
 {
-    //
+    public function catalogo()//int $rol)
+    {
+        $rol = 2;
+        $ofertas = DB::select('CALL SP_GET_CATALOGO(?)',array($rol));
+        return view('catalogo', compact('ofertas'));
+    }
 }

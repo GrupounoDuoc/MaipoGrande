@@ -25,9 +25,7 @@ Route::get('/administrador', function () {
 Route::get('/carrito', function () {
     return view('carrito');
 });
-Route::get('/catalogo', function () {
-    return view('catalogo');
-});
+Route::get('/catalogo', 'App\Http\Controllers\pedidoController@catalogo');
 Route::get('/descripcion', function () {
     return view('descripcion');
 });

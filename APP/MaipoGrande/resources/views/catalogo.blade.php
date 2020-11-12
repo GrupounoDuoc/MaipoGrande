@@ -1,4 +1,5 @@
 <?php
+    /*
     session_start();
     include("php/conexion.php");
 
@@ -31,7 +32,7 @@
 
     $query = "SELECT * FROM productos WHERE tipo = '$tipo'";
     //$resultado = $conexion->query($query);
-
+*/
 ?> 
 
 <!DOCTYPE html>
@@ -91,7 +92,7 @@
                 <li><a href="php/cerrar.php">Cerrar sesión</a></li>
             </ul>
             <a href="carrito.php"><span class="icon-cart"></span></a>
-            <p class="cantidad"><?php echo $cantidad ?></p>
+            <p class="cantidad"><?php echo 'cantidad' ?></p>
         </ul>
     </div>  
     <div class="menu-lateralResponsive" id="menu-responsive">
@@ -101,7 +102,7 @@
                 <li><a href="registro.php">Registrarse</a></li>
                 <li><a href="contacto.php">Contacto</a></li>
                 <li><a href=""><span class="icon-cart"></span></a></li>
-                <p class="cantidad"><?php echo $cantidad ?></p>
+                <p class="cantidad"><?php echo 'cantidad' ?></p>
             </ul>
         </nav>  
     </div>
@@ -122,16 +123,14 @@
         </nav>
     </div>
     <div class="contenido-productos">
-        <?php
-        while ($columna = mysqli_fetch_array( $resultado )){?>
+        @foreach ($ofertas as $oferta)
             <div class='card'>
-                <img src="<?php echo $columna['imagenProducto'] ?>">
-                <h2><?php echo $columna['nombreProducto']?></h2>
-                <p><em><?php echo $columna['gramosProducto'] ?></em></p><br>
-                <h3 value="<?php echo $columna['precioProducto'] ?>">Precio: $ <?php echo $columna['precioProducto'] ?></h3><br>
-                <button><a href="descripcion.php?id=<?php echo $columna['id_producto']?>">Ver más</a></button>
+                <h2>{{ $oferta->TIPO_FRUTA}}</h2>
+                <p><em><NOMBRE PRODUCTO></em></p><br>
+                <h3 value="">Precio: $ </h3><br>
+                <button><a href="">Ver más</a></button>
             </div>
-        <?php } ?>
+        @endforeach
     </div>
 
     <script src="js/buscar.js"></script>
