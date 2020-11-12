@@ -109,25 +109,25 @@
     <div class="menu-lateral">
         <nav class="submenu-lateral">
             <ul class="lista-lateral">
-                <li><span><img src="imagenes/icon-fruta.png"></span><a href="catalogo.php?id=fruta">Frutas</a></li>
-                <li><span><img src="imagenes/icon-verdura.png"></span><a href="catalogo.php?id=verdura">Verduras</a></li>
+                <li><span><img src="imagenes/icon-fruta.png"></span><a href="catalogo.php?id=fruta">Tipo fruta</a></li>
                 <ul>
-                    <li><input type="radio" name="precio" id="no-rango" checked="" value="no-rango"><label for="no-rango">Calidad de los productos</label></li>
-                    <li><input type="radio" name="precio" id="1-4" value="1000-4999"><label for="1-4">E</label></li>
-                    <li><input type="radio" name="precio" id="5-9" value="5000-9999"><label for="5-9">D</label></li>
-                    <li><input type="radio" name="precio" id="10-14" value="10000-14000"><label for="10-14">C</label></li>
-                    <li><input type="radio" name="precio" id="15-19" value="15000-19000"><label for="15-19">B</label></li>
-                    <li><input type="radio" name="precio" id="20-24" value="20000-24000"><label for="20-24">A</label></li>
+                    @foreach ($tipos as $tipo)
+                    <li><input type="radio" name="tipo" checked="" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                    @endforeach
                 </ul>
+                <li><span><img src="imagenes/icon-verdura.png"></span><a href="catalogo.php?id=verdura">Verduras</a></li>
+                
             </ul>
         </nav>
     </div>
     <div class="contenido-productos">
         @foreach ($ofertas as $oferta)
             <div class='card'>
+                <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}">
                 <h2>{{ $oferta->TIPO_FRUTA}}</h2>
-                <p><em><NOMBRE PRODUCTO></em></p><br>
-                <h3 value="">Precio: $ </h3><br>
+                <p><em>{{ $oferta->NOMBRE_VENDEDOR}}</em></p><br>
+                <p><em>{{ $oferta->CALIDAD}}</em></p><br>
+                <h3 value="">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</h3><br>
                 <button><a href="">Ver más</a></button>
             </div>
         @endforeach
