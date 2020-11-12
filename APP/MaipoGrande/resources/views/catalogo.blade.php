@@ -85,7 +85,7 @@
     </header>
     <div class="sub-menu">
         <ul class="lista-submenu">
-            <li><a href="catalogo.php">Catálogo</a></li>
+            <li><a href="catalogo">Catálogo</a></li>
             <li><a href="maipogrande.php">Calidad Fruta</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="php/validarUsuario.php">Perfil</a></li>

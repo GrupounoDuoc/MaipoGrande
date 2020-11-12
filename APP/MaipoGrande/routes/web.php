@@ -35,9 +35,8 @@ Route::get('/login', function () {
 Route::get('/maipogrande', function () {
     return view('maipogrande');
 });
-Route::get('/registro', function () {
-    return view('registro');
-});
+Route::get('/registro', 'App\Http\Controllers\userController@CargarComuna');
+
 Route::get('/usuario', function () {
     return view('usuario');
 });

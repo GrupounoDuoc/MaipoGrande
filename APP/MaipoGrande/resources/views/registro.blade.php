@@ -87,9 +87,11 @@
             <div class="form-group">
                 <label for="Nombre">Datos adicionales</label>
                 <div class="form-row">
-                    <div class="col-xs-4">
-                        <input type="text" class="form-control" name=comuna placeholder="Comuna">
-                    </div>
+                    <select name="comuna">
+                    @foreach($comunas as $comuna)
+                        <option value="{{ $comuna->ID}}">{{ $comuna->NOMBRECOMUNA}}</option>
+                    @endforeach
+                    </select>
                     <div class="col-xs-4">
                         <input type="text" class="form-control" name=codigopostal  placeholder="Código Postal">
                     </div>

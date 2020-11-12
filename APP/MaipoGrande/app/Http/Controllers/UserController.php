@@ -34,5 +34,16 @@ class UserController extends Controller
         $InsertarUser = DB::select('call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
                 array($nombre,$apellido,$rut,$dv,$comuna,$codigopostal,$correo,$contrasenia,$telefono,$tipopersona,$nombrefantasia,$tipocomprador));
     }
-    
+
+    public function CargarComuna()//int $rol)
+    {
+        $comunas = DB::select('CALL SP_GET_COMUNAS()');
+        return view('registro', compact('comunas')); 
+
+       /* $comunas= comuna::select('NombreComuna','nombre')->get();
+        return view('id_comuna',compact('comunas')); */
+    }
+
+
 }
+    
