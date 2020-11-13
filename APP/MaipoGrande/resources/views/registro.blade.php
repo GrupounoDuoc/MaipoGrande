@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registro | Maipo Grande</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="css/registro.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="iconos/style.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
     <script src="https://kit.fontawesome.com/5dd90ee603.js" crossorigin="anonymous"></script>
+    <!-- PWA -->
+    @laravelPWA
     
 </head>
 
@@ -27,6 +30,16 @@
             </ul>
         </nav>
     </header>  
+    @if(session('status'))
+    <div class="alert alert-success" role="alert">
+        {{ session('status') }}
+    </div>
+    @endif
+    <!--@if($errors)
+    <div class="alert alert-danger" role="alert">
+        Se ha producido un error al crear al usuario
+    </div> -->
+    @endif
     <div class="menu-lateralResponsive" id="menu-responsive">
         <nav class="nav-responsive">
             <ul>
@@ -48,10 +61,10 @@
             
                 <div class="col-xs-4">
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" name=nombre placeholder="Nombre">
+                        <input type="text" class="form-control" name=nombre placeholder="Nombre" required> 
                 </div>
                 <div class="col-xs-4">
-                    <input type="text" name=apellido class="form-control"  placeholder="Apellido">
+                    <input type="text" name=apellido class="form-control"  placeholder="Apellido" required>
                 </div>
             </div>
             <div class="form-group">
@@ -59,22 +72,22 @@
             
                 <div class="form-row">
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" name=rut placeholder="Rut">
+                        <input type="number" min=1000000 max=99999999 class="form-control" name=rut placeholder="Rut" required>
                 </div>
                 <div class="col-xs-2">
-                    <input type="text" name=dv class="form-control"  placeholder="DV">
+                    <input type="text" name=dv class="form-control"  placeholder="DV" maxlength="1" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlSelect1">¿Que tipo de compras realizarás?</label>
-                    <select class="form-control" id="FormComprador" name=tipocomprador>
+                    <select class="form-control" id="FormComprador" name=tipocomprador required>
                         <option value=3>Compras Nacionales</option>
                         <option value=4>Compras Internacionales</option>
                     </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" required>
                 <label for="exampleFormControlSelect1">Escoge el tipo de persona</label>
-                    <select class="form-control" id="FormPersona" name=tipopersona>
+                    <select class="form-control" id="FormPersona" name=tipopersona required>
                         <option value=1>Persona Natural</option>
                         <option value=2>Empresa</option>
                     </select>
@@ -82,21 +95,25 @@
             <label for="Nombre">Ingresa tu nombre de fantasía</label>
             <div class="col">
                 <div >
-                    <input type="text" class="form-control" name=nombrefantasia placeholder="Nombre de Fantasía">
+                    <input type="text" class="form-control" name=nombrefantasia placeholder="Nombre de Fantasía" required>
                 </div>
             <div class="form-group">
                 <label for="Nombre">Datos adicionales</label>
-                <div class="form-row">
-                    <select name="comuna">
-                    @foreach($comunas as $comuna)
-                        <option value="{{ $comuna->ID}}">{{ $comuna->NOMBRECOMUNA}}</option>
+                <div class="form">
+                    <select name="comuna" class="custom-select custom-select-sm" required >
+                        <option selected disabled value="">Selecciona una comuna</option>
+                    @foreach($comunas as $cursorcomuna) 
+                        <option value="{{ $cursorcomuna->ID}}">{{ $cursorcomuna->NOMBRECOMUNA}}</option>
                     @endforeach
                     </select>
-                    <div class="col-xs-4">
-                        <input type="text" class="form-control" name=codigopostal  placeholder="Código Postal">
+                    <div>
+                    <br>
                     </div>
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" name=telefono  placeholder="Nro. de Teléfono">
+                        <input type="text" class="form-control" name=codigopostal maxlength="7"  placeholder="Código Postal" required>
+                    </div>
+                    <div class="col-xs-4">
+                        <input type="text" class="form-control" name=telefono  placeholder="Nro. de Teléfono" required>
                     </div>
                 </div>
             </div>
@@ -105,10 +122,10 @@
             
                 <div class="col-xs-4">
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" name=correo placeholder="Correo">
+                        <input type="mail" class="form-control" name=correo placeholder="Correo" required>
                 </div>
                 <div class="col-xs-4">
-                    <input type="password" name=contrasenia class="form-control"  placeholder="Contraseña">
+                    <input type="password" name=contrasenia class="form-control"  placeholder="Contraseña" required>
                 </div>
             </div>
 
@@ -138,5 +155,10 @@
 
     <script src="js/ver_clave.js"></script>
     <script src="js/cerrarVentanita.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
+
+
 </html>

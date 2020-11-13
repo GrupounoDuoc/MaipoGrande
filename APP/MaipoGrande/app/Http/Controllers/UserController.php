@@ -15,7 +15,17 @@ class UserController extends Controller
     }
     public function insertarUser(Request $request)
     {
-        //$name = $request->get('nombre');
+
+        // Form validation
+        $this->validate($request, [
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'telefono' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            /*'subject'=>'required',
+            'message' => 'required'*/
+         ]);
+       
+        
         $nombre = $request->get('nombre');
         $apellido = $request->get('apellido');
         $rut =  $request->get('rut');
@@ -29,10 +39,13 @@ class UserController extends Controller
         $correo = $request->get('correo');
         $contrasenia = $request->get('contrasenia');
 
-         //$name = $request->get('nombre');
 
         $InsertarUser = DB::select('call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
                 array($nombre,$apellido,$rut,$dv,$comuna,$codigopostal,$correo,$contrasenia,$telefono,$tipopersona,$nombrefantasia,$tipocomprador));
+
+                return back()->with('status', "Se ha creado el usuario {$correo} satisfactoriamente!");
+
+
     }
 
     public function CargarComuna()//int $rol)

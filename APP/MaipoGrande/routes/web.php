@@ -42,7 +42,7 @@ Route::get('/usuario', function () {
 });
 
 // Post form data
-Route::post('/insertarUser', [
+Route::post('/registro', [
     'uses' => 'App\Http\Controllers\UserController@insertarUser',
     'as' => 'insertarUser'
 ]);
