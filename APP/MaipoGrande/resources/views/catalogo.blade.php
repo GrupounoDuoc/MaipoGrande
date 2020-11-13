@@ -44,7 +44,8 @@
     <title>Catálogo</title>
     <link rel="stylesheet" href="css/catalogo.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
-
+    <!-- PWA -->
+    @laravelPWA
     <link rel="stylesheet" href="iconos/style.css">
 </head>
 <body>
@@ -83,6 +84,8 @@
             <?php unset($_SESSION['objetoNoEncontrado']); } ?>
         </nav>
     </header>
+
+    
     <div class="sub-menu">
         <ul class="lista-submenu">
             <li><a href="catalogo">Catálogo</a></li>
