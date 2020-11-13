@@ -26,9 +26,11 @@ INSERT INTO `maipo_grande`.`tipo_pedido`(`ID_TIPO_PEDIDO`,`NOMBRE`,`DESCRIPCION`
 
 #CALIDAD
 INSERT INTO `maipo_grande`.`calidad`(`ID_CALIDAD`,`NOMBRE`,`DESCRIPCION`)VALUES(1,'Calidad A','Calidad premuim');
+INSERT INTO `maipo_grande`.`calidad`(`ID_CALIDAD`,`NOMBRE`,`DESCRIPCION`)VALUES(2,'Calidad B','Calidad superior');
 
 #TIPO_FRUTA
 INSERT INTO `maipo_grande`.`tipo_fruta`(`ID_TIPO_FRUTA`,`NOMBRE`,`DESCRIPCION`)VALUES(1,'Platano','BANANA');
+INSERT INTO `maipo_grande`.`tipo_fruta`(`ID_TIPO_FRUTA`,`NOMBRE`,`DESCRIPCION`)VALUES(2,'Naranja','ORANGE');
 
 #PAIS
 INSERT INTO PAIS VALUES('CL','Chile');

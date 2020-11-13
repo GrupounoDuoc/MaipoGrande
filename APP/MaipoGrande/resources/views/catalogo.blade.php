@@ -34,7 +34,6 @@
     //$resultado = $conexion->query($query);
 */
 ?> 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,7 +87,7 @@
     
     <div class="sub-menu">
         <ul class="lista-submenu">
-            <li><a href="catalogo">Catálogo</a></li>
+            <li><a href="catalogo.php">Catálogo</a></li>
             <li><a href="maipogrande.php">Calidad Fruta</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="php/validarUsuario.php">Perfil</a></li>
@@ -109,20 +108,37 @@
             </ul>
         </nav>  
     </div>
-    <div class="menu-lateral">
-        <nav class="submenu-lateral">
-            <ul class="lista-lateral">
-                <li><span><img src="imagenes/icon-fruta.png"></span><a href="catalogo.php?id=fruta">Tipo fruta</a></li>
-                <ul>
-                    @foreach ($tipos as $tipo)
-                    <li><input type="radio" name="tipo" checked="" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
-                    @endforeach
+    <form action="{{ route('catalogo') }}" method="POST" >
+    @csrf
+        <div class="menu-lateral">
+            <nav class="submenu-lateral">
+                <ul class="lista-lateral">
+                    <li><span><img src="imagenes/icon-fruta.png"></span>Tipo fruta</li>
+                    <ul>
+                        @foreach ($tipos as $tipo)
+                        @if( $tipo->TIPO_FRUTA == $tipoSelected)
+                            <li><input type="radio" name="tipo" checked value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                        @else
+                            <li><input type="radio" name="tipo"  value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                        @endif
+                        @endforeach
+                    </ul>
+                    <li><span><img src=""></span>Calidad</li>
+                    <ul>                
+                        @foreach ($calidades as $calidad)
+                        @if( $calidad->CALIDAD == $calidadSelected)
+                            <li><input type="radio" name="calidad" checked value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
+                        @else
+                            <li><input type="radio" name="calidad" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
+                        @endif
+                        @endforeach
+                    </ul>
+                    <br>
+                    <input type="submit" name="send" value="Filtrar">
                 </ul>
-                <li><span><img src="imagenes/icon-verdura.png"></span><a href="catalogo.php?id=verdura">Verduras</a></li>
-                
-            </ul>
-        </nav>
-    </div>
+            </nav>
+        </div>
+    </form>
     <div class="contenido-productos">
         @foreach ($ofertas as $oferta)
             <div class='card'>
@@ -135,7 +151,11 @@
             </div>
         @endforeach
     </div>
-
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
     <script src="js/buscar.js"></script>
     <script src="js/rangoPrecios.js"></script>
     <script src="js/aparecerIcono.js"></script>

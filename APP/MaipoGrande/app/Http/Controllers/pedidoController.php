@@ -14,11 +14,25 @@ use App\tipo_pedido;
 
 class pedidoController extends Controller
 {
-    public function catalogo()
+    public function catalogo(Request $request)
     {
         $tipos = DB::select('CALL SP_GET_TIPO_FRUTA()',array());
-        $ofertas = DB::select('CALL SP_GET_CATALOGO()',array());
         $calidades = DB::select('CALL SP_GET_CALIDAD()',array());
-        return view('/catalogo', compact('ofertas','tipos'));
+        $calidadSelected = $request->get('calidad');
+        $tipoSelected = $request->get('tipo');
+        $ofertas = DB::select('CALL SP_GET_CATALOGO()',array());
+        if($tipoSelected!=null){
+            $filtro = collect($ofertas)->filter(function ($value, $key) use($tipoSelected){
+                return data_get($value, 'TIPO_FRUTA') == $tipoSelected;
+            });
+            $ofertas = $filtro->all();
+        }
+        if($calidadSelected!=null){
+            $filtro = collect($ofertas)->filter(function ($value, $key) use($calidadSelected){
+                return data_get($value, 'CALIDAD') == $calidadSelected;
+            });
+            $ofertas = $filtro->all();
+        }
+        return view('/catalogo', compact('ofertas','tipos','calidades','calidadSelected','tipoSelected'));
     }
 }
