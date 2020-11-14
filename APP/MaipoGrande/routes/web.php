@@ -22,6 +22,12 @@ Route::get('/contacto', function () {
 Route::get('/administrador', function () {
     return view('administrador');
 });
+
+Route::get('/admin', function () {
+    return view('admin');
+});
+
+
 Route::get('/carrito', function () {
     return view('carrito');
 });
@@ -32,13 +38,23 @@ Route::get('/descripcion', function () {
 Route::get('/login', function () {
     return view('login');
 });
-Route::get('/maipogrande', function () {
+Route::get('maipogrande', function () {
     return view('maipogrande');
 });
 Route::get('/registro', 'App\Http\Controllers\userController@CargarComuna');
 
 Route::get('/usuario', function () {
     return view('usuario');
+});
+
+//panel de rutas laravel 
+Route::get('/admin/layout', function () {
+    return view('admin');
+});
+
+//modulo de cliente panel de admin
+Route::get('cliente', function () {
+    return view('cliente');
 });
 
 // Post form data
