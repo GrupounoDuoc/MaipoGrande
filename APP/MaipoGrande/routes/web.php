@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//Routes Admin
+
+
+
+Route::get('/admin', 'App\Http\Controllers\adminController\adminviewController@ViewPanelAdmin')->name('admin');
+
+Route::get('/cliente', 'App\Http\Controllers\clientesController\clienteviewController@ViewPanelCliente')->name('cliente');
+
+
 //VISTAS APP
 Route::get('/', function () {
     return view('index');
@@ -23,9 +33,9 @@ Route::get('/administrador', function () {
     return view('administrador');
 });
 
-Route::get('/admin', function () {
-    return view('admin');
-});
+//Route::get('/admin', function () {
+//    return view('admin');
+//});
 
 
 Route::get('/carrito', function () {
@@ -48,14 +58,16 @@ Route::get('/usuario', function () {
 });
 
 //panel de rutas laravel 
-Route::get('/admin/layout', function () {
-    return view('admin');
-});
+//Route::get('/admin/layout', function () {
+//    return view('admin');
+//});
 
 //modulo de cliente panel de admin
-Route::get('cliente', function () {
-    return view('cliente');
-});
+//Route::get('cliente', function () {
+//    return view('cliente');
+//});
+
+
 
 // Post form data
 Route::post('/registro', [
