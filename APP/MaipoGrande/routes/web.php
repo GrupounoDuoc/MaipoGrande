@@ -19,9 +19,6 @@ Route::get('/', function () {
 Route::get('/contacto', function () {
     return view('contacto');
 });
-Route::get('/administrador', function () {
-    return view('administrador');
-});
 Route::get('/carrito', function () {
     return view('carrito');
 });
@@ -37,15 +34,25 @@ Route::get('/maipogrande', function () {
 });
 Route::get('/registro', 'App\Http\Controllers\userController@CargarComuna');
 
+Route::get('/administrador', 'App\Http\Controllers\AdminController@CargarComuna');
+
 Route::get('/usuario', function () {
     return view('usuario');
 });
+
+
 
 // Post form data
 Route::post('/registro', [
     'uses' => 'App\Http\Controllers\UserController@insertarUser',
     'as' => 'insertarUser'
 ]);
+
+Route::post('/administrador', [
+    'uses' => 'App\Http\Controllers\AdminController@CrearUser',
+    'as' => 'CrearUser'
+]);
+
 
 //VISTAS DE PRUEBA
 
