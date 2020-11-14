@@ -106,7 +106,6 @@ if (isset($_SESSION['datos'])) {
         <ul class="lista-submenu">
             <li><a href="catalogo">Catálogo</a></li>
             <li><a href="maipogrande">Calidad Fruta</a></li>
-            <li><a href="administrador">Administrador</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="php/validarUsuario.php">Perfil</a></li>
                 <li><a href="php/cerrar.php">Cerrar sesión</a></li>

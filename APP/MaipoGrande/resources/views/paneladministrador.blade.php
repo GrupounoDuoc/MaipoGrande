@@ -93,6 +93,7 @@
                                         <div class="form-group" required>
                                             <p class="font-weight-bold">Seleccione el tipo de persona</p>
                                             <select class="form-control" id="FormPersona" name=tipopersona required>
+                                                <option selected disabled value="">Seleccione tipo de persona</option>
                                                 <option value=1>Persona Natural</option>
                                                 <option value=2>Empresa</option>
                                             </select>
