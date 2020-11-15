@@ -29,6 +29,18 @@ Route::get('/descripcion', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+
+
+Route::post('/loguarse', 'App\Http\Controllers\LoginController@loguear') -> name('loguearse');
+
+Route::post('/salir', 'App\Http\Controllers\LoginController@logout') -> name('salir');
+
+
+
+
+
+
 Route::get('/maipogrande', function () {
     return view('maipogrande');
 });
