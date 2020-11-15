@@ -41,7 +41,7 @@ body {
     color: rgba(0,0,0,.65);
     display: inline-block;
     position: absolute;
-    margin-top: 30px;
+    margin-top: 20px;
     margin-left: 8px;
     font-weight: bold;
 }
@@ -183,7 +183,7 @@ header {
 .img-logo {
     height: 70px;
     width: 70px;
-    margin-left: 60px;
+    margin-left: 30px;
 }
 
 nav {

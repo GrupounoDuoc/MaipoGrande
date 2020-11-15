@@ -69,7 +69,7 @@ if (isset($_SESSION['datos'])) {
     <header id="cabecera">
 
         <img src="imagenes/manzana.png" class="img-logo">
-        <h1 class="logo">Maipo Grande</h1>
+        <h2 class="logo">Maipo Grande</h2>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
             <div class="container-buscador" id="contenido">
@@ -106,7 +106,6 @@ if (isset($_SESSION['datos'])) {
         <ul class="lista-submenu">
             <li><a href="catalogo">Catálogo</a></li>
             <li><a href="maipogrande">Calidad Fruta</a></li>
-            <li><a href="administrador">Administrador</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="php/validarUsuario.php">Perfil</a></li>
                 <li><a href="php/cerrar.php">Cerrar sesión</a></li>
@@ -174,7 +173,7 @@ if (isset($_SESSION['datos'])) {
             </div>
             <div class="testimonial-item">
                 <div class="testimonial-client">
-                    <img src="testimonios/testimonio4.png" alt="">
+                    <img src="testimonios/testimonioEB.png" alt="">
                     <p class="client-name">Edgar Barrera</p>
                 </div>
                 <div class="testimonial-text">
