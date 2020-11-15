@@ -1,27 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registro | Maipo Grande</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="css/registro.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
-    <link rel="stylesheet" href="iconos/style.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
     <script src="https://kit.fontawesome.com/5dd90ee603.js" crossorigin="anonymous"></script>
     <!-- PWA -->
     @laravelPWA
-    
+
 </head>
 
 <body>
     <header id="cabecera">
-        <img src="imagenes/manzana.png" class="img-logo"> 
-         <h1 class="logo"> <a href="index.php" > Maipo Grande </a></h1>
+        <img src="imagenes/manzana.png" class="img-logo">
+        <h1 class="logo"> <a href="index.php"> Maipo Grande </a></h1>
         <img src="img/menu.png" class="icon-menu" id="boton-menu">
         <nav>
             <ul>
@@ -29,7 +27,7 @@
                 <li><a href="login">Entrar</a></li>
             </ul>
         </nav>
-    </header>  
+    </header>
     @if(session('status'))
     <div class="alert alert-success" role="alert">
         {{ session('status') }}
@@ -46,88 +44,90 @@
                 <li><a href="login.html">Entrar</a></li>
                 <li><a href=""><span class="icon-cart"></span></a></li>
             </ul>
-        </nav>  
+        </nav>
     </div>
 
     <div class="contenedor seccion contenido-centrado">
         <h2 class="centrar-texto">Registro de Comprador</h2>
 
-        <form action="{{ route('insertarUser') }}" method="POST"  autocomplete="on" action=""> <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
-        @csrf
+        <form action="{{ route('insertarUser') }}" method="POST" autocomplete="on" action="">
+            <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
+            @csrf
             <fieldset>
-            <p class="font-weight-bold">Para comenzar, ingresa tus datos personales...</p>
-            <div class="form-group">
-                <label for="Nombre">Ingresa tu nombre</label>
-            
-                <div class="col-xs-4">
+                <p class="font-weight-bold">Para comenzar, ingresa tus datos personales...</p>
+                <div class="form-group">
+                    <label for="Nombre">Ingresa tu nombre</label>
+
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" name=nombre placeholder="Nombre" required> 
-                </div>
-                <div class="col-xs-4">
-                    <input type="text" name=apellido class="form-control"  placeholder="Apellido" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="Nombre">Ingresa tu rut</label>
-            
-                <div class="form-row">
-                    <div class="col-xs-4">
-                        <input type="number" min=1000000 max=99999999 class="form-control" name=rut placeholder="Rut" required>
-                </div>
-                <div class="col-xs-2">
-                    <input type="text" name=dv class="form-control"  placeholder="DV" maxlength="1" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">¿Que tipo de compras realizarás?</label>
-                    <select class="form-control" id="FormComprador" name=tipocomprador required>
-                        <option value=3>Compras Nacionales</option>
-                        <option value=4>Compras Internacionales</option>
-                    </select>
-            </div>
-            <div class="form-group" required>
-                <label for="exampleFormControlSelect1">Escoge el tipo de persona</label>
-                    <select class="form-control" id="FormPersona" name=tipopersona required>
-                        <option value=1>Persona Natural</option>
-                        <option value=2>Empresa</option>
-                    </select>
-            </div>
-            <label for="Nombre">Ingresa tu nombre de fantasía</label>
-            <div class="col">
-                <div >
-                    <input type="text" class="form-control" name=nombrefantasia placeholder="Nombre de Fantasía" required>
-                </div>
-            <div class="form-group">
-                <label for="Nombre">Datos adicionales</label>
-                <div class="form">
-                    <select name="comuna" class="custom-select custom-select-sm" required >
-                        <option selected disabled value="">Selecciona una comuna</option>
-                    @foreach($comunas as $cursorcomuna) 
-                        <option value="{{ $cursorcomuna->ID}}">{{ $cursorcomuna->NOMBRECOMUNA}}</option>
-                    @endforeach
-                    </select>
-                    <div>
-                    <br>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" name=nombre placeholder="Nombre" required>
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="text" name=apellido class="form-control" placeholder="Apellido" required>
+                        </div>
                     </div>
-                    <div class="col-xs-4">
-                        <input type="text" class="form-control" name=codigopostal maxlength="7"  placeholder="Código Postal" required>
-                    </div>
-                    <div class="col-xs-4">
-                        <input type="text" class="form-control" name=telefono  placeholder="Nro. de Teléfono" required>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="Nombre">Ingresa tus datos de inicio de sesión</label>
-            
-                <div class="col-xs-4">
-                    <div class="col-xs-4">
-                        <input type="mail" class="form-control" name=correo placeholder="Correo" required>
-                </div>
-                <div class="col-xs-4">
-                    <input type="password" name=contrasenia class="form-control"  placeholder="Contraseña" required>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="rut">Ingresa tu rut</label>
+
+                        <div class="form-row">
+                            <div class="col-xs-4">
+                                <input type="number" min=1000000 max=99999999 class="form-control" name=rut placeholder="Rut" required>
+                            </div>
+                            <div class="col-xs-2">
+                                <input type="text" name=dv class="form-control" placeholder="DV" maxlength="1" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">¿Que tipo de compras realizarás?</label>
+                            <select class="form-control" id="FormComprador" name=tipocomprador required>
+                                <option value=3>Compras Nacionales</option>
+                                <option value=4>Compras Internacionales</option>
+                            </select>
+                        </div>
+                        <div class="form-group" required>
+                            <label for="exampleFormControlSelect1">Escoge el tipo de persona</label>
+                            <select class="form-control" id="FormPersona" name=tipopersona required>
+                                <option value=1>Persona Natural</option>
+                                <option value=2>Empresa</option>
+                            </select>
+                        </div>
+                        <label for="NombreFantasia">Ingresa tu nombre de fantasía</label>
+                        <div class="col-xs-2">
+                            <div>
+                                <input type="text" class="form-control" name=nombrefantasia placeholder="Nombre de Fantasía" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Nombre">Datos adicionales</label>
+                            <div class="form">
+                                <select name="comuna" class="form-control" required>
+                                    <option selected disabled value="">Selecciona una comuna</option>
+                                    @foreach($comunas as $cursorcomuna)
+                                    <option value="{{ $cursorcomuna->ID}}">{{ $cursorcomuna->NOMBRECOMUNA}}</option>
+                                    @endforeach
+                                </select>
+                                <div>
+                                    <br>
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" name=codigopostal maxlength="7" placeholder="Código Postal" required>
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" name=telefono placeholder="Nro. de Teléfono" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Nombre">Ingresa tus datos de inicio de sesión</label>
+
+                            <div class="col-xs-4">
+                                <div class="col-xs-4">
+                                    <input type="mail" class="form-control" name=correo placeholder="Correo" required>
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="password" name=contrasenia class="form-control" placeholder="Contraseña" required>
+                                </div>
+                            </div>
 
             </fieldset>
             <fieldset>
@@ -135,8 +135,8 @@
                     <input type="submit" name="" value="Registrarse">
                 </div>
                 <div class="texto-login">
-                    <h4 class="texto-registro">¿Ya estás registrado?</h4> 
-                    <a class="btn-login1" href="login.php"> Inicia sesión</a> 
+                    <h4 class="texto-registro">¿Ya estás registrado?</h4>
+                    <a class="btn-login1" href="login.php"> Inicia sesión</a>
                 </div>
             </fieldset>
         </form>
@@ -147,7 +147,7 @@
         <div class="contenedor">
             <div class="d-flex p-2 justify-content-center">
                 <div class="copyright">
-                © 2019 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
+                    © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
                 </div>
             </div>
         </div>

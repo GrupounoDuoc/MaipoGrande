@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use DB;
 
-class UserController extends Controller
+
+class AdminController extends Controller
 {
     //
     public function index()
     {
-        return view('/registrarse');
+        return view('/administrador');
     }
-    public function insertarUser(Request $request)
+    public function CrearUser(Request $request)
     {
 
 
@@ -30,7 +31,7 @@ class UserController extends Controller
         $contrasenia = $request->get('contrasenia');
 
 
-        $InsertarUser = DB::select(
+        $CrearUser = DB::select(
             'call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
             array($nombre, $apellido, $rut, $dv, $comuna, $codigopostal, $correo, $contrasenia, $telefono, $tipopersona, $nombrefantasia, $tipocomprador)
         );
@@ -41,7 +42,7 @@ class UserController extends Controller
     public function CargarComuna() //int $rol)
     {
         $comunas = DB::select('CALL SP_GET_COMUNAS()');
-        return view('registro', compact('comunas'));
+        return view('paneladministrador', compact('comunas'));
 
         /* $comunas= comuna::select('NombreComuna','nombre')->get();
         return view('id_comuna',compact('comunas')); */

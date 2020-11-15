@@ -2,21 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 //Routes Admin
-
-
-
 Route::get('/admin', 'App\Http\Controllers\adminController\adminviewController@ViewPanelAdmin')->name('admin');
 
 Route::get('/cliente', 'App\Http\Controllers\clientesController\clienteviewController@ViewPanelCliente')->name('cliente');
@@ -33,11 +21,6 @@ Route::get('/administrador', function () {
     return view('administrador');
 });
 
-//Route::get('/admin', function () {
-//    return view('admin');
-//});
-
-
 Route::get('/carrito', function () {
     return view('carrito');
 });
@@ -48,24 +31,17 @@ Route::get('/descripcion', function () {
 Route::get('/login', function () {
     return view('login');
 });
-Route::get('maipogrande', function () {
+Route::get('/maipogrande', function () {
     return view('maipogrande');
 });
 Route::get('/registro', 'App\Http\Controllers\userController@CargarComuna');
+
+Route::get('/administrador', 'App\Http\Controllers\AdminController@CargarComuna');
 
 Route::get('/usuario', function () {
     return view('usuario');
 });
 
-//panel de rutas laravel 
-//Route::get('/admin/layout', function () {
-//    return view('admin');
-//});
-
-//modulo de cliente panel de admin
-//Route::get('cliente', function () {
-//    return view('cliente');
-//});
 
 
 
@@ -74,6 +50,12 @@ Route::post('/registro', [
     'uses' => 'App\Http\Controllers\UserController@insertarUser',
     'as' => 'insertarUser'
 ]);
+
+Route::post('/administrador', [
+    'uses' => 'App\Http\Controllers\AdminController@CrearUser',
+    'as' => 'CrearUser'
+]);
+
 
 //VISTAS DE PRUEBA
 
