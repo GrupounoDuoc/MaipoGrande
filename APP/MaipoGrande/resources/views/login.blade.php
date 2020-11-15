@@ -1,3 +1,4 @@
+
 <?php
 
     session_start();
@@ -85,7 +86,8 @@
         </div>
     </div>
 
-    <form action="php/ingresar.php" method="POST" autocomplete="off" class="form-login">
+    <form action="{{ route('loguearse') }}" method="POST" autocomplete="off" class="form-login">
+            {{ csrf_field() }}
         <div class="container">
             <h2>Inicia sesión<br>con tu red social</h2>
             <div class="redes">
