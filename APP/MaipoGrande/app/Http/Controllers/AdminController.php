@@ -11,7 +11,7 @@ class AdminController extends Controller
     //
     public function index()
     {
-        return view('/administrador');
+        return view('/index');
     }
     public function CrearUser(Request $request)
     {
@@ -19,8 +19,8 @@ class AdminController extends Controller
 
         $nombre = $request->get('nombre');
         $apellido = $request->get('apellido');
-        $rut =  $request->get('rut');
-        $dv =  $request->get('dv');
+        $rut = $request->get('rut');
+        $dv = $request->get('dv');
         $tipocomprador = $request->get('tipocomprador');
         $tipopersona = $request->get('tipopersona');
         $comuna = $request->get('comuna');
@@ -37,14 +37,26 @@ class AdminController extends Controller
         );
 
         return back()->with('status', "Se ha creado el usuario {$correo} satisfactoriamente!");
-    }
+    } 
 
     public function CargarComuna() //int $rol)
     {
         $comunas = DB::select('CALL SP_GET_COMUNAS()');
-        return view('paneladministrador', compact('comunas'));
+        return view('CrearUser', compact('comunas'));
 
         /* $comunas= comuna::select('NombreComuna','nombre')->get();
         return view('id_comuna',compact('comunas')); */
+    }
+
+    public function EliminarUser(Request $request)
+    {
+        $rut = $request->get('rut');
+
+        $EliminarUser = DB::select(
+            'call SP_DELETE_USUARIO(?)',
+            array($rut)
+        );
+
+        return back()->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
     }
 }

@@ -47,4 +47,6 @@ class UserController extends Controller
         /* $comunas= comuna::select('NombreComuna','nombre')->get();
         return view('id_comuna',compact('comunas')); */
     }
+
+
 }

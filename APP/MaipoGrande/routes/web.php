@@ -34,21 +34,32 @@ Route::get('/maipogrande', function () {
 });
 Route::get('/registro', 'App\Http\Controllers\userController@CargarComuna');
 
-Route::get('/administrador', 'App\Http\Controllers\AdminController@CargarComuna');
+Route::get('/administrador', function () {
+    return view('paneladministrador');
+});
 
 Route::get('/usuario', function () {
     return view('usuario');
 });
 
+Route::get('/CrearUsuario', 'App\Http\Controllers\AdminController@CargarComuna');
 
+Route::get('/EliminarUsuario', function () {
+    return view('eliminaruser');
+});
 
 // Post form data
 Route::post('/registro', [
     'uses' => 'App\Http\Controllers\UserController@insertarUser',
     'as' => 'insertarUser'
-]);
+]); 
 
-Route::post('/administrador', [
+Route::post('/EliminarUsuario', [
+    'uses' => 'App\Http\Controllers\AdminController@EliminarUser',
+    'as' => 'EliminarUser'
+]); 
+
+Route::post('/CrearUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@CrearUser',
     'as' => 'CrearUser'
 ]);

@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+if (isset($_SESSION['datos'])) {
+    $id_User = $_SESSION['datos']['id'];
+
+    $consulta = "SELECT * FROM carrito_compras WHERE id_usuario = '$id_User'";
+    $resultado = mysqli_query($conexion, $consulta);
+
+    $cantidad = mysqli_num_rows($resultado);
+} else {
+    $cantidad = 0;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,15 +22,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Panel Administrador | Maipo Grande</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="css/registro.css">
+    <link rel="stylesheet" href="css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="iconos/style.css">
-    <link rel="stylesheet" href="iconos/estilos.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
     <script src="https://kit.fontawesome.com/5dd90ee603.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+
     <!-- PWA -->
     @laravelPWA
 
@@ -23,132 +38,69 @@
 
 <body>
     <header id="cabecera">
+
         <img src="imagenes/manzana.png" class="img-logo">
-        <h1 class="logo"> <a href="index.php"> Maipo Grande </a></h1>
-        <img src="img/menu.png" class="icon-menu" id="boton-menu">
+        <h1 class="logo">Maipo Grande</h1>
+        <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
-            <ul>
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="login">Entrar</a></li>
+            <ul id="lista-principal">
+                <?php
+                if (empty($_SESSION['datos'])) { ?>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="administrador">Administrador</a></li>
+
+                <?php } else { ?>
+                    <li><a href="/">Inicio</a></li>
+                    <li class="li-perfilUsuario">
+                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                    </li>
+
+                <?php } ?>
             </ul>
+            <?php if (isset($_SESSION['objetoNoEncontrado'])) { ?>
+                <h3 class="errorBusqueda" id="messageError"><?php echo $_SESSION['objetoNoEncontrado'] ?></h3>
+            <?php unset($_SESSION['objetoNoEncontrado']);
+            } ?>
         </nav>
     </header>
+    <div class="menu-lateralResponsive" id="menu-responsive">
+        <nav class="nav-responsive">
+            <ul>
+                <?php
+                if (empty($_SESSION['datos'])) { ?>
+
+                    <!--<li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"] ?>">Entrar</a></li> 
+                    <li><a href="registro">Registrarse</a></li> -->
+                    <li><a href="administrador">Administrador</a></li>
+                    <li><a href="catalogo">Catálogo</a></li>
+                    <li><a href="maipogrande.html">Calidad Fruta</a></li>
+                    <ul class="subMenu-usuario" id="submenu-perfil">
+                        <li><a href="php/validarUsuario.php">Perfil</a></li>
+                        <li><a href="php/cerrar.php">Cerrar sesión</a></li>
+                    </ul>
+                <?php } else { ?>
+                    <li><a href=""><span class="icon-search"></span></a></li>
+                    <li class="li-perfilUsuario">
+                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                    </li>
+                    <li><a href="catalogo">Catálogo</a></li>
+                    <li><a href="maipogrande.html">Calidad Fruta</a></li>
+                    <ul class="subMenu-usuario" id="submenu-perfil">
+                        <li><a href="php/validarUsuario.php">Perfil</a></li>
+                        <li><a href="php/cerrar.php">Cerrar sesión</a></li>
+                    </ul>
+                <?php } ?>
+            </ul>
+        </nav>
+    </div>
 
     <div class="container mt-5">
 
 
         <label for="" class=FormItem>Selecciona un módulo</label>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#modalcrearuser">
-            Crear Usuario
-        </button>
+        <a href="CrearUsuario" class="btn btn-success btn-block">Crear Usuario</a>
 
-        <!-- Modal -->
-        <div class="modal fade" id="modalcrearuser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-content">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <label class="modal-title" id="modalcrearuser">Crear Usuario</label>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('CrearUser') }}" method="POST" autocomplete="on" action="">
-                            <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
-                            @csrf
-                            <fieldset>
-                                <p class="font-weight-bold">Ingresa los datos del nuevo usuario...</p>
-                                <div class="form-group">
-                                    <p class="font-weight-bold">Nombres</p>
-
-                                    <div class="col-xs-4">
-                                        <div class="col-xs-4">
-                                            <input type="text" class="form-control" name=nombre placeholder="Nombre" required>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <input type="text" name=apellido class="form-control" placeholder="Apellido" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="font-weight-bold">Rut</p>
-
-                                        <div class="form-row">
-                                            <div class="col-xs-4">
-                                                <input type="number" min=1000000 max=99999999 class="form-control" name=rut placeholder="Rut" required>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <input type="text" name=dv class="form-control" placeholder="DV" maxlength="1" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <p class="font-weight-bold">Tipo de usuario</p>
-                                            <select class="form-control" id="FormComprador" name=tipocomprador required>
-                                                <option selected disabled value="">Seleccione perfil</option>
-                                                <option value=1>Administrador</option>
-                                                <option value=2>Vendedor</option>
-                                                <option value=3>Compras Nacionales</option>
-                                                <option value=4>Compras Internacionales</option>
-                                                <option value=4>Transportista</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group" required>
-                                            <p class="font-weight-bold">Seleccione el tipo de persona</p>
-                                            <select class="form-control" id="FormPersona" name=tipopersona required>
-                                                <option selected disabled value="">Seleccione tipo de persona</option>
-                                                <option value=1>Persona Natural</option>
-                                                <option value=2>Empresa</option>
-                                            </select>
-                                        </div>
-                                        <p class="font-weight-bold">Ingrese tipo de persona </p>
-                                        <div class="col-xs-2">
-                                            <div>
-                                                <input type="text" class="form-control" name=nombrefantasia placeholder="Nombre de Fantasía" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <p class="font-weight-bold">Datos adicionales</p>
-                                            <div class="form">
-                                                <select name="comuna" class="form-control" required>
-                                                    <option selected disabled value="">Selecciona una comuna</option>
-                                                    @foreach($comunas as $cursorcomuna)
-                                                    <option value="{{ $cursorcomuna->ID}}">{{ $cursorcomuna->NOMBRECOMUNA}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div>
-                                                    <br>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <input type="text" class="form-control" name=codigopostal maxlength="7" placeholder="Código Postal" required>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <input type="text" class="form-control" name=telefono placeholder="Nro. de Teléfono" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <p class="font-weight-bold">Ingrese las credenciales del usuario</p>
-                                            <div class="col-xs-4">
-                                                <div class="col-xs-4">
-                                                    <input type="mail" class="form-control" name=correo placeholder="Correo" required>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <input type="password" name=contrasenia class="form-control" placeholder="Contraseña" required>
-                                                </div>
-                                            </div>
-
-                            </fieldset>
-                            <fieldset>
-                                <div class="container-boton">
-                                    <input type="submit" name="" value="Registrarse">
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar pestaña</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modalmodificaruser">
             Modificar usuario
         </button>
@@ -170,11 +122,7 @@
             </div>
         </div>
         </form>
-
-        <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modaleliminaruser">
-            Eliminar usuario
-        </button>
-
+        <a href="EliminarUsuario" class="btn btn-success btn-block">Eliminar Usuario</a>           
         <div class="modal fade" id="modaleliminaruser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -183,6 +131,7 @@
                         <label class="modal-title" id="modaleliminaruser">Eliminar Usuario</label>
                     </div>
                     <div class="modal-body">
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar pestaña</button>
@@ -195,7 +144,7 @@
     </div>
 
     <!--Footer-->
-    <footer>
+    <footer class="footer2">
         <div class="contenedor">
             <div class="d-flex p-2 justify-content-center">
                 <div class="copyright">
@@ -205,6 +154,9 @@
         </div>
     </footer>
 
+    <script src="js/buscar.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/aparecerIcono.js"></script>
     <script src="js/ver_clave.js"></script>
     <script src="js/cerrarVentanita.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
