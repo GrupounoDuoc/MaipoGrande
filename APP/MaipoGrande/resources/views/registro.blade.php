@@ -105,23 +105,24 @@
                 <p class="font-weight-bold">Para comenzar, ingresa tus datos personales...</p>
                 <div class="form-group">
                     <label for="Nombre">Ingresa tu nombre</label>
-
-                    <div class="col-xs-4">
                         <div class="col-xs-4">
                             <input type="text" class="form-control" name=nombre placeholder="Nombre" required>
+                            <div class="valid-feedback">
+                                Nombre Correcto!
+                            </div>
                         </div>
                         <div class="col-xs-4">
                             <input type="text" name=apellido class="form-control" placeholder="Apellido" required>
                         </div>
-                    </div>
+
                     <div class="form-group">
                         <label for="rut">Ingresa tu rut</label>
 
                         <div class="form-row">
-                            <div class="col-xs-4">
+                            <div class="col-md-10 mb-2">
                                 <input type="number" min=1000000 max=99999999 class="form-control" name=rut placeholder="Rut" required>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-md-2">
                                 <input type="text" name=dv class="form-control" placeholder="DV" maxlength="1" required>
                             </div>
                         </div>
@@ -140,7 +141,7 @@
                             </select>
                         </div>
                         <label for="NombreFantasia">Ingresa tu nombre de fantasía</label>
-                        <div class="col-xs-2">
+                        <div class="col-xs-4">
                             <div>
                                 <input type="text" class="form-control" name=nombrefantasia placeholder="Nombre de Fantasía" required>
                             </div>
