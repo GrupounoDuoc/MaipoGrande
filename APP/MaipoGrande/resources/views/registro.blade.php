@@ -139,7 +139,7 @@
                                 <option value=2>Empresa</option>
                             </select>
                         </div>
-                        <label for="NombreFantasia">Ingresa tu nombre de fantasía</label>
+                        <label for="NombreFantasia">Ingresa tu nombre de fantasía (El mismo nombre en caso de ser persona natural)</label>
                         <div class="col-xs-2">
                             <div>
                                 <input type="text" class="form-control" name=nombrefantasia placeholder="Nombre de Fantasía" required>

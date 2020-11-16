@@ -87,46 +87,8 @@
         <label for="" class=FormItem>Selecciona un módulo</label>
         <!-- Button trigger modal -->
         <a href="CrearUsuario" class="btn btn-success btn-block">Crear Usuario</a>
-
-        <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modalmodificaruser">
-            Modificar usuario
-        </button>
-        <!-- Modal -->
-        <div class="modal fade" id="modalmodificaruser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-content">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <label class="modal-title" id="modalmodificaruser">Modificar Usuario</label>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar pestaña</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </form>
+        <a href="ModificarUsuario" class="btn btn-success btn-block">Modificar Usuario</a> 
         <a href="EliminarUsuario" class="btn btn-success btn-block">Eliminar Usuario</a>           
-        <div class="modal fade" id="modaleliminaruser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-content">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <label class="modal-title" id="modaleliminaruser">Eliminar Usuario</label>
-                    </div>
-                    <div class="modal-body">
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar pestaña</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </form>
     </div>
     </div>
 

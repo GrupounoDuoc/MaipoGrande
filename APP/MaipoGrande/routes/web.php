@@ -38,15 +38,9 @@ Route::get('/login', function () {
     return view('login');
 });
 
-
-
 Route::post('/loguarse', 'App\Http\Controllers\LoginController@loguear') -> name('loguearse');
 
 Route::post('/salir', 'App\Http\Controllers\LoginController@logout') -> name('salir');
-
-
-
-
 
 
 Route::get('/maipogrande', function () {
@@ -63,6 +57,8 @@ Route::get('/usuario', function () {
 });
 
 Route::get('/CrearUsuario', 'App\Http\Controllers\AdminController@CargarComuna');
+
+Route::get('/ModificarUsuario', 'App\Http\Controllers\AdminController@CargarComunaB');
 
 Route::get('/EliminarUsuario', function () {
     return view('eliminaruser');
@@ -83,6 +79,12 @@ Route::post('/CrearUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@CrearUser',
     'as' => 'CrearUser'
 ]);
+
+Route::post('/ModificarUsuario', [
+    'uses' => 'App\Http\Controllers\AdminController@ModificarUser',
+    'as' => 'ModificarUser'
+]); 
+
 
 
 //VISTAS DE PRUEBA
