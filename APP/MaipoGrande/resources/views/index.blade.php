@@ -1,19 +1,6 @@
-<?php
-session_start();
-
-if (isset($_SESSION['datos'])) {
-    $id_User = $_SESSION['datos']['id'];
-
-    $consulta = "SELECT * FROM carrito_compras WHERE id_usuario = '$id_User'";
-    $resultado = mysqli_query($conexion, $consulta);
-
-    $cantidad = mysqli_num_rows($resultado);
-} else {
-    $cantidad = 0;
-}
-
-?>
-
+@if(!isset($_SESSION))
+|   {{ session_start() }}
+@endif
 <!--V5 Laravel -->
 <!DOCTYPE html>
 <html lang="en">
@@ -72,34 +59,23 @@ if (isset($_SESSION['datos'])) {
         <h2 class="logo">Maipo Grande</h2>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
-            <div class="container-buscador" id="contenido">
-                <form action="php/buscar.php?url=<?php echo $_SERVER["REQUEST_URI"] ?>" method="POST">
-                    <input type="text" id="campoBuscar" placeholder="Buscar..." name="productoBuscar">
-                    <span class="icon-search"></span>
-                </form>
-            </div>
             <ul id="lista-principal">
-                <?php
-                if (empty($_SESSION['datos'])) { ?>
+                @if (empty($_SESSION['usuario']))
                     <li><a href="/">Inicio</a></li>
                     <li><a href="login">Entrar</a></li>
                     <li><a href="registro">Registrarse</a></li>
                     <li><a href="administrador">Administrador</a></li>
                     <li><span class="icon-search" id="buscador"></span></li>
 
-                <?php } else { ?>
+                @else
                     <li><a href="/">Inicio</a></li>
                     <li><span class="icon-search" id="buscador"></span></li>
                     <li class="li-perfilUsuario">
                         <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                     </li>
 
-                <?php } ?>
+                @endif
             </ul>
-            <?php if (isset($_SESSION['objetoNoEncontrado'])) { ?>
-                <h3 class="errorBusqueda" id="messageError"><?php echo $_SESSION['objetoNoEncontrado'] ?></h3>
-            <?php unset($_SESSION['objetoNoEncontrado']);
-            } ?>
         </nav>
     </header>
     <div class="sub-menu">
@@ -107,8 +83,8 @@ if (isset($_SESSION['datos'])) {
             <li><a href="catalogo">Catálogo</a></li>
             <li><a href="maipogrande">Calidad Fruta</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
-                <li><a href="php/validarUsuario.php">Perfil</a></li>
-                <li><a href="php/cerrar.php">Cerrar sesión</a></li>
+                <li><a href="">Perfil</a></li>
+                <li><a href="logout">Cerrar sesión</a></li>
             </ul>
             <a href="carrito"><span class="icon-cart"></span></a>
             @if(isset($_SESSION['totalCart']))
@@ -121,21 +97,24 @@ if (isset($_SESSION['datos'])) {
     <div class="menu-lateralResponsive" id="menu-responsive">
         <nav class="nav-responsive">
             <ul>
-                <?php
-                if (empty($_SESSION['datos'])) { ?>
+                @if (empty($_SESSION['usuario']))
 
-                    <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"] ?>">Entrar</a></li>
+                    <li><a href="login">Entrar</a></li>
                     <li><a href="registro">Registrarse</a></li>
                     <li><a href="administrador">Administrador</a></li>
                     <li><a href="catalogo">Catálogo</a></li>
                     <li><a href="maipogrande.html">Calidad Fruta</a></li>
                     <ul class="subMenu-usuario" id="submenu-perfil">
-                        <li><a href="php/validarUsuario.php">Perfil</a></li>
-                        <li><a href="php/cerrar.php">Cerrar sesión</a></li>
+                        <li><a href="">Perfil</a></li>
+                        <li><a href="logout">Cerrar sesión</a></li>
                     </ul>
                     <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-                    <p class="cantidad"><?php echo $cantidad ?></p>
-                <?php } else { ?>
+                    @if(isset($_SESSION['totalCart']))
+                        <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+                    @else
+                        <p class="cantidad">0</p>
+                    @endif
+                @else
                     <li><a href=""><span class="icon-search"></span></a></li>
                     <li class="li-perfilUsuario">
                         <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
@@ -143,12 +122,16 @@ if (isset($_SESSION['datos'])) {
                     <li><a href="catalogo">Catálogo</a></li>
                     <li><a href="maipogrande.html">Calidad Fruta</a></li>
                     <ul class="subMenu-usuario" id="submenu-perfil">
-                        <li><a href="php/validarUsuario.php">Perfil</a></li>
-                        <li><a href="php/cerrar.php">Cerrar sesión</a></li>
+                        <li><a href="">Perfil</a></li>
+                        <li><a href="logout">Cerrar sesión</a></li>
                     </ul>
                     <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-                    <p class="cantidad"><?php echo $cantidad ?></p>
-                <?php } ?>
+                    @if(isset($_SESSION['totalCart']))
+                        <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+                    @else
+                        <p class="cantidad">0</p>
+                    @endif
+                @endif
             </ul>
         </nav>
     </div>
@@ -225,8 +208,11 @@ if (isset($_SESSION['datos'])) {
         </div>
     </footer>
 
-
-
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
     <script src="js/buscar.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/aparecerIcono.js"></script>

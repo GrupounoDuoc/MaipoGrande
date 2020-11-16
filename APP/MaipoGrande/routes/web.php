@@ -34,20 +34,14 @@ Route::get('addCart/{id}', 'App\Http\Controllers\UserController@AddCart');
 Route::get('/descripcion', function () {
     return view('descripcion');
 });
-Route::get('/login', function () {
+
+route::get('login', function () {
     return view('login');
 });
 
+route::post('login', 'App\Http\Controllers\LoginController@login') -> name('login');
 
-
-Route::post('/loguarse', 'App\Http\Controllers\LoginController@loguear') -> name('loguearse');
-
-Route::post('/salir', 'App\Http\Controllers\LoginController@logout') -> name('salir');
-
-
-
-
-
+Route::get('logout', 'App\Http\Controllers\LoginController@logout') -> name('logout');
 
 Route::get('/maipogrande', function () {
     return view('maipogrande');
