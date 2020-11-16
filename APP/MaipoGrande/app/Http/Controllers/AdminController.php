@@ -33,7 +33,8 @@ class AdminController extends Controller
 
         $CrearUser = DB::select(
             'call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
-            array($nombre, $apellido, $rut, $dv, $comuna, $codigopostal, $correo, $contrasenia, $telefono, $tipopersona, $nombrefantasia, $tipocomprador)
+            array($nombre, $apellido, $rut, $dv, $comuna, $codigopostal, $correo, 
+            $contrasenia, $telefono, $tipopersona, $nombrefantasia, $tipocomprador)
         );
 
         return back()->with('status', "Se ha creado el usuario {$correo} satisfactoriamente!");
@@ -59,4 +60,40 @@ class AdminController extends Controller
 
         return back()->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
     }
+
+    public function CargarComunaB() //int $rol)
+    {
+        $comunas = DB::select('CALL SP_GET_COMUNAS()');
+        return view('ModificarUser', compact('comunas'));
+
+        /* $comunas= comuna::select('NombreComuna','nombre')->get();
+        return view('id_comuna',compact('comunas')); */
+    }
+
+    public function ModificarUser(Request $request)
+    {
+
+
+        $nombre = $request->get('nombre');
+        $apellido = $request->get('apellido');
+        $rut = $request->get('rut');
+        $tipocomprador = $request->get('tipocomprador');
+        $tipopersona = $request->get('tipopersona');
+        $comuna = $request->get('comuna');
+        $codigopostal = $request->get('codigopostal');
+        $telefono = $request->get('telefono');
+        $nombrefantasia = $request->get('nombrefantasia');
+        $correo = $request->get('correo');
+        $contrasenia = $request->get('contrasenia');
+
+
+        $ModificarUser = DB::select(
+            'call SP_UPDATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?)',
+            array($nombre, $apellido, $rut, $tipocomprador,
+            $tipopersona, $nombrefantasia, $comuna, $codigopostal,
+            $telefono, $correo, $contrasenia)
+        );
+
+        return back()->with('status', "Se ha modificado el usuario con rut {$rut} satisfactoriamente!");
+    } 
 }

@@ -25,23 +25,25 @@ Route::get('/carrito', function () {
     return view('carrito');
 });
 Route::get('/catalogo', 'App\Http\Controllers\pedidoController@catalogo');
+
+Route::post('/catalogo', [
+    'uses' => 'App\Http\Controllers\pedidoController@catalogo',
+    'as' => 'catalogo'
+]);
+
+Route::get('addCart/{id}', 'App\Http\Controllers\UserController@AddCart');
+
 Route::get('/descripcion', function () {
     return view('descripcion');
 });
-Route::get('/login', function () {
+
+route::get('login', function () {
     return view('login');
 });
 
+route::post('login', 'App\Http\Controllers\LoginController@login') -> name('login');
 
-
-Route::post('/loguarse', 'App\Http\Controllers\LoginController@loguear') -> name('loguearse');
-
-Route::post('/salir', 'App\Http\Controllers\LoginController@logout') -> name('salir');
-
-
-
-
-
+Route::get('logout', 'App\Http\Controllers\LoginController@logout') -> name('logout');
 
 Route::get('/maipogrande', function () {
     return view('maipogrande');
@@ -57,6 +59,8 @@ Route::get('/usuario', function () {
 });
 
 Route::get('/CrearUsuario', 'App\Http\Controllers\AdminController@CargarComuna');
+
+Route::get('/ModificarUsuario', 'App\Http\Controllers\AdminController@CargarComunaB');
 
 Route::get('/EliminarUsuario', function () {
     return view('eliminaruser');
@@ -78,6 +82,12 @@ Route::post('/CrearUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@CrearUser',
     'as' => 'CrearUser'
 ]);
+
+Route::post('/ModificarUsuario', [
+    'uses' => 'App\Http\Controllers\AdminController@ModificarUser',
+    'as' => 'ModificarUser'
+]); 
+
 
 
 //VISTAS DE PRUEBA

@@ -1,6 +1,6 @@
 
 
- /* 
+<!--
     include("php/conexion.php");
     session_start();
 
@@ -14,7 +14,7 @@
     }else {
         $cantidad = 0;
     }
-*/
+-->
 
 
 <!DOCTYPE html>
@@ -26,9 +26,11 @@
     <title>Maipo Grande</title>
     <link rel="stylesheet" href="css/maipogrande.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Foonts -->
     <link rel="stylesheet" href="iconos/style.css">
+
 
     <!-- Slider -->
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
@@ -87,8 +89,12 @@
                 <li><a href="php/validarUsuario.php">Perfil</a></li>
                 <li><a href="php/cerrar.php">Cerrar sesión</a></li>
             </ul>
-            <a href="carrito.php" class="href-carrito"><span class="icon-cart"></span></a>
-            <p class="cantidad"><?php echo $cantidad ?></p>
+            <a href="carrito"><span class="icon-cart"></span></a>
+            @if(isset($_SESSION['totalCart']))
+                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+            @else
+                <p class="cantidad">0</p>
+            @endif
         </ul>
     </div>
     <div class="menu-lateralResponsive" id="menu-responsive">
@@ -111,10 +117,10 @@
         </div>
     </div>
     <div class="sub-menu2" id="sub-menu">
-            <ul class="lista-submenu2">
-                <li><a href="#seccion1">Identificar una fruta de calidad</a></li>
-                <li><a href="#seccion2">Control de Calidad</a></li>
-                <li><a href="#seccion3">Beneficios</a></li>
+            <ul class="lista-submenu2 col-12">
+                <li><a href="#seccion1" class="col-xs-2">Identificar una fruta de calidad</a></li>
+                <li><a href="#seccion2" class="col-xs-2">Control de Calidad</a></li>
+                <li><a href="#seccion3" class="col-xs-2">Beneficios</a></li>
             </ul>
     </div>
     <section class="parrafo" id="seccion1">

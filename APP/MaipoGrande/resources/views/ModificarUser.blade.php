@@ -54,38 +54,36 @@
     </div>
 
     <div class="contenedor seccion contenido-centrado">
-        <h2 class="centrar-texto">Crear Usuario</h2>
-        <form action="{{ route('CrearUser') }}" method="POST" autocomplete="on" action="">
+        <h2 class="centrar-texto">Modificar Usuario</h2>
+        <form action="{{ route('ModificarUser') }}" method="POST" autocomplete="on" action="">
             <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
             @csrf
             <fieldset>
-                <p class="font-weight-bold">Ingresa los datos del nuevo usuario...</p>
+                <p class="font-weight-bold">Ingresa los datos del usuario a modificar...</p>
                 <div class="form-group">
+
+                    <p class="font-weight-bold">Rut de usuario a modificar</p>
+
+                    <div class="form-row">
+                        <div class="col-md-4">
+                            <input type="number" min=1000000 max=99999999 class="form-control" name=rut placeholder="Rut" required>
+                        </div>
+                    </div>
                     <p class="font-weight-bold">Nombres</p>
 
                     <div class="col-xs-4">
                         <div class="col-xs-4">
-                            <input type="text" class="form-control" name=nombre placeholder="Nombre" required>
+                            <input type="text" class="form-control" name=nombre placeholder="Nuevo nombre" required>
                         </div>
                         <div class="col-xs-4">
-                            <input type="text" name=apellido class="form-control" placeholder="Apellido" required>
+                            <input type="text" name=apellido class="form-control" placeholder="Nuevo apellido" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <p class="font-weight-bold">Rut</p>
-
-                        <div class="form-row">
-                            <div class="col-xs-4">
-                                <input type="number" min=1000000 max=99999999 class="form-control" name=rut placeholder="Rut" required>
-                            </div>
-                            <div class="col-xs-2">
-                                <input type="text" name=dv class="form-control" placeholder="DV" maxlength="1" required>
-                            </div>
-                        </div>
                         <div class="form-group">
-                            <p class="font-weight-bold">Tipo de usuario</p>
+                            <p class="font-weight-bold">Nuevo tipo de usuario</p>
                             <select class="form-control" id="FormComprador" name=tipocomprador required>
-                                <option selected disabled value="">Seleccione perfil</option>
+                                <option selected disabled value="">Seleccione nuevo perfil</option>
                                 <option value=1>Administrador</option>
                                 <option value=2>Vendedor</option>
                                 <option value=3>Compras Nacionales</option>
@@ -94,17 +92,17 @@
                             </select>
                         </div>
                         <div class="form-group" required>
-                            <p class="font-weight-bold">Seleccione el tipo de persona</p>
+                            <p class="font-weight-bold">Seleccione el nuevo tipo de persona</p>
                             <select class="form-control" id="FormPersona" name=tipopersona required>
-                                <option selected disabled value="">Seleccione tipo de persona</option>
+                                <option selected disabled value="">Seleccione el nuevo tipo de persona</option>
                                 <option value=1>Persona Natural</option>
                                 <option value=2>Empresa</option>
                             </select>
                         </div>
-                        <p class="font-weight-bold">Ingrese el nombre comercial (El mismo nombre en caso de ser persona natural) </p>
+                        <p class="font-weight-bold">Ingrese nuevo nombre comercial </p>
                         <div class="col-xs-2">
                             <div>
-                                <input type="text" class="form-control" name=nombrefantasia placeholder="Nombre de Fantasía" required>
+                                <input type="text" class="form-control" name=nombrefantasia placeholder="Nuevo nombre de Fantasía" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -120,28 +118,28 @@
                                     <br>
                                 </div>
                                 <div class="col-xs-4">
-                                    <input type="text" class="form-control" name=codigopostal maxlength="7" placeholder="Código Postal" required>
+                                    <input type="text" class="form-control" name=codigopostal maxlength="7" placeholder="Nuevo código Postal" required>
                                 </div>
                                 <div class="col-xs-4">
-                                    <input type="text" class="form-control" name=telefono placeholder="Nro. de Teléfono" required>
+                                    <input type="text" class="form-control" name=telefono placeholder="Nuevo nro. de Teléfono" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <p class="font-weight-bold">Ingrese las credenciales del usuario</p>
+                            <p class="font-weight-bold">Ingrese las nuevas credenciales del usuario</p>
                             <div class="col-xs-4">
                                 <div class="col-xs-4">
-                                    <input type="mail" class="form-control" name=correo placeholder="Correo" required>
+                                    <input type="mail" class="form-control" name=correo placeholder="Nuevo correo" required>
                                 </div>
                                 <div class="col-xs-4">
-                                    <input type="password" name=contrasenia class="form-control" placeholder="Contraseña" required>
+                                    <input type="password" name=contrasenia class="form-control" placeholder="Nueva contraseña" required>
                                 </div>
                             </div>
 
             </fieldset>
             <fieldset>
                 <div class="container-boton">
-                    <input type="submit" name="" value="Registrarse">
+                    <input type="submit" name="" value="Actualizar datos">
                 </div>
                 <div class="container-boton">
                     <a class="btn-login1" href="administrador"> Volver</a>

@@ -1,13 +1,6 @@
-
-<?php
-
-    session_start();
-
-    if (isset($_GET['url'])) {
-        $url= $_GET['url'];
-    }
-
-?>
+@if(!isset($_SESSION))
+|   {{ session_start() }}
+@endif
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,12 +21,12 @@
 <body>
     <header id="cabecera">
         <img src="imagenes/manzana.png" class="img-logo"> 
-        <h1 class="logo"> <a href="index.php" > Maipo Grande </a></h1>
+        <h1 class="logo"> <a href="/" > Maipo Grande </a></h1>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
             <ul>
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="contacto.php">Contacto</a></li>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="contacto">Contacto</a></li>
                 <li><a href=""><span class="icon-search"></span></a></li>
             </ul>
         </nav>
@@ -41,61 +34,37 @@
     <div class="menu-lateralResponsive" id="menu-responsive">
         <nav class="nav-responsive">
             <ul>
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="contacto.php">Contacto</a></li>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="contacto">Contacto</a></li>
                 <li><a href=""><span class="icon-search"></span></a></li>
             </ul>
         </nav>  
     </div>
-
-    <?php if (isset($_SESSION['loginCarrito'])) { ?>
-        <div class="inicia_primero" id="ventana-emergente">
-            <?php echo $_SESSION['loginCarrito']; ?>
-            <span class="icon-cancel-circle" id="close-alert"></span>
-        </div>
-    <?php session_unset(); } ?>
-
-    <?php 
-        if (isset($_SESSION['mensaje'])) { ?>
-            <div class="inicia_primero" id="ventana-emergente">
-                <?php echo $_SESSION['mensaje']; ?>
-                <span class="icon-cancel-circle" id="close-alert"></span>
-            </div>      
-    <?php session_unset(); } ?>
-
-    <?php if (isset($_SESSION['noExisteEmail'])) { ?>
-        <div class="inicia_primero" id="ventana-emergente">
-            <?php echo $_SESSION['noExisteEmail']; ?>
-            <span class="icon-cancel-circle" id="close-alert"></span>
-        </div> 
-    <?php session_unset(); } ?>
     
     <div class ="contenedor-login">
         <div class="login1">
             <div class="contenido-login">
                 <h2>Registrate como cliente nacional</h2>
                 
-                <a href="registro.php?dato=1" class="btn btn-login">Registrate</a>
+                <a href="registro" class="btn btn-login">Registrate</a>
             </div>
         </div>
         <div class="login1">
             <div class="contenido-login">
                 <h2>Registrate como cliente internacional/proveedor</h2>
-                <a href="registro.php?dato=2" class="btn btn-login">Registrate</a>
+                <a href="registro" class="btn btn-login">Registrate</a>
             </div>
         </div>
     </div>
 
     <form action="{{ route('loguearse') }}" method="POST" autocomplete="off" class="form-login">
-            {{ csrf_field() }}
+        @csrf
         <div class="container">
-            <h2>Inicia sesión<br>con tu red social</h2>
-            <div class="redes">
-                <img src="imagenes/google.png">
-                <img src="imagenes/facebook.png">
-                <img src="imagenes/twitter.png">
-            </div>
+            <h2>Inicia sesión</h2>
             <div class="containe2">
+                @if (isset($_SESSION['incorrecto'])) 
+                    <label ><p>Datos incorrectos</p></label>
+                @endif
     		    <label for="nameUser"><p>Correo Electronico:</p></label>
                 <input type="email" name="emailUser" id="nameUser" placeholder="Correo electrónico" required=""> <br>
                 <label for="contraseñaUser"> <p>Contraseña:</p></label>
@@ -111,7 +80,7 @@
 
                 
             </div>
-            <h4>¿No tienes cuenta?</h4> <a href="registro.php"> Regístrate aquí</a> 
+            <h4>¿No tienes cuenta?</h4> <a href="registro"> Regístrate aquí</a> 
             
         </div>
     </form>
@@ -125,7 +94,7 @@
                     <h2>RECUPERAR CONTRASEÑA</h2>
                 </div>
                 <div class="modal-body">
-                    <form action="php/recuperarContraseña.php" method="POST" class="form-recuperar">
+                    <form action="recuperarContraseña" method="POST" class="form-recuperar">
                         <p>Ingresa el correo con el que te registrarte:</p>
                         <input type="email" name="correoRecuperacion" placeholder="ejemplo@gmail.com">
                         <input type="submit" value="Enviar">
