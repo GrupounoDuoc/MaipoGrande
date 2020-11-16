@@ -39,7 +39,7 @@ if (isset($_SESSION['datos'])) {
         jQuery(function($) {
             $('.slider-testimonial').sss({
                 slideShow: true,
-                speed: 3500
+                speed: 5500
             });
         });
     </script>

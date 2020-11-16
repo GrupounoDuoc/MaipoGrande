@@ -2,10 +2,10 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+    <a href="{{url('admin')}}" class="brand-link">
+      <img src="dist/img/icon-72x72.png" alt="Admin Maipo Grande" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">Admin|Maipo Grande</span>
     </a>
 
     <!-- Sidebar -->
@@ -49,50 +49,38 @@
                 </a>
               </li>
               -->
+              <!--
               <li class="nav-item">
                 <a class="nav-link" href="{{url('categoria')}}" onclick="event.preventDefault(); document.getElementById('categoria-form').submit();"><i class="fa fa-list"></i> Categorías</a>
                   <form id="categoria-form" action="{{url('categoria')}}" method="GET" style="display: none;">
                   {{csrf_field()}} 
                   </form>
-              </li>     
+              </li>
+              -->     
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{url('categoria')}}"  ><i class="fa fa-tags"></i> Categorias</a>
+              </li>
               
               <li class="nav-item">
-                <a class="nav-link" href="{{url('producto')}}" onclick="event.preventDefault(); document.getElementById('producto-form').submit();"><i class="fa fa-list"></i> Productos</a>          
-                  <form id="producto-form" action="{{url('producto')}}" method="GET" style="display: none;">
-                      {{csrf_field()}} 
-                  </form>
+                <a class="nav-link" href="{{url('producto')}}"  ><i class="fa fa-cart-plus"></i> Productos</a>
               </li>
 
+              <li class="nav-item">
+                <a class="nav-link" href="{{url('proveedor')}}" ><i class="fa fa-users"></i> Proveedor</a>
+              </li>
 
-                <li class="nav-item">
-                        <a class="nav-link" href="{{url('proveedor')}}" onclick="event.preventDefault(); document.getElementById('proveedor-form').submit();"><i class="fa fa-users"></i> Proveedores</a>
-                        <form id="proveedor-form" action="{{url('proveedor')}}" method="GET" style="display: none;">
-                            {{csrf_field()}} 
-                         </form>
-                </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url('cliente')}}" ><i class="fa fa-users"></i> Clientes</a>
+              </li>
 
-                <li class="nav-item">
-                        <a class="nav-link" href="{{url('cliente')}}" ><i class="fa fa-users"></i> Clientes</a>
+              <li class="nav-item">
+                  <a class="nav-link" href="{{url('user')}}" ><i class="fa fa-users"></i> Usuarios</a>
+              </li>
 
-                </li>
-
-
-                        
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url('user')}}" onclick="event.preventDefault(); document.getElementById('user-form').submit();"><i class="fa fa-user"></i> Usuarios</a>
-                        <form id="user-form" action="{{url('user')}}" method="GET" style="display: none;">
-                            {{csrf_field()}} 
-                         </form> 
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url('rol')}}" onclick="event.preventDefault(); document.getElementById('rol-form').submit();"><i class="fa fa-list"></i> Roles</a>
-                        <form id="rol-form" action="{{url('rol')}}" method="GET" style="display: none;">
-                            {{csrf_field()}} 
-                         </form> 
-                    </li>
-
+              <li class="nav-item">
+                  <a class="nav-link" href="{{url('rol')}}" ><i class="fa fa-users"></i> Roles</a>
+              </li>
             </ul>
           </li>
         </ul>

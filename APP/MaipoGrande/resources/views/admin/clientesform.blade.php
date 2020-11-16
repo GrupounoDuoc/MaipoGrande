@@ -47,10 +47,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <!-- To the right -->
-    
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">Maipo Grande</a>.</strong> All rights reserved.
+  <div class="contenedor">
+      <div class="d-flex p-2 justify-content-center">
+            <div class="copyright">
+                    © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
+            </div>
+      </div>
+  </div>
   </footer>
 </div>
 <!-- ./wrapper -->

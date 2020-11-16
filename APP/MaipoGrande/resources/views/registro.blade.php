@@ -133,7 +133,7 @@
                                 <option value=4>Compras Internacionales</option>
                             </select>
                         </div>
-                        <div class="form-group" required>
+                        <div class="form-group col-12" required>
                             <label for="exampleFormControlSelect1">Escoge el tipo de persona</label>
                             <select class="form-control" id="FormPersona" name=tipopersona required>
                                 <option value=1>Persona Natural</option>
