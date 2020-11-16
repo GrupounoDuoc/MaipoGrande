@@ -23,6 +23,14 @@ Route::get('/carrito', function () {
     return view('carrito');
 });
 Route::get('/catalogo', 'App\Http\Controllers\pedidoController@catalogo');
+
+Route::post('/catalogo', [
+    'uses' => 'App\Http\Controllers\pedidoController@catalogo',
+    'as' => 'catalogo'
+]);
+
+Route::get('addCart/{id}', 'App\Http\Controllers\UserController@AddCart');
+
 Route::get('/descripcion', function () {
     return view('descripcion');
 });

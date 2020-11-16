@@ -110,8 +110,12 @@ if (isset($_SESSION['datos'])) {
                 <li><a href="php/validarUsuario.php">Perfil</a></li>
                 <li><a href="php/cerrar.php">Cerrar sesión</a></li>
             </ul>
-            <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-            <p class="cantidad"><?php echo $cantidad ?></p>
+            <a href="carrito"><span class="icon-cart"></span></a>
+            @if(isset($_SESSION['totalCart']))
+                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+            @else
+                <p class="cantidad">0</p>
+            @endif
         </ul>
     </div>
     <div class="menu-lateralResponsive" id="menu-responsive">

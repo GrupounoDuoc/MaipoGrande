@@ -1,17 +1,4 @@
-<?php
-session_start();
-
-if (isset($_SESSION['datos'])) {
-    $id_User = $_SESSION['datos']['id'];
-
-    $consulta = "SELECT * FROM carrito_compras WHERE id_usuario = '$id_User'";
-    $resultado = mysqli_query($conexion, $consulta);
-
-    $cantidad = mysqli_num_rows($resultado);
-} else {
-    $cantidad = 0;
-}
-?>
+<?php session_start();?>
 
 <!DOCTYPE html>
 <html lang="en">

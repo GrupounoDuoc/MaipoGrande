@@ -1,39 +1,4 @@
-<?php
-    /*
-    session_start();
-    include("php/conexion.php");
-
-    if (isset($_SESSION['datos'])) {
-        $id_User = $_SESSION['datos']['id'];
-        $consulta = "SELECT * FROM carrito_compras WHERE id_usuario = '$id_User'";
-        $resultado = mysqli_query($conexion, $consulta);
-        $cantidad = mysqli_num_rows($resultado);
-        
-    }else {
-        $cantidad = 0;
-    }
-
-    if (isset($conexion)) {
-        echo "";
-    }else {
-        echo "Error";
-    }
-
-    if (isset($_GET['id'])) {
-        $tipo = $_GET['id'];
-
-    }else {
-        $tipo = 'fruta';
-    }
-
-    if (isset($_GET['rango'])) {
-        echo $_GET['rango'];
-    }
-
-    $query = "SELECT * FROM productos WHERE tipo = '$tipo'";
-    //$resultado = $conexion->query($query);
-*/
-?> 
+<?php session_start();?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Catálogo</title>
     <link rel="stylesheet" href="css/catalogo.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
-    <!-- PWA -->
-    @laravelPWA
+
     <link rel="stylesheet" href="iconos/style.css">
 </head>
 <body>
@@ -53,12 +18,6 @@
         <h1 class="logo">Maipo Grande</h1>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
-            <div class="container-buscador" id="contenido">
-                <form action="php/buscar.php?url=<?php echo $_SERVER["REQUEST_URI"] ?>" method="POST">
-                    <input type="text" id="campoBuscar" placeholder="Buscar..." name="productoBuscar">
-                    <span class="icon-search"></span>
-                </form>
-            </div>
             <ul id="lista-principal">
                 <?php 
                     if (empty($_SESSION['datos'])) { ?>
@@ -78,13 +37,8 @@
 
                 <?php } ?>
             </ul>
-            <?php if (isset($_SESSION['objetoNoEncontrado'])) { ?>
-                <h3 class="errorBusqueda" id="messageError"><?php echo $_SESSION['objetoNoEncontrado'] ?></h3>
-            <?php unset($_SESSION['objetoNoEncontrado']); } ?>
         </nav>
     </header>
-
-    
     <div class="sub-menu">
         <ul class="lista-submenu">
             <li><a href="catalogo.php">Catálogo</a></li>
@@ -94,20 +48,13 @@
                 <li><a href="php/cerrar.php">Cerrar sesión</a></li>
             </ul>
             <a href="carrito.php"><span class="icon-cart"></span></a>
-            <p class="cantidad"><?php echo 'cantidad' ?></p>
+            @if(isset($_SESSION['totalCart']))
+                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+            @else
+                <p class="cantidad">0</p>
+            @endif
         </ul>
     </div>  
-    <div class="menu-lateralResponsive" id="menu-responsive">
-        <nav class="nav-responsive">
-            <ul>
-                <li><a href="login.php?url=index.html">Entrar</a></li>
-                <li><a href="registro.php">Registrarse</a></li>
-                <li><a href="contacto.php">Contacto</a></li>
-                <li><a href=""><span class="icon-cart"></span></a></li>
-                <p class="cantidad"><?php echo 'cantidad' ?></p>
-            </ul>
-        </nav>  
-    </div>
     <form action="{{ route('catalogo') }}" method="POST" >
     @csrf
         <div class="menu-lateral">
@@ -135,6 +82,7 @@
                     </ul>
                     <br>
                     <input type="submit" name="send" value="Filtrar">
+                    <button ><a href="{{ action('App\Http\Controllers\pedidoController@catalogo') }}" class="button">Limpiar filtros </a></button>
                 </ul>
             </nav>
         </div>
@@ -148,6 +96,8 @@
                 <p><em>{{ $oferta->CALIDAD}}</em></p><br>
                 <h3 value="">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</h3><br>
                 <button><a href="">Ver más</a></button>
+                <!--<button><a href="{{ action('App\Http\Controllers\pedidoController@catalogo' , $oferta->ID) }}">Añadir al carro</a></button>-->
+                <button><a href="addCart/{{ $oferta->ID}}">Añadir al carro</a></button>
             </div>
         @endforeach
     </div>
