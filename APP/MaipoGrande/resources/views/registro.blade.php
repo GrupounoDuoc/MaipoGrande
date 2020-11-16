@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,9 +9,12 @@
     <title>Registro | Maipo Grande</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/registro.css">
+    <link rel="stylesheet" href="css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="iconos/estilos.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
     <script src="https://kit.fontawesome.com/5dd90ee603.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- PWA -->
     @laravelPWA
 
@@ -18,10 +22,10 @@
 
 <body>
 
-<header id="cabecera">
+    <header id="cabecera">
 
-        <img src="imagenes/manzana.png" class="img-logo" >
-        
+        <img src="imagenes/manzana.png" class="img-logo">
+
         <h2 class="logo">Maipo Grande</h2>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
@@ -29,7 +33,6 @@
                 <?php
                 if (empty($_SESSION['datos'])) { ?>
                     <li><a href="/">Inicio</a></li>
-                    <li><a href="administrador">Administrador</a></li>
 
                 <?php } else { ?>
                     <li><a href="/">Inicio</a></li>
@@ -53,9 +56,9 @@
 
                     <!--<li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"] ?>">Entrar</a></li> 
                     <li><a href="registro">Registrarse</a></li> -->
-                    <li><a href="administrador">Administrador</a></li>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="login">Entrar</a></li>
                     <li><a href="catalogo">Catálogo</a></li>
-                    <li><a href="maipogrande.html">Calidad Fruta</a></li>
                     <ul class="subMenu-usuario" id="submenu-perfil">
                         <li><a href="php/validarUsuario.php">Perfil</a></li>
                         <li><a href="php/cerrar.php">Cerrar sesión</a></li>
@@ -75,25 +78,11 @@
             </ul>
         </nav>
     </div>
-
     @if(session('status'))
     <div class="alert alert-success" role="alert">
         {{ session('status') }}
     </div>
     @endif
-    <!--@if($errors)
-    <div class="alert alert-danger" role="alert">
-        Se ha producido un error al crear al usuario
-    </div> -->
-    @endif
-    <div class="menu-lateralResponsive" id="menu-responsive">
-        <nav class="nav-responsive">
-            <ul>
-                <li><a href="login.html">Entrar</a></li>
-                <li><a href=""><span class="icon-cart"></span></a></li>
-            </ul>
-        </nav>
-    </div>
 
     <div class="contenedor seccion contenido-centrado">
         <h1 class="centrar-texto">Registro de Comprador</h1>

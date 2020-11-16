@@ -1,6 +1,3 @@
-@if(!isset($_SESSION))
-|   {{ session_start() }}
-@endif
 <!--V5 Laravel -->
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +47,10 @@
 
     <!-- PWA -->
     @laravelPWA
+
+    @if(!isset($_SESSION))
+    | {{ session_start() }}
+    @endif
 </head>
 
 <body>
@@ -61,18 +62,18 @@
         <nav>
             <ul id="lista-principal">
                 @if (empty($_SESSION['usuario']))
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="login">Entrar</a></li>
-                    <li><a href="registro">Registrarse</a></li>
-                    <li><a href="administrador">Administrador</a></li>
-                    <li><span class="icon-search" id="buscador"></span></li>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="login">Entrar</a></li>
+                <li><a href="registro">Registrarse</a></li>
+                <li><a href="administrador">Administrador</a></li>
+                <li><span class="icon-search" id="buscador"></span></li>
 
                 @else
-                    <li><a href="/">Inicio</a></li>
-                    <li><span class="icon-search" id="buscador"></span></li>
-                    <li class="li-perfilUsuario">
-                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                    </li>
+                <li><a href="/">Inicio</a></li>
+                <li><span class="icon-search" id="buscador"></span></li>
+                <li class="li-perfilUsuario">
+                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                </li>
 
                 @endif
             </ul>
@@ -88,9 +89,9 @@
             </ul>
             <a href="carrito"><span class="icon-cart"></span></a>
             @if(isset($_SESSION['totalCart']))
-                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+            <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
             @else
-                <p class="cantidad">0</p>
+            <p class="cantidad">0</p>
             @endif
         </ul>
     </div>
@@ -99,38 +100,38 @@
             <ul>
                 @if (empty($_SESSION['usuario']))
 
-                    <li><a href="login">Entrar</a></li>
-                    <li><a href="registro">Registrarse</a></li>
-                    <li><a href="administrador">Administrador</a></li>
-                    <li><a href="catalogo">Catálogo</a></li>
-                    <li><a href="maipogrande.html">Calidad Fruta</a></li>
-                    <ul class="subMenu-usuario" id="submenu-perfil">
-                        <li><a href="">Perfil</a></li>
-                        <li><a href="logout">Cerrar sesión</a></li>
-                    </ul>
-                    <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-                    @if(isset($_SESSION['totalCart']))
-                        <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-                    @else
-                        <p class="cantidad">0</p>
-                    @endif
+                <li><a href="login">Entrar</a></li>
+                <li><a href="registro">Registrarse</a></li>
+                <li><a href="administrador">Administrador</a></li>
+                <li><a href="catalogo">Catálogo</a></li>
+                <li><a href="maipogrande.html">Calidad Fruta</a></li>
+                <ul class="subMenu-usuario" id="submenu-perfil">
+                    <li><a href="">Perfil</a></li>
+                    <li><a href="logout">Cerrar sesión</a></li>
+                </ul>
+                <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
+                @if(isset($_SESSION['totalCart']))
+                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
                 @else
-                    <li><a href=""><span class="icon-search"></span></a></li>
-                    <li class="li-perfilUsuario">
-                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                    </li>
-                    <li><a href="catalogo">Catálogo</a></li>
-                    <li><a href="maipogrande.html">Calidad Fruta</a></li>
-                    <ul class="subMenu-usuario" id="submenu-perfil">
-                        <li><a href="">Perfil</a></li>
-                        <li><a href="logout">Cerrar sesión</a></li>
-                    </ul>
-                    <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-                    @if(isset($_SESSION['totalCart']))
-                        <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-                    @else
-                        <p class="cantidad">0</p>
-                    @endif
+                <p class="cantidad">0</p>
+                @endif
+                @else
+                <li><a href=""><span class="icon-search"></span></a></li>
+                <li class="li-perfilUsuario">
+                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                </li>
+                <li><a href="catalogo">Catálogo</a></li>
+                <li><a href="maipogrande.html">Calidad Fruta</a></li>
+                <ul class="subMenu-usuario" id="submenu-perfil">
+                    <li><a href="">Perfil</a></li>
+                    <li><a href="logout">Cerrar sesión</a></li>
+                </ul>
+                <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
+                @if(isset($_SESSION['totalCart']))
+                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+                @else
+                <p class="cantidad">0</p>
+                @endif
                 @endif
             </ul>
         </nav>
@@ -209,8 +210,8 @@
     </footer>
 
     <script>
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
         }
     </script>
     <script src="js/buscar.js"></script>
