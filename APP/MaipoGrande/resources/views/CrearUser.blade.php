@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +9,8 @@
     <title>Crear usuario | Maipo Grande</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/registro.css">
+    <link rel="stylesheet" href="css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
-    <link rel="stylesheet" href="iconos/style.css">
     <link rel="stylesheet" href="iconos/estilos.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
     <script src="https://kit.fontawesome.com/5dd90ee603.js" crossorigin="anonymous"></script>
@@ -24,7 +25,7 @@
         <header id="cabecera">
             <img src="imagenes/manzana.png" class="img-logo">
             <h1 class="logo"> <a href="index.php"> Maipo Grande </a></h1>
-            <img src="img/menu.png" class="icon-menu" id="boton-menu">
+            <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
             <nav>
                 <ul>
                     <li><a href="index.php">Inicio</a></li>
@@ -47,8 +48,9 @@
     <div class="menu-lateralResponsive" id="menu-responsive">
         <nav class="nav-responsive">
             <ul>
-                <li><a href="login.html">Entrar</a></li>
-                <li><a href=""><span class="icon-cart"></span></a></li>
+                <li><a href="login">Entrar</a></li>
+                <li><a href="administrador">Administrador</a></li>
+                <li><a href="catálogo">Catálogo</a></li>
             </ul>
         </nav>
     </div>
@@ -162,6 +164,9 @@
         </div>
     </footer>
 
+    <script src="js/buscar.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/aparecerIcono.js"></script>
     <script src="js/ver_clave.js"></script>
     <script src="js/cerrarVentanita.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

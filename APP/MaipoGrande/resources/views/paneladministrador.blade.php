@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,6 +58,8 @@
 
                     <!--<li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"] ?>">Entrar</a></li> 
                     <li><a href="registro">Registrarse</a></li> -->
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="login">Entrar</a></li>
                     <li><a href="administrador">Administrador</a></li>
                     <li><a href="catalogo">Catálogo</a></li>
                     <li><a href="maipogrande.html">Calidad Fruta</a></li>
@@ -87,8 +89,8 @@
         <label for="" class=FormItem>Selecciona un módulo</label>
         <!-- Button trigger modal -->
         <a href="CrearUsuario" class="btn btn-success btn-block">Crear Usuario</a>
-        <a href="ModificarUsuario" class="btn btn-success btn-block">Modificar Usuario</a> 
-        <a href="EliminarUsuario" class="btn btn-success btn-block">Eliminar Usuario</a>           
+        <a href="ModificarUsuario" class="btn btn-success btn-block">Modificar Usuario</a>
+        <a href="EliminarUsuario" class="btn btn-success btn-block">Eliminar Usuario</a>
     </div>
     </div>
 

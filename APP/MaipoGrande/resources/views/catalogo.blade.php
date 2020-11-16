@@ -1,5 +1,5 @@
 @if(!isset($_SESSION))
-|   {{ session_start() }}
+| {{ session_start() }}
 @endif
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Catálogo</title>
     <link rel="stylesheet" href="css/catalogo.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/registro.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="iconos/style.css">
     <!-- PWA -->
@@ -23,21 +24,21 @@
         <h1 class="logo">Maipo Grande</h1>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
-            <ul id="lista-principal"> 
+            <ul id="lista-principal">
                 @if (empty($_SESSION['usuario']))
-                    <li><a href="/">Incio</a></li>
-                    <li><a href="login">Entrar</a></li>
-                    <li><a href="registro">Registrarse</a></li>
-                    <li><a href="contacto">Contacto</a></li>
-                    <li><span class="icon-search" id="buscador"></span></li>
-                    
+                <li><a href="/">Inicio</a></li>
+                <li><a href="login">Entrar</a></li>
+                <li><a href="registro">Registrarse</a></li>
+                <li><a href="contacto">Contacto</a></li>
+                <li><span class="icon-search" id="buscador"></span></li>
+
                 @else
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="contacto">Contacto</a></li>
-                    <li><span class="icon-search" id="buscador"></span></li>
-                    <li class="li-perfilUsuario">
-                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                    </li>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="contacto">Contacto</a></li>
+                <li><span class="icon-search" id="buscador"></span></li>
+                <li class="li-perfilUsuario">
+                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                </li>
                 @endif
             </ul>
         </nav>
@@ -92,14 +93,20 @@
     </form>
     <div class="contenido-productos">
         @foreach ($ofertas as $oferta)
-        <div class='card'>
+        <div class="card" style="width: 18rem;">
             <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}">
-            <h2>{{ $oferta->TIPO_FRUTA}}</h2>
-            <p><em>{{ $oferta->NOMBRE_VENDEDOR}}</em></p><br>
-            <p><em>{{ $oferta->CALIDAD}}</em></p><br>
-            <h3 value="">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</h3><br>
-            <button><a href="">Ver más</a></button>
-            <button><a href="addCart/{{ $oferta->ID}}">Añadir al carro</a></button>
+            <div class="card-body">
+                <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
+                <p class="card-text">Vendedor: {{ $oferta->NOMBRE_VENDEDOR}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Tipo de calidad: {{ $oferta->CALIDAD}}</li>
+                <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</li>
+            </ul>
+            <div class="centrar-texto">
+                <a href="#" class="btn btn-outline-success">Ver más</button>
+                    <a class="btn btn-outline-success" href="addCart/{{ $oferta->ID}}" role="button">Añadir al carro</a>
+            </div>
         </div>
         @endforeach
     </div>
@@ -108,6 +115,9 @@
             window.history.replaceState(null, null, window.location.href);
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="js/buscar.js"></script>
     <script src="js/rangoPrecios.js"></script>
     <script src="js/aparecerIcono.js"></script>

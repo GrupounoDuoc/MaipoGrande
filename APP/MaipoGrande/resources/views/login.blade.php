@@ -11,6 +11,11 @@
     <title>Inicia sesión | MaipoGrande</title>
     
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="iconos/estilos.css">
+    <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
+    <script src="https://kit.fontawesome.com/5dd90ee603.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="iconos/ojos-contraseña/style.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
@@ -40,24 +45,8 @@
             </ul>
         </nav>  
     </div>
-    
-    <div class ="contenedor-login">
-        <div class="login1">
-            <div class="contenido-login">
-                <h2>Registrate como cliente nacional</h2>
-                
-                <a href="registro" class="btn btn-login">Registrate</a>
-            </div>
-        </div>
-        <div class="login1">
-            <div class="contenido-login">
-                <h2>Registrate como cliente internacional/proveedor</h2>
-                <a href="registro" class="btn btn-login">Registrate</a>
-            </div>
-        </div>
-    </div>
 
-    <form action="{{ route('loguearse') }}" method="POST" autocomplete="off" class="form-login">
+    <form action="{{ route('login') }}" method="POST" autocomplete="off" class="form-login">
         @csrf
         <div class="container">
             <h2>Inicia sesión</h2>

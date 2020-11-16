@@ -188,6 +188,7 @@ input[type="email"]:focus, input[type="password"]:focus,  input[type="text"]:foc
 	flex-wrap: wrap;
     justify-content: center;
     border-radius: 0;
+    margin-top: 15%;
 }
 
 .container2 {
