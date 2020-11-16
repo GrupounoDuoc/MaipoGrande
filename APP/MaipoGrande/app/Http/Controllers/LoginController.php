@@ -10,68 +10,41 @@ use DB;
 
 class LoginController extends Controller
 {
-    
-
-    public function loguear(Request $request)
+    public function login(Request $request)
     {
-        $logmail = $request->get('emailUser');
-        $logclave = $request->get('clave');
-
-        $datosLogin = DB::table('usuario')->get(); //Trae un objeto con los datos de la tabla.
- 
-        $arrayes = json_decode(json_encode($datosLogin), true); //Convierte a array los datos de la tabla de la BD
-
-        $mailes = array_column($arrayes, 'CORREO'); //Trae arreglo de todos los mails
-        
-        $contras = array_column($arrayes, 'CONTRASENA'); //Trae arreglo de todas las contraseñas
-        $perfiles = array_column($arrayes, 'ID_PERFIL'); //Trae arreglo de todos los id de perfiles
-
-        $j = 0;
-        for($i=0; $i<count($mailes); $i++){
-
-            if ($mailes[$i] == $logmail){
-
-                if($contras[$i] == $logclave){
-
-                    session_start();
-                    $_SESSION['usuario'] = $logmail;
-                    $varSesion = $_SESSION['usuario'];
-
-                    return view('vistaprueba', compact('varSesion'));
-
-                    //echo 'ERES USUARIO';
+        if(!isset($_SESSION)) 
+        { 
+            session_start(); 
+        } 
+        $datosLogin = DB::table('usuario')
+                    ->where('CORREO',$request->get('emailUser'))
+                    ->get(); //Trae un objeto con los datos de la tabla.
+        if(count($datosLogin) > 0){
+            foreach($datosLogin as $record){
+                if($record -> CONTRASENA == $request->get('clave')){
+                    if (isset($_SESSION['incorrecto'])) {
+                        unset($_SESSION['incorrecto']);
+                    }
+                    $_SESSION['usuario'] = $record -> CORREO;
+                    $_SESSION['tipo_usuario'] = $record -> ID_PERFIL;
+                    return view('index');
                 }else{
-                    echo 'TU CONTRASEÑA NO ES CORRECTA';
+                    $_SESSION['incorrecto'] = true;
+                    return redirect()->back();
                 }
-            }else{
-                $j = ++$j;
             }
+        }else{
+            $_SESSION['incorrecto'] = true;
+            return redirect()->back();
         }
-
-        $cuenta = count($mailes);
-        if($j == $cuenta){
-            //echo 'NO ESTÁS REGISTRADO';
-            return view('login');
-        }
-
     }
-
-
-
-    public function logout(Request $request){
-        session_start();
-        session_destroy();
-        return view('index');
-
+    public function logout(){
+        if(!isset($_SESSION)) 
+        { 
+            session_start();
+            session_destroy();
+        } 
+        return redirect()->back();
     }
-
-
-
-
-
-
-
-
-
-
 }
+?>

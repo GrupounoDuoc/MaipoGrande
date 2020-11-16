@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+@if(!isset($_SESSION))
+|   {{ session_start() }}
+@endif
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,34 +23,34 @@
         <h1 class="logo">Maipo Grande</h1>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
-            <ul id="lista-principal">
-                <?php
-                if (empty($_SESSION['datos'])) { ?>
-                    <li><a href="index.php">Inicio</a></li>
-                    <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"] ?>">Entrar</a></li>
+            <ul id="lista-principal"> 
+                @if (empty($_SESSION['usuario']))
+                    <li><a href="/">Incio</a></li>
+                    <li><a href="login">Entrar</a></li>
                     <li><a href="registro">Registrarse</a></li>
-                    <li><a href="administrador">Administrador</a></li>
+                    <li><a href="contacto">Contacto</a></li>
                     <li><span class="icon-search" id="buscador"></span></li>
-
-                <?php } else { ?>
-                    <li><a href="index.php">Inicio</a></li>
+                    
+                @else
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="contacto">Contacto</a></li>
                     <li><span class="icon-search" id="buscador"></span></li>
                     <li class="li-perfilUsuario">
                         <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                     </li>
-                <?php } ?>
+                @endif
             </ul>
         </nav>
     </header>
     <div class="sub-menu">
         <ul class="lista-submenu">
-            <li><a href="catalogo.php">Catálogo</a></li>
-            <li><a href="maipogrande.php">Calidad Fruta</a></li>
+            <li><a href="catalogo">Catálogo</a></li>
+            <li><a href=">Calidad Fruta">Calidad Fruta</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
-                <li><a href="php/validarUsuario.php">Perfil</a></li>
-                <li><a href="php/cerrar.php">Cerrar sesión</a></li>
+                <li><a href="">Perfil</a></li>
+                <li><a href="logout">Cerrar sesión</a></li>
             </ul>
-            <a href="carrito.php"><span class="icon-cart"></span></a>
+            <a href="carrito"><span class="icon-cart"></span></a>
             @if(isset($_SESSION['totalCart']))
             <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
             @else
