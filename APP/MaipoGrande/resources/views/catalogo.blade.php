@@ -120,9 +120,6 @@
 -->
 
     <body>
-
-        
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <img src="imagenes/manzana.png" style="height:1.25rem; margin-right:0.8rem">
             <a class="navbar-brand" href="/">Maipo Grande</a>
@@ -152,10 +149,53 @@
         </nav>
 
         <div class="row">
-            <div class="col-sm-12 col-md-4 col-lg-3 col-xl-2 bg-primary" >
-                <h1>hola</h1>
+            <div class="col-sm-12 col-md-4 col-lg-3 col-xl-2" >
+                <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+            <li class="nav-item has-treeview menu-open">
+                <li class="nav-item">
+ 
+                    <p>Frutas Maipo Grande</p>
+
+                </li>  
+            <form action="{{ route('catalogo') }}" method="POST">
+                @csrf
+                <div class="menu-lateral">
+                    <nav class="submenu-lateral">
+                        <ul class="lista-lateral">
+                            <span><img src="imagenes/icon-fruta.png">Tipo fruta</span>
+                            <ul>
+                                @foreach ($tipos as $tipo)
+                                @if( $tipo->TIPO_FRUTA == $tipoSelected)
+                                <li><input type="radio" name="tipo" checked value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                                @else
+                                <li><input type="radio" name="tipo" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                                @endif
+                                @endforeach
+                            </ul>
+                            <span>Calidad</span>
+                            <ul>
+                                @foreach ($calidades as $calidad)
+                                @if( $calidad->CALIDAD == $calidadSelected)
+                                <li><input type="radio" name="calidad" checked value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
+                                @else
+                                <li><input type="radio" name="calidad" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
+                                @endif
+                                @endforeach
+                            </ul>
+                            <br>
+                            <input type="submit" class="btn btn-success" name="send" value="Filtrar">
+                            <button><a href="{{ action('App\Http\Controllers\pedidoController@catalogo') }}" class="btn btn-primary">Limpiar filtros </a></button>
+                        </ul>
+                    </nav>
+                </div>
+            </form>
+
+
             </div>
-            <div class="col-sm-12 col-md-8 col-lg-9 col-xl-10 bg-danger">
+            <div class="col-sm-12 col-md-8 col-lg-9 col-xl-10 r">
                 <div class="row" style="padding:20px">
                     <div class="col-sm-12 col-md-4 col-lg-3 col-xl-2">
                         @foreach ($ofertas as $oferta)
