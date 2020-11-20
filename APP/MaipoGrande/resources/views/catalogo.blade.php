@@ -1,6 +1,8 @@
+<!--
 @if(!isset($_SESSION))
 | {{ session_start() }}
 @endif
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,74 +20,6 @@
     @laravelPWA
 </head>
 
-<body>
-    <header id="cabecera">
-        <img src="imagenes/manzana.png" class="img-logo">
-        <h1 class="logo">Maipo Grande</h1>
-        <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
-        <nav>
-            <ul id="lista-principal">
-                @if (empty($_SESSION['usuario']))
-                <li><a href="/">Inicio</a></li>
-                <li><a href="login">Entrar</a></li>
-                <li><a href="registro">Registrarse</a></li>
-                <li><a href="contacto">Contacto</a></li>
-                <li><span class="icon-search" id="buscador"></span></li>
-
-                @else
-                <li><a href="/">Inicio</a></li>
-                <li><a href="contacto">Contacto</a></li>
-                <li><span class="icon-search" id="buscador"></span></li>
-                <li class="li-perfilUsuario">
-                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                </li>
-                @endif
-            </ul>
-        </nav>
-    </header>
-    <div class="sub-menu">
-        <ul class="lista-submenu">
-            <li><a href="catalogo">Catálogo</a></li>
-            <li><a href=">Calidad Fruta">Calidad Fruta</a></li>
-            <ul class="subMenu-usuario" id="submenu-perfil">
-                <li><a href="">Perfil</a></li>
-                <li><a href="logout">Cerrar sesión</a></li>
-            </ul>
-            <a href="carrito"><span class="icon-cart"></span></a>
-            @if(isset($_SESSION['totalCart']))
-            <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-            @else
-            <p class="cantidad">0</p>
-            @endif
-        </ul>
-    </div>
-    <form action="{{ route('catalogo') }}" method="POST">
-        @csrf
-        <div class="menu-lateral">
-            <nav class="submenu-lateral">
-                <ul class="lista-lateral">
-                    <li><span><img src="imagenes/icon-fruta.png"></span>Tipo fruta</li>
-                    <ul>
-                        @foreach ($tipos as $tipo)
-                        @if( $tipo->TIPO_FRUTA == $tipoSelected)
-                        <li><input type="radio" name="tipo" checked value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
-                        @else
-                        <li><input type="radio" name="tipo" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
-                        @endif
-                        @endforeach
-                    </ul>
-                    <div class="centrar-texto">
-                        <a href="#" class="btn btn-info">Ver más</button>
-                            <a class="btn btn-danger" href="addCart/{{ $oferta->ID}}" role="button">Añadir al carro</a>
-                    </div>
-            
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
--->
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <img src="imagenes/manzana.png" style="height:1.25rem; margin-right:0.8rem">
