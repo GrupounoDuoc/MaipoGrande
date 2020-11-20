@@ -9,6 +9,7 @@
     <title>Registro | Maipo Grande</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/registro.css">
+    <link rel="stylesheet" href="css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="iconos/estilos.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
@@ -21,32 +22,73 @@
 
 <body>
 
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <img src="imagenes/manzana.png" style="height:1.25rem; margin-right:0.8rem">
-        <a class="navbar-brand" href="/">Maipo Grande</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="catalogo"> Catalogo <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="maipogrande">Calidad Fruta</a>
-                </li>
+    <header id="cabecera">
+
+        <img src="imagenes/manzana.png" class="img-logo">
+
+        <h2 class="logo">Maipo Grande</h2>
+        <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
+        <nav>
+            <ul id="lista-principal">
+                <?php
+                if (empty($_SESSION['datos'])) { ?>
+                    <li><a href="/">Inicio</a></li>
+
+                <?php } else { ?>
+                    <li><a href="/">Inicio</a></li>
+                    <li class="li-perfilUsuario">
+                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                    </li>
+
+                <?php } ?>
             </ul>
-        </div>
-    </nav>
+            <?php if (isset($_SESSION['objetoNoEncontrado'])) { ?>
+                <h3 class="errorBusqueda" id="messageError"><?php echo $_SESSION['objetoNoEncontrado'] ?></h3>
+            <?php unset($_SESSION['objetoNoEncontrado']);
+            } ?>
+        </nav>
+    </header>
+    <div class="menu-lateralResponsive" id="menu-responsive">
+        <nav class="nav-responsive">
+            <ul>
+                <?php
+                if (empty($_SESSION['datos'])) { ?>
 
+                    <!--<li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"] ?>">Entrar</a></li> 
+                    <li><a href="registro">Registrarse</a></li> -->
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="login">Entrar</a></li>
+                    <li><a href="catalogo">Catálogo</a></li>
+                    <ul class="subMenu-usuario" id="submenu-perfil">
+                        <li><a href="php/validarUsuario.php">Perfil</a></li>
+                        <li><a href="php/cerrar.php">Cerrar sesión</a></li>
+                    </ul>
+                <?php } else { ?>
+                    <li><a href=""><span class="icon-search"></span></a></li>
+                    <li class="li-perfilUsuario">
+                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                    </li>
+                    <li><a href="catalogo">Catálogo</a></li>
+                    <li><a href="maipogrande.html">Calidad Fruta</a></li>
+                    <ul class="subMenu-usuario" id="submenu-perfil">
+                        <li><a href="php/validarUsuario.php">Perfil</a></li>
+                        <li><a href="php/cerrar.php">Cerrar sesión</a></li>
+                    </ul>
+                <?php } ?>
+            </ul>
+        </nav>
+    </div>
+    @if(session('status'))
+    <div class="alert alert-success" role="alert">
+        {{ session('status') }}
+    </div>
+    @endif
 
-    <!--
     <div class="contenedor seccion contenido-centrado">
         <h1 class="centrar-texto">Registro de Comprador</h1>
 
         <form action="{{ route('insertarUser') }}" method="POST" autocomplete="on" action="">
-
+            <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
             @csrf
             <fieldset>
                 <p class="font-weight-bold">Para comenzar, ingresa tus datos personales...</p>
@@ -137,39 +179,8 @@
             </fieldset>
         </form>
     </div>
--->
 
-        <div id="register">
-        <h3 class="text-center text-black pt-4">Bienvenido a Maipo Grande</h3>
-        <div class="container">
-            <div id="register-row" class="row justify-content-center align-items-center">
-                <div id="register-column" class="col-md-6">
-                    <div id="register-box" class="col-md-12">
-                        <form id="register-form" class="form" action="{{ route('insertarUser') }}" method="POST" autocomplete="off">
-                        @csrf
-                            <h3 class="text-center text-info ">Registro de comprador</h3>
-                            <div class="form-group">
-                                <label for="nameUser" class="text-info">Nombre:</label><br>
-                                <input type="text" name="emailUser" id="nameUser" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="contraseñaUser" class="text-info">Apellido:</label><br>
-                                <input type="password" name="clave" id="contraseñaUser" class="form-control">
-                            </div>
-                            <div class="form-group">
-                            <input type="submit" name="" value="Registrarse" class="btn btn-info btn-md">
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-
-
-    
+    <!--Footer-->
     <footer>
         <div class="contenedor">
             <div class="d-flex p-2 justify-content-center">
