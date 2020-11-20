@@ -96,4 +96,27 @@ class AdminController extends Controller
 
         return back()->with('status', "Se ha modificado el usuario con rut {$rut} satisfactoriamente!");
     } 
+    public function listarUser(Request $request)
+    {
+        $usuarios = DB::select('CALL SP_GET_USUARIO()',array());
+
+        return view('/ListarUser', compact('usuarios'));
+    }
+
+    public function IngresarProducto(Request $request)
+    {
+
+
+        $nombreFruta = $request->get('nombreFruta');
+        $descripcion = $request->get('descripcion');
+        $imagen = $request->get('imagen');
+
+
+        $IngresarProducto = DB::select(
+            'call SP_CREATE_TIPO_FRUTA(?,?,?)',
+            array($nombreFruta, $descripcion, $imagen)
+        );
+
+        return back()->with('status', "Se ha creado la fruta {$nombreFruta} satisfactoriamente!");
+    } 
 }

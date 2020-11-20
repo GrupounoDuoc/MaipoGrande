@@ -82,16 +82,32 @@
             </ul>
         </nav>
     </div>
+    <div class="contenedor seccion contenido-centrado">
 
-    <div class="container mt-5">
 
 
-        <label for="" class=FormItem>Selecciona un módulo</label>
-        <!-- Button trigger modal -->
-        <a href="CrearUsuario" class="btn btn-success btn-block">Crear Usuario</a>
-        <a href="ModificarUsuario" class="btn btn-success btn-block">Modificar Usuario</a>
-        <a href="EliminarUsuario" class="btn btn-success btn-block">Eliminar Usuario</a>
-    </div>
+        <div class="row">
+            <div class="col-xs-6 col-xl-6 item">
+
+                <div class="btn-group-vertical">
+                    <label for="" class=FormItem>Mantenedor usuarios </label>
+                    <a href="CrearUsuario" class="btn btn-success">Crear Usuario</a>
+                    <a href="ModificarUsuario" class="btn btn-success">Modificar Usuario</a>
+                    <a href="EliminarUsuario" class="btn btn-success">Eliminar Usuario</a>
+                    <a href="ListarUsuario" class="btn btn-success">Listar Usuario</a>
+                </div>
+
+            </div>
+            <div class="col-xs-6 col-xl-6 item">
+                <div class="btn-group-vertical">
+                    <label for="" class=FormItem>Mantenedor Productos</label>
+                    <a href="IngresarProducto" class="btn btn-success">Ingresar producto</a>
+                    <a href="ModificarUsuario" class="btn btn-success">Modificar producto</a>
+                    <a href="EliminarUsuario" class="btn btn-success">Eliminar producto</a>
+                    <a href="ListarUsuario" class="btn btn-success">Listar producto</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!--Footer-->
