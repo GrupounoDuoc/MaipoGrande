@@ -21,7 +21,7 @@
 
     <link rel="stylesheet" href="css/login.css">
 </head>
-<body>
+<body >
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <img src="imagenes/manzana.png" style="height:1.25rem; margin-right:0.8rem">
@@ -41,7 +41,7 @@
             </div>
 </nav>
 
-
+<!--
     <form action="{{ route('login') }}" method="POST" autocomplete="off" class="form-login">
         @csrf
         <div class="container">
@@ -89,74 +89,48 @@
             </div>
         </div>
     </div>
+-->
 
-
-<!--
-    <body class="my-login-page">
-        <section class="h-100">   
-            <div class="container h-100">
-                @if (isset($_SESSION['incorrecto'])) 
-                    <label ><p>Datos incorrectos</p></label>
-                @endif
-                <div class="row justify-content-md-center h-100">
-                    <div class="card-wrapper">
-                        <div class="brand">
-                            <img src="images/icon-192x192.png" alt="logo">
-                        </div>
-                        <div class="card fat">
-                            <div class="card-body">
-                                <h4 class="card-title">Inicio de sesion</h4>
-                                <form action="{{ route('login') }}" method="POST" autocomplete="off" class="form-login" novalidate=""> < my-login-validation 
-                                    <div class="form-group">
-                                        <label for="email">E-Mail Address</label>
-                                        <input id="email" type="email" class="form-control" name="emailUser" value="" required autofocus>
-                                        <div class="invalid-feedback">
-                                            Email incorrecto
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="password">Contraseña
-                                            <a href="forgot.html" class="float-right">
-                                                Olvido contraseña
-                                            </a>
-                                        </label>
-                                        <input id="password" type="password" class="form-control" name="clave" required data-eye>
-                                        <div class="invalid-feedback">
-                                            Contraseña requerida
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="custom-checkbox custom-control">
-                                            <input type="checkbox" name="remember" id="remember" class="custom-control-input">
-                                            <label for="remember" class="custom-control-label">Recuerdame</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group m-0">
-                                        <button type="submit" class="btn btn-primary btn-block">
-                                            Iniciar Sesion
-                                        </button>
-                                    </div>
-                                    <div class="mt-4 text-center">
-                                        No tienes cuenta? <a href="register.html">Registrate aca!</a>
-                                    </div>
-                                </form>
+    <div id="login">
+        <h3 class="text-center text-black pt-4">Bienvenido a Maipo Grande</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" action="{{ route('login') }}" method="POST" autocomplete="off">
+                            @csrf
+                            @if (isset($_SESSION['incorrecto'])) 
+                                <label ><p>Datos incorrectos</p></label>
+                            @endif
+                            <h3 class="text-center text-info ">Iniciar sesion</h3>
+                            <div class="form-group">
+                                <label for="nameUser" class="text-info">Correo Electronico:</label><br>
+                                <input type="text" name="emailUser" id="nameUser" class="form-control">
                             </div>
-                        </div>
-                        <div class="footer">
-                            Copyright &copy; 2020 &mdash; Maipo Grande
-                        </div>
+                            <div class="form-group">
+                                <label for="contraseñaUser" class="text-info">Contraseña:</label><br>
+                                <input type="password" name="clave" id="contraseñaUser" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="remember-me" class="text-info"><span>Recuerdame</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="Iniciar sesion">
+                            </div>
+                            <div id="register-link" class="text-right">
+                                <a href="registro" class="text-info">Registrate aca!</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            </form>  
-        </section>
+        </div>
+    </div>
+    <br>
 
--->
-
-
+    <footer class="page-footer font-small blue black">
+        <div class="footer-copyright text-center py-3">
+            © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande</a>
+        </div>
+    </footer>
     
     <!-- FIN VENTANA EMERGENTE -->
 
