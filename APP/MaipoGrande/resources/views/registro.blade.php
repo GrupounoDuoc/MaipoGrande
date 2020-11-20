@@ -140,36 +140,93 @@
 -->
 
         <div id="register">
-        <h3 class="text-center text-black pt-4">Bienvenido a Maipo Grande</h3>
-        <div class="container">
-            <div id="register-row" class="row justify-content-center align-items-center">
-                <div id="register-column" class="col-md-6">
-                    <div id="register-box" class="col-md-12">
-                        <form id="register-form" class="form" action="{{ route('insertarUser') }}" method="POST" autocomplete="off">
-                        @csrf
-                            <h3 class="text-center text-info ">Registro de comprador</h3>
-                            <div class="form-group">
-                                <label for="nameUser" class="text-info">Nombre:</label><br>
-                                <input type="text" name="emailUser" id="nameUser" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="contraseñaUser" class="text-info">Apellido:</label><br>
-                                <input type="password" name="clave" id="contraseñaUser" class="form-control">
-                            </div>
-                            <div class="form-group">
-                            <input type="submit" name="" value="Registrarse" class="btn btn-info btn-md">
-                            </div>
+            <h3 class="text-center text-black pt-4">Bienvenido a Maipo Grande</h3>
+            <div class="container">
+                <div id="register-row" class="row justify-content-center align-items-center">
+                    <div id="register-column" class="col-md-6">
+                        <div id="register-box" class="col-md-12">
+                            <form id="register-form" class="form" action="{{ route('insertarUser') }}" method="POST" autocomplete="off">
+                            @csrf
+                                <h3 class="text-center text-info ">Registro de comprador</h3>
+                                <div class="form-group">
+                                    <label for="nameUser" class="text-info">Nombre:</label><br>
+                                    <input type="text" name="nombre" id="nameUser" class="form-control" placeholder="Ingresa tu nombre . . ." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contraseñaUser" class="text-info">Apellido:</label><br>
+                                    <input type="text" name="apellido" id="contraseñaUser" class="form-control" placeholder="Ingresa tu apellido . . ." required>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-10">
+                                        <label for="rutUser" class="text-info">Rut:</label><br>
+                                        <input type="number" name="rut" type="number" min=1000000 max=99999999 id="rutUser" class="form-control" placeholder="Ingresa tu rut . . ." required>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input type="text" name=dv class="form-control" placeholder="DV" maxlength="1" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">¿Que tipo de compras realizarás?</label>
+                                    <select class="form-control" id="FormComprador" name=tipocomprador required>
+                                        <option value=3>Compras Nacionales</option>
+                                        <option value=4>Compras Internacionales</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Escoge el tipo de persona</label>
+                                    <select class="form-control" id="FormPersona" name=tipopersona required>
+                                        <option value=1>Persona Natural</option>
+                                        <option value=2>Empresa</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contraseñaUser" class="text-info">Nombre de fantasia:</label><br>
+                                    <input type="text" name="clave" id="contraseñaUser" class="form-control" placeholder="Ingresa tu apodo . . ." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nombre">Datos adicionales</label>
+                                    <select name="comuna" class="form-control" required>
+                                            <option selected disabled value="">Selecciona una comuna</option>
+                                            @foreach($comunas as $cursorcomuna)
+                                            <option value="{{ $cursorcomuna->ID}}">{{ $cursorcomuna->NOMBRECOMUNA}}</option>
+                                            @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contraseñaUser" class="text-info">Codigo postal:</label><br>
+                                    <input type="number" name=codigopostal maxlength="7" id="contraseñaUser"  class="form-control" placeholder="Digite el codigo . . ." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contraseñaUser" class="text-info">Numero de telefono:</label><br>
+                                    <input type="number" name="telefono" id="contraseñaUser" class="form-control" placeholder="Nro. de Telefono . . ." required>
+                                </div>
 
-                        </form>
+                                <label for="Nombre">Ingresa tus datos de inicio de sesión</label>
+                                <div class="form-group">
+                                    <label for="contraseñaUser" class="text-info">Correo:</label><br>
+                                    <input type="text" name="correo" id="contraseñaUser" class="form-control" placeholder="Ingrese su correo . . ." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contraseñaUser" class="text-info">Contraseña:</label><br>
+                                    <input type="password" name="contrasenia" id="contraseñaUser" class="form-control" placeholder="Ingresa tu contraseña . . ." required>
+                                </div>
+
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input type="submit" name="" value="Registrarse" class="btn btn-info btn-md" style="margin-top: 5px;">
+                                    </div>
+                                    <div class="form-group">
+                                        <h4 class="texto-registro" style="text-align: center;">¿Ya estás registrado?</h4><br>
+                                        <a class="btn btn-primary btn-md" href="login"> Inicia sesión</a>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </div>
     <br>
-
-
-    
     <footer>
         <div class="contenedor">
             <div class="d-flex p-2 justify-content-center">

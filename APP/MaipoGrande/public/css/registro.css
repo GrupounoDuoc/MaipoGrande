@@ -1,0 +1,36 @@
+html,body {
+	height: 100%;
+}
+
+h3 {
+    padding-top: 10px;
+	color: black;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-size: cover;
+    background: url(../imagenes/registro.jpg) no-repeat center center fixed;
+	height: auto;
+  }
+
+
+
+  #register .container #register-row #register-column #register-box {
+	margin-top: 50px;
+	max-width: 600px;
+	height: auto;
+	border: 1px solid #9C9C9C;
+	background-color: #EAEAEA;
+  }
+  #register .container #register-row #registercolumn #register-box #register-form {
+	padding: 20px;
+  }
+  #register .container #register-row #register-column #register-box #register-form #register-link {
+	margin-top: -85px;
+  }
+
+
+
+  
