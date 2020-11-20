@@ -58,6 +58,10 @@ Route::get('/usuario', function () {
     return view('usuario');
 });
 
+Route::get('/IngresarProducto', function () {
+    return view('IngresarProducto');
+});
+
 Route::get('/CrearUsuario', 'App\Http\Controllers\AdminController@CargarComuna');
 
 Route::get('/ModificarUsuario', 'App\Http\Controllers\AdminController@CargarComunaB');
@@ -65,6 +69,8 @@ Route::get('/ModificarUsuario', 'App\Http\Controllers\AdminController@CargarComu
 Route::get('/EliminarUsuario', function () {
     return view('eliminaruser');
 });
+
+Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@Listaruser');
 
 
 // Post form data
@@ -83,9 +89,19 @@ Route::post('/CrearUsuario', [
     'as' => 'CrearUser'
 ]);
 
+Route::post('/IngresarProducto', [
+    'uses' => 'App\Http\Controllers\AdminController@IngresarProducto',
+    'as' => 'IngresarProducto'
+]);
+
 Route::post('/ModificarUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@ModificarUser',
     'as' => 'ModificarUser'
+]); 
+
+Route::post('/ListarUsuario', [
+    'uses' => 'App\Http\Controllers\AdminController@ListarUser',
+    'as' => 'ListarUser'
 ]); 
 
 
