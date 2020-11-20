@@ -1,8 +1,6 @@
-<!--
 @if(!isset($_SESSION))
 | {{ session_start() }}
 @endif
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +17,7 @@
     <!-- PWA -->
     @laravelPWA
 </head>
-<!--
+
 <body>
     <header id="cabecera">
         <img src="imagenes/manzana.png" class="img-logo">
@@ -31,10 +29,12 @@
                 <li><a href="/">Inicio</a></li>
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
+                <li><a href="contacto">Contacto</a></li>
                 <li><span class="icon-search" id="buscador"></span></li>
 
                 @else
                 <li><a href="/">Inicio</a></li>
+                <li><a href="contacto">Contacto</a></li>
                 <li><span class="icon-search" id="buscador"></span></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
@@ -59,54 +59,20 @@
             @endif
         </ul>
     </div>
-
-    <div class="row">
-        <div class="col-sm-4">  
-            <form action="{{ route('catalogo') }}" method="POST">
-                @csrf
-                <div class="menu-lateral">
-                    <nav class="submenu-lateral">
-                        <ul class="lista-lateral">
-                            <li><span><img src="imagenes/icon-fruta.png"></span>Tipo fruta</li>
-                            <ul>
-                                @foreach ($tipos as $tipo)
-                                @if( $tipo->TIPO_FRUTA == $tipoSelected)
-                                <li><input type="radio" name="tipo" checked value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
-                                @else
-                                <li><input type="radio" name="tipo" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
-                                @endif
-                                @endforeach
-                            </ul>
-                            <li><span></span>Calidad</li>
-                            <ul>
-                                @foreach ($calidades as $calidad)
-                                @if( $calidad->CALIDAD == $calidadSelected)
-                                <li><input type="radio" name="calidad" checked value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
-                                @else
-                                <li><input type="radio" name="calidad" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
-                                @endif
-                                @endforeach
-                            </ul>
-                            <br>
-                            <input type="submit" class="btn btn-success" name="send" value="Filtrar">
-                            <button><a href="{{ action('App\Http\Controllers\pedidoController@catalogo') }}" class="btn btn-primary">Limpiar filtros </a></button>
-                        </ul>
-                    </nav>
-                </div>
-            </form>
-        </div>
-        <div class="col-sm-8">
-            <div class="contenido-productos">
-                @foreach ($ofertas as $oferta)
-                <div class="card">
-                    <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
-                        <p class="card-text">Vendedor: {{ $oferta->NOMBRE_VENDEDOR}}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Tipo de calidad: {{ $oferta->CALIDAD}}</li>
-                        <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</li>
+    <form action="{{ route('catalogo') }}" method="POST">
+        @csrf
+        <div class="menu-lateral">
+            <nav class="submenu-lateral">
+                <ul class="lista-lateral">
+                    <li><span><img src="imagenes/icon-fruta.png"></span>Tipo fruta</li>
+                    <ul>
+                        @foreach ($tipos as $tipo)
+                        @if( $tipo->TIPO_FRUTA == $tipoSelected)
+                        <li><input type="radio" name="tipo" checked value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                        @else
+                        <li><input type="radio" name="tipo" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                        @endif
+                        @endforeach
                     </ul>
                     <div class="centrar-texto">
                         <a href="#" class="btn btn-info">Ver más</button>
