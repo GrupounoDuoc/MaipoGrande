@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Eliminar usuario | Maipo Grande</title>
+    <title>Listar producto | Maipo Grande</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/registro.css">
     <link rel="stylesheet" href="css/estilos.css">
@@ -56,30 +56,37 @@
         </nav>
     </div>
     <div class="contenedor seccion contenido-centrado">
-        <h2 class="centrar-texto">Eliminar Usuario</h2>
-        <form action="{{ route('EliminarUser') }}" method="POST" autocomplete="on" action="">
-            @csrf
-            <fieldset class="centrar-texto">
-                <p class="font-weight-bold">Ingresa el rut del usuario a eliminar...</p>
-                <div class="form-group">
-                    <div class="form-group">
-                        <div class="form-block">
-                            <div class="col">
-                                <input type="number" min=1000000 max=99999999 class="form-control" name=rut placeholder="Rut" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div>
-                <input class="btn btn-primary" type="submit" value="Eliminar">
-                </div>
-                <div class="container-boton">
-                    <a class="btn-login1" href="administrador"> Volver</a>
-                </div>
-            </fieldset>
-        </form>
+        <h2 class="centrar-texto">Productos</h2>
+        <div>
+            <table class="table table-dark">
+                <thead>
+
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($frutas as $fruta)
+                    <tr>
+                        <td>{{$fruta->ID_TIPO_FRUTA}}</td>
+                        <td>{{$fruta->NOMBRE}}</td>
+                        <td>{{$fruta->DESCRIPCION}}</td>
+                        <td><a href='deleteProducto/{{ $fruta->ID_TIPO_FRUTA }}'>Borrar</a>
+                            <a href='ModificarProducto'>Modificar</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container-boton">
+            <a class="btn-login1" href="administrador"> Volver</a>
+        </div>
+
     </div>
 
     <!--Footer-->

@@ -33,12 +33,14 @@ class AdminController extends Controller
 
         $CrearUser = DB::select(
             'call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
-            array($nombre, $apellido, $rut, $dv, $comuna, $codigopostal, $correo, 
-            $contrasenia, $telefono, $tipopersona, $nombrefantasia, $tipocomprador)
+            array(
+                $nombre, $apellido, $rut, $dv, $comuna, $codigopostal, $correo,
+                $contrasenia, $telefono, $tipopersona, $nombrefantasia, $tipocomprador
+            )
         );
 
         return back()->with('status', "Se ha creado el usuario {$correo} satisfactoriamente!");
-    } 
+    }
 
     public function CargarComuna() //int $rol)
     {
@@ -89,16 +91,18 @@ class AdminController extends Controller
 
         $ModificarUser = DB::select(
             'call SP_UPDATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?)',
-            array($nombre, $apellido, $rut, $tipocomprador,
-            $tipopersona, $nombrefantasia, $comuna, $codigopostal,
-            $telefono, $correo, $contrasenia)
+            array(
+                $nombre, $apellido, $rut, $tipocomprador,
+                $tipopersona, $nombrefantasia, $comuna, $codigopostal,
+                $telefono, $correo, $contrasenia
+            )
         );
 
         return back()->with('status', "Se ha modificado el usuario con rut {$rut} satisfactoriamente!");
-    } 
+    }
     public function listarUser(Request $request)
     {
-        $usuarios = DB::select('CALL SP_GET_USUARIO()',array());
+        $usuarios = DB::select('CALL SP_GET_USUARIO()', array());
 
         return view('/ListarUser', compact('usuarios'));
     }
@@ -118,5 +122,52 @@ class AdminController extends Controller
         );
 
         return back()->with('status', "Se ha creado la fruta {$nombreFruta} satisfactoriamente!");
-    } 
+    }
+
+    public function listarProducto(Request $request)
+    {
+        $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()', array());
+
+        return view('/ListarProducto', compact('frutas'));
+    }
+
+    public function destroyProducto($id)
+    {
+        DB::select('call SP_DELETE_TIPO_FRUTA(?)', [$id]);
+        return back()->with('status', "Se ha eliminado la fruta con ID {$id} satisfactoriamente!");
+    }
+
+    public function destroyUser($rut)
+    {
+        DB::select('call SP_DELETE_USUARIO(?)', [$rut]);
+
+        return back()->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
+    }
+
+    public function CargarDatosProducto(Request $request)
+    {
+        $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()', array());
+
+        return view('/ModificarProducto', compact('frutas'));
+    }
+
+    public function ModificarProducto(Request $request)
+    {
+
+        $id_tipo_fruta = $request->get('itf');
+        $nombre = $request->get('nombreFruta');
+        $descripcion = $request->get('descripcion');
+        $imagen = $request->get('imagen');
+
+
+
+        $ModificarProducto = DB::select(
+            'call SP_UPDATE_TIPO_FRUTA(?,?,?,?)',
+            array(
+                $id_tipo_fruta, $nombre, $descripcion, $imagen 
+            )
+        );
+
+        return back()->with('status', "Se ha modificado la fruta con id {$id_tipo_fruta} y nombre {$nombre} satisfactoriamente!");
+    }
 }

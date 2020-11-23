@@ -142,7 +142,7 @@
                     <input type="submit" name="" value="Actualizar datos">
                 </div>
                 <div class="container-boton">
-                    <a class="btn-login1" href="administrador"> Volver</a>
+                    <a class="btn-login1" href="ListarUsuario"> Volver</a>
                 </div>
             </fieldset>
         </form>
