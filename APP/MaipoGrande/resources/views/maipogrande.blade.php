@@ -58,7 +58,7 @@
             <ul id="lista-principal">
                 <?php if (empty($_SESSION['datos'])) { ?>
 
-                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="/">Inicio</a></li>
                     <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"]?>">Entrar</a></li>
                     <li><a href="registro.php">Registrarse</a></li>
                     <li><a href="contacto.php">Contacto</a></li>

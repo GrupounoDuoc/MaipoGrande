@@ -9,6 +9,8 @@ Route::get('/admin', 'App\Http\Controllers\adminController\adminviewController@V
 
 Route::get('/cliente', 'App\Http\Controllers\clientesController\clienteviewController@ViewPanelCliente')->name('cliente');
 
+Route::get('/producto', 'App\Http\Controllers\productosController\productoviewController@ViewPanelProducto')->name('producto');
+
 
 //VISTAS APP
 Route::get('/', function () {

@@ -157,13 +157,18 @@
                                     <input type="text" name="apellido" id="contraseñaUser" class="form-control" placeholder="Ingresa tu apellido . . ." required>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-xs-10">
-                                        <label for="rutUser" class="text-info">Rut:</label><br>
-                                        <input type="number" name="rut" type="number" min=1000000 max=99999999 id="rutUser" class="form-control" placeholder="Ingresa tu rut . . ." required>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <input type="text" name=dv class="form-control" placeholder="DV" maxlength="1" required>
-                                    </div>
+                                <label for="rutUser" class="text-info">Rut:</label><br>
+                                    <div class="row">    
+                                        <div class="col-8">
+                                            <input type="number" name="rut" type="number" min=1000000 max=99999999 id="rutUser" class="form-control" placeholder="Ingresa tu rut . . ." required>
+                                        </div>
+                                        <div class="col-1 d-flex justify-content-center align-items-center">
+                                            <div>-</div>
+                                        </div>
+                                        <div class="col-3">
+                                            <input type="text" name=dv class="form-control" placeholder="DV" maxlength="1" required>
+                                        </div>        
+                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">¿Que tipo de compras realizarás?</label>
@@ -211,12 +216,14 @@
                                     <input type="password" name="contrasenia" id="contraseñaUser" class="form-control" placeholder="Ingresa tu contraseña . . ." required>
                                 </div>
 
-                                <fieldset>
-                                    <div class="form-group">
+                                <fieldset class="row d-flex justify-content-center">
+                                    <div class="form-group col-12 text-center">
                                         <input type="submit" name="" value="Registrarse" class="btn btn-info btn-md" style="margin-top: 5px;">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-12">
                                         <h4 class="texto-registro" style="text-align: center;">¿Ya estás registrado?</h4><br>
+                                    </div>
+                                    <div class="form-group col-12 text-center">
                                         <a class="btn btn-primary btn-md" href="login"> Inicia sesión</a>
                                     </div>
                                 </fieldset>

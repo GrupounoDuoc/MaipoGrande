@@ -59,6 +59,7 @@
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Buscar producto ..." aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                    
                 </form>
             </div>
         </nav>
@@ -66,6 +67,7 @@
         <!-- Sidebar -->
         <div class="bg-light border-right " id="sidebar-wrapper">
             <div class="sidebar-heading">Catalogo </div>
+            <br>
             <div class="list-group list-group-flush"> 
                 <form action="{{ route('catalogo') }}" method="POST">
                     @csrf
@@ -80,6 +82,7 @@
                             @endif
                             @endforeach
                         </ul>
+                        <br>
                         <li><span></span>Calidad</li>
                         <ul>
                             @foreach ($calidades as $calidad)
@@ -92,7 +95,7 @@
                         </ul>
                         <br>
                         <input type="submit" class="btn btn-success" name="send" value="Filtrar">
-                        <button><a href="{{ action('App\Http\Controllers\pedidoController@catalogo') }}" class="btn btn-primary">Limpiar filtros </a></button>
+                        <a href="{{ action('App\Http\Controllers\pedidoController@catalogo') }}" class="btn btn-primary">Limpiar filtros </a>
                     </ul>
                 </form>
             </div>
@@ -183,7 +186,7 @@
             @endforeach
             </div>
 
-            <div class="col-12 col-md-4" style="max-width:25rem;">
+            <div class="col-12 col-md-4" style="max-width:25rem; margin-top:1rem">
                 @foreach ($ofertas as $oferta)
                     <div class="card">
                         <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}" class="card-img-top" alt="...">

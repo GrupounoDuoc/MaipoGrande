@@ -92,7 +92,7 @@
 -->
 
     <div id="login">
-        <h3 class="text-center text-black pt-4">Bienvenido a Maipo Grande</h3>
+        <h3 class="text-center text-black pt-4" style="margin-top: 2rem;">Bienvenido a Maipo Grande</h3>
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
@@ -103,6 +103,7 @@
                                 <label ><p>Datos incorrectos</p></label>
                             @endif
                             <h3 class="text-center text-info ">Iniciar sesion</h3>
+                            <br>
                             <div class="form-group">
                                 <label for="nameUser" class="text-info">Correo Electronico:</label><br>
                                 <input type="text" name="emailUser" id="nameUser" class="form-control">
