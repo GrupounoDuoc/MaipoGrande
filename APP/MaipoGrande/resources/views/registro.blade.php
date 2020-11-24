@@ -9,6 +9,7 @@
     <title>Registro | Maipo Grande</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/registro.css">
+    <link rel="stylesheet" href="css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="iconos/estilos.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">

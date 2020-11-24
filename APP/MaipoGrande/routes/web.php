@@ -46,9 +46,9 @@ route::get('login', function () {
     return view('login');
 });
 
-route::post('login', 'App\Http\Controllers\LoginController@login') -> name('login');
+route::post('login', 'App\Http\Controllers\LoginController@login')->name('login');
 
-Route::get('logout', 'App\Http\Controllers\LoginController@logout') -> name('logout');
+Route::get('logout', 'App\Http\Controllers\LoginController@logout')->name('logout');
 
 Route::get('/maipogrande', function () {
     return view('maipogrande');
@@ -71,23 +71,33 @@ Route::get('/CrearUsuario', 'App\Http\Controllers\AdminController@CargarComuna')
 
 Route::get('/ModificarUsuario', 'App\Http\Controllers\AdminController@CargarComunaB');
 
+Route::get('/ModificarProducto', function () {
+    return view('ModificarProducto');
+});
+
 Route::get('/EliminarUsuario', function () {
     return view('eliminaruser');
 });
 
+Route::get('deleteProducto/{id}', 'App\Http\Controllers\AdminController@destroyProducto');
+
+Route::get('deleteUser/{rut}', 'App\Http\Controllers\AdminController@destroyUser');
+
 Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@Listaruser');
+
+Route::get('/ListarProducto', 'App\Http\Controllers\adminController@Listarproducto');
 
 
 // Post form data
 Route::post('/registro', [
     'uses' => 'App\Http\Controllers\UserController@insertarUser',
     'as' => 'insertarUser'
-]); 
+]);
 
 Route::post('/EliminarUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@EliminarUser',
     'as' => 'EliminarUser'
-]); 
+]);
 
 Route::post('/CrearUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@CrearUser',
@@ -102,13 +112,22 @@ Route::post('/IngresarProducto', [
 Route::post('/ModificarUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@ModificarUser',
     'as' => 'ModificarUser'
-]); 
+]);
 
 Route::post('/ListarUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@ListarUser',
     'as' => 'ListarUser'
-]); 
+]);
 
+Route::post('/ListarProducto', [
+    'uses' => 'App\Http\Controllers\AdminController@ListarProducto',
+    'as' => 'ListarProducto'
+]);
+
+Route::post('/ModificarProducto', [
+    'uses' => 'App\Http\Controllers\AdminController@ModificarProducto',
+    'as' => 'ModificarProducto'
+]);
 
 
 //VISTAS DE PRUEBA

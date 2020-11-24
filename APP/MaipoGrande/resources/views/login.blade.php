@@ -21,7 +21,7 @@
 
     <link rel="stylesheet" href="css/login.css">
 </head>
-<body >
+<body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <img src="imagenes/manzana.png" style="height:1.25rem; margin-right:0.8rem">
@@ -41,7 +41,7 @@
             </div>
 </nav>
 
-<!--
+
     <form action="{{ route('login') }}" method="POST" autocomplete="off" class="form-login">
         @csrf
         <div class="container">
@@ -89,7 +89,6 @@
             </div>
         </div>
     </div>
--->
 
     <div id="login">
         <h3 class="text-center text-black pt-4" style="margin-top: 2rem;">Bienvenido a Maipo Grande</h3>
@@ -119,19 +118,19 @@
                             <div id="register-link" class="text-right">
                                 <a href="registro" class="text-info">Registrate aca!</a>
                             </div>
-                        </form>
+                        </div>
+                        <div class="footer">
+                            Copyright &copy; 2020 &mdash; Maipo Grande
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <br>
+            </form>  
+        </section>
 
-    <footer class="page-footer font-small blue black">
-        <div class="footer-copyright text-center py-3">
-            © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande</a>
-        </div>
-    </footer>
+-->
+
+
     
     <!-- FIN VENTANA EMERGENTE -->
 

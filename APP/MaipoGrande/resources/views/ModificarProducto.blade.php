@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Listar usuario | Maipo Grande</title>
+    <title>Modificar Producto | Maipo Grande</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/registro.css">
     <link rel="stylesheet" href="css/estilos.css">
@@ -56,68 +56,56 @@
         </nav>
     </div>
     <div class="contenedor seccion contenido-centrado">
-        <h2 class="centrar-texto">Usuarios</h2>
-        <div>
-            <table class="table table-dark">
-                <thead>
 
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Rut</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Perfil</th>
-                        <th scope="col">Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($usuarios as $usuario)
-                    <tr>
-                        <td>{{$usuario->ID_USUARIO}}</td>
-                        <td>{{$usuario->RUT}}</td>
-                        <td>{{$usuario->NOMBRE}}</td>
-                        <td>{{$usuario->APELLIDO}}</td>
-                        <td>{{$usuario->CORREO}}</td>
-                        <td>
-                            @if( $usuario->ID_PERFIL == 1)
-                            <b>
-                                Administrador
-                            </b>
-                            @elseif( $usuario->ID_PERFIL == 2)
-                            <b>
-                                Vendedor
-                            </b>
-                            @elseif( $usuario->ID_PERFIL == 3)
-                            <b>
-                                Comprador interno
-                            </b>
-                            @elseif( $usuario->ID_PERFIL == 4)
-                            <b>
-                                Comprador externo
-                            </b>
-                            @elseif( $usuario->ID_PERFIL == 5)
-                            <b>
-                                Transportista
-                            </b>
-                            @endif
-                        </td>
-                        <td><a href='deleteUser/{{ $usuario->RUT }}'>Borrar</a>
-                            <a href='ModificarUsuario'>Modificar</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div class="container-boton">
-            <a class="btn-login1" href="administrador"> Volver</a>
-        </div>
+        <form action="{{ route('ModificarProducto') }}" method="POST" autocomplete="on" action="">
+            <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
+            @csrf
+            <fieldset>
+                <p class="font-weight-bold">Ingresa los datos a modificar del nuevo Producto...</p>
+                <div class="form-group">
+                    <p class="font-weight-bold">ID de producto a modificar</p>
 
+                    <div class="form-row">
+                        <div class="col-md-4">
+                            <input type="number" class="form-control" name=itf placeholder="ID de fruta" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" name=nombreFruta placeholder="Nuevo nombre" required>
+                        </div>
+                        <div class="col-xs-4">
+                            <textarea name="descripcion" rows="5" cols="10" placeholder="Ingresa aquí la nueva descripción del nuevo producto" maxlength="150"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p class="font-weight-bold">Carga la nueva imagen del producto</p>
+                    </div>
+                    <div class="ml-2 col-sm-6">
+                        <div id="msg"></div>
+                        <input type="file" name="imagen" class="file" accept="image/*">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="container-boton">
+                    <input type="submit" name="" value="Ingresar">
+                </div>
+                <div class="container-boton">
+                    <a class="btn-login1" href="ListarProducto"> Volver</a>
+                </div>
+            </fieldset>
+        </form>
+
+        <!--
+        <script>
+            document.getElementById("write").innerHTML = window.location.search;
+        </script>
+        <h2 class="centrar-texto">Modificar Producto</h2>
+    </div> -->
     </div>
-
     <!--Footer-->
-    <footer class="footer2">
+    <footer class="footer">
         <div class="contenedor">
             <div class="d-flex p-2 justify-content-center">
                 <div class="copyright">

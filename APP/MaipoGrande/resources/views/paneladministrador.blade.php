@@ -92,9 +92,7 @@
                 <div class="btn-group-vertical">
                     <label for="" class=FormItem>Mantenedor usuarios </label>
                     <a href="CrearUsuario" class="btn btn-success">Crear Usuario</a>
-                    <a href="ModificarUsuario" class="btn btn-success">Modificar Usuario</a>
-                    <a href="EliminarUsuario" class="btn btn-success">Eliminar Usuario</a>
-                    <a href="ListarUsuario" class="btn btn-success">Listar Usuario</a>
+                    <a href="ListarUsuario" class="btn btn-success">Listar Usuarios</a>
                 </div>
 
             </div>
@@ -102,16 +100,14 @@
                 <div class="btn-group-vertical">
                     <label for="" class=FormItem>Mantenedor Productos</label>
                     <a href="IngresarProducto" class="btn btn-success">Ingresar producto</a>
-                    <a href="ModificarUsuario" class="btn btn-success">Modificar producto</a>
-                    <a href="EliminarUsuario" class="btn btn-success">Eliminar producto</a>
-                    <a href="ListarUsuario" class="btn btn-success">Listar producto</a>
+                    <a href="ListarProducto" class="btn btn-success">Listar productos</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!--Footer-->
-    <footer class="footer2">
+    <footer class="footer">
         <div class="contenedor">
             <div class="d-flex p-2 justify-content-center">
                 <div class="copyright">
