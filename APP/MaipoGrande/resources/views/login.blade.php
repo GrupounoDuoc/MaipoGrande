@@ -41,55 +41,6 @@
             </div>
 </nav>
 
-
-    <form action="{{ route('login') }}" method="POST" autocomplete="off" class="form-login">
-        @csrf
-        <div class="container">
-            <h2>Inicia sesión</h2>
-            <div class="containe2">
-                @if (isset($_SESSION['incorrecto'])) 
-                    <label ><p>Datos incorrectos</p></label>
-                @endif
-    		    <label for="nameUser"><p>Correo Electronico:</p></label>
-                <input type="email" name="emailUser" id="nameUser" placeholder="Correo electrónico" required=""> <br>
-                <label for="contraseñaUser"> <p>Contraseña:</p></label>
-                <div class="container con_password">
-                    <img src="imagenes/eye.png" alt="" class="img-contraseña" id="mostrar">
-                    <img src="imagenes/hide.png" alt="" class="img-contraseña" id="no-ver">
-                    <input type="password" name="clave" id="contraseñaUser" placeholder="Introduce tu contraseña" required="">
-                </div>
-                <p id="recuperar">¿Olvidaste tu contraseña?</p>
-                <div class="container-boton">
-                    <input type="submit" name="" value="Iniciar sesión">
-                </div>
-
-                
-            </div>
-            <h4>¿No tienes cuenta?</h4> <a href="registro"> Regístrate aquí</a> 
-            
-        </div>
-    </form>
-
-
-    <div id="miModal" class="modal">
-        <div class="flex" id="flex">
-            <div class="contenido-modal">
-                <div class="modal-header">
-                    <span class="icon-cancel-circle" id="close-alert"></span>
-                    <h2>RECUPERAR CONTRASEÑA</h2>
-                </div>
-                <div class="modal-body">
-                    <form action="recuperarContraseña" method="POST" class="form-recuperar">
-                        <p>Ingresa el correo con el que te registrarte:</p>
-                        <input type="email" name="correoRecuperacion" placeholder="ejemplo@gmail.com">
-                        <input type="submit" value="Enviar">
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <div id="login">
         <h3 class="text-center text-black pt-4" style="margin-top: 2rem;">Bienvenido a Maipo Grande</h3>
         <div class="container">
@@ -127,10 +78,6 @@
             </div>
             </form>  
         </section>
-
--->
-
-
     
     <!-- FIN VENTANA EMERGENTE -->
 
