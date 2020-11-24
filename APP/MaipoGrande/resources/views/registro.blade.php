@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registro | Maipo Grande</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
+
     <link rel="stylesheet" href="css/registro.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="iconos/estilos.css">
@@ -42,13 +44,13 @@
 
     <div id="register">
         <h3 class="text-center text-black pt-4">Bienvenido a Maipo Grande</h3>
-        <div class="container">
+        <div class="container" >
             <div id="register-row" class="row justify-content-center align-items-center">
-                <div id="register-column" class="col-md-6">
+                <div id="register-column" class="col-md-6 my-5">
                     <div id="register-box" class="col-md-12">
                         <form id="register-form" class="form" action="{{ route('insertarUser') }}" method="POST" autocomplete="off">
                             @csrf
-                            <h3 class="text-center text-info ">Registro de comprador</h3>
+                            <h3 class="text-center text-info mt-3">Registro de comprador</h3>
                             <div class="form-group">
                                 <label for="nameUser" class="text-info">Nombre:</label><br>
                                 <input type="text" name="nombre" id="nameUser" class="form-control" placeholder="Ingresa tu nombre . . ." required>
@@ -122,9 +124,9 @@
                                     <input type="submit" name="" value="Registrarse" class="btn btn-info btn-md" style="margin-top: 5px;">
                                 </div>
                                 <div class="form-group col-12">
-                                    <h4 class="texto-registro" style="text-align: center;">¿Ya estás registrado?</h4><br>
+                                    <h4 class="texto-registro" style="text-align: center;">¿Ya estás registrado?</h4>
                                 </div>
-                                <div class="form-group col-12 text-center">
+                                <div class="form-group col-12 text-center pb-3">
                                     <a class="btn btn-primary btn-md" href="login"> Inicia sesión</a>
                                 </div>
                             </fieldset>

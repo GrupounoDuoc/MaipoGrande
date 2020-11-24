@@ -8,7 +8,6 @@
     <title>Inicia sesión | MaipoGrande</title>
     
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="iconos/estilos.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
     

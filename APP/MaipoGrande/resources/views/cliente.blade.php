@@ -10,21 +10,23 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Id</th>
+                <th scope="col">ID</th>
+                <th scope="col">Rut</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
-                <th scope="col">Correo Electronico</th>
-                <th scope="col">Tipo Comprador</th>
-                <th scope="col">Accion</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Acción</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
+                <td scope="col">ID</td>
+                <td scope="col">Rut</td>
+                <td scope="col">Nombre</td>
+                <td scope="col">Apellido</td>
+                <td scope="col">Correo</td>
+                <td scope="col">Perfil</td>
                 <td><button class="btn btn-warning">Editar usuario <i class="material-icons"></i> &#128397;&#65039;</a></button> <button class="btn btn-danger">Eliminar usuario<i class="material-icons"></i> &#128465;&#65039;</a></button></td>
             </tr>
         </tbody>

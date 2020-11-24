@@ -9,3 +9,8 @@ body {
     background: url(../imagenes/registro.jpg) no-repeat center center fixed;
 	max-width: auto;
   }
+
+  #register-column{
+    border: 1px solid #9C9C9C!important;
+	background-color: #EAEAEA!important;
+  }
