@@ -3,7 +3,8 @@
 @section('content')
 <div class="contenedor">
     <div>
-        <a href="#prueba" data-toggle="modal"><button class="btn btn-success" style="margin-top: 0.5rem;"><img src="imagenes/agregar-usuario.svg"></img>Usuario</button></a>
+        <br>
+        <a href="#prueba" data-toggle="modal"><button class="btn btn-success" style="justify-content:center;"><span class="material-icons">person_add</span>Usuario</button></a>
     </div>
     <br>
     <table class="table">
@@ -47,22 +48,34 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="direccion">Apellido</label>
+                                <label class="col-md-3 form-control-label" for="apellido">Apellido</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la dirección" pattern="^[a-zA-Z0-9_áéíóúñ°\s]{0,200}$">
+                                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese su apellido" pattern="^[a-zA-Z0-9_áéíóúñ°\s]{0,200}$">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="documento">Documento</label>
+                                <label class="col-md-3 form-control-label" for="rutUser">Rut</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="rutUser" name="rut" class="form-control" placeholder="Ingrese su rut" pattern="[0-10]{0,15}">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" name="dv" class="form-control" placeholder="dv">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="documento">Tipo de usuario</label>
 
                                 <div class="col-md-9">
 
                                     <select class="form-control" name="tipo_documento" id="tipo_documento">
-
-                                        <option value="0" disabled>Seleccione</option>
-                                        <option value="DNI">Cliente nacional</option>
-                                        <option value="CEDULA">Cliente internacional</option>
+                                        <option selected disabled value="">Seleccione perfil</option>
+                                        <option value=1>Administrador</option>
+                                        <option value=2>Vendedor</option>
+                                        <option value=3>Compras Nacionales</option>
+                                        <option value=4>Compras Internacionales</option>
+                                        <option value=4>Transportista</option>
                                     </select>
 
                                 </div>
@@ -71,9 +84,9 @@
 
 
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="num_documento">Número documento</label>
+                                <label class="col-md-3 form-control-label" for="num_documento">Nombre comercial</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="num_documento" name="num_documento" class="form-control" placeholder="Ingrese el número documento" pattern="[0-9]{0,15}">
+                                    <input type="text" id="num_documento" name="num_documento" class="form-control" placeholder="Ingrese nombre de fantasia . . . ">
                                 </div>
                             </div>
 
@@ -81,18 +94,26 @@
                                 <label class="col-md-3 form-control-label" for="telefono">Telefono</label>
                                 <div class="col-md-9">
 
-                                    <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el telefono" pattern="[0-9]{0,15}">
+                                    <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el telefono . . . " pattern="[0-9]{0,15}">
 
                                 </div>
                             </div>
 
                             <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="credencial">Ingrese sus credenciales</label>
+                                </div>
                                 <label class="col-md-3 form-control-label" for="telefono">Correo</label>
                                 <div class="col-md-9">
-
                                     <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese el correo">
-
                                 </div>
+                                <br>
+                                <br>
+                                <label class="col-md-3 form-control-label" for="contra">Contraseña</label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" id="contra" name="email" placeholder="Ingrese su contraseña . . .">
+                                </div>
+                                
                             </div>
                         </form>
                         <div class="modal-footer">

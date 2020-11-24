@@ -65,6 +65,7 @@
                 <div class="form-group">
                     <div class="col-xs-4">
                         <div class="col-xs-4">
+                            
                             <input type="text" class="form-control" name=nombreFruta placeholder="Nombre" required>
                         </div>
                         <div class="col-xs-4">

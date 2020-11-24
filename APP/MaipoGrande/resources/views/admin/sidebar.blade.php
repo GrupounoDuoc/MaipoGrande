@@ -57,17 +57,9 @@
                   </form>
               </li>
               -->     
-
-              <li class="nav-item">
-                <a class="nav-link" href="{{url('categoria')}}"  ><i class="fa fa-tags"></i> Categorias</a>
-              </li>
               
               <li class="nav-item">
                 <a class="nav-link" href="{{url('producto')}}"  ><i class="fa fa-cart-plus"></i> Productos</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="{{url('proveedor')}}" ><i class="fa fa-users"></i> Proveedor</a>
               </li>
 
               <li class="nav-item">

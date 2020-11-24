@@ -16,11 +16,14 @@ Route::get('/producto', 'App\Http\Controllers\productosController\productoviewCo
 Route::get('/', function () {
     return view('index');
 });
+
+
+
 Route::get('/contacto', function () {
     return view('contacto');
 });
 Route::get('/administrador', function () {
-    return view('administrador');
+    return view('principal');
 });
 
 Route::get('/carrito', function () {
