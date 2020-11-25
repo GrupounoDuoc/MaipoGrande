@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\Route;
 //Routes Admin
 Route::get('/admin', 'App\Http\Controllers\adminController\adminviewController@ViewPanelAdmin')->name('admin');
 
-Route::get('/cliente', 'App\Http\Controllers\clientesController\clienteviewController@ViewPanelCliente')->name('cliente');
+//Route::get('/cliente', 'App\Http\Controllers\clientesController\clienteviewController@ViewPanelCliente')->name('cliente');
+
+Route::get('/usuario', 'App\Http\Controllers\usuariosController\usuarioviewController@ViewPanelUsuario')->name('usuario');
+
+Route::post('/crearUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@CrearUser')->name('CrearUsuario');
 
 Route::get('/producto', 'App\Http\Controllers\productosController\productoviewController@ViewPanelProducto')->name('producto');
 
@@ -59,15 +63,16 @@ Route::get('/administrador', function () {
     return view('paneladministrador');
 });
 
-Route::get('/usuario', function () {
-    return view('usuario');
-});
+//Route::get('/usuario', function () {
+  //  return view('usuario');
+//});
 
 Route::get('/IngresarProducto', function () {
     return view('IngresarProducto');
 });
 
-Route::get('/CrearUsuario', 'App\Http\Controllers\AdminController@CargarComuna');
+//panel de admin - para comunas
+//Route::get('/cliente', 'App\Http\Controllers\AdminController@CargarComuna');
 
 Route::get('/ModificarUsuario', 'App\Http\Controllers\AdminController@CargarComunaB');
 
@@ -83,7 +88,7 @@ Route::get('deleteProducto/{id}', 'App\Http\Controllers\AdminController@destroyP
 
 Route::get('deleteUser/{rut}', 'App\Http\Controllers\AdminController@destroyUser');
 
-Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@Listaruser');
+Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@ListarUser');
 
 Route::get('/ListarProducto', 'App\Http\Controllers\adminController@Listarproducto');
 
@@ -99,7 +104,7 @@ Route::post('/EliminarUsuario', [
     'as' => 'EliminarUser'
 ]);
 
-Route::post('/CrearUsuario', [
+Route::post('/cliente', [
     'uses' => 'App\Http\Controllers\AdminController@CrearUser',
     'as' => 'CrearUser'
 ]);

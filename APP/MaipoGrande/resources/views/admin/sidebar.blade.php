@@ -63,11 +63,11 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="{{url('cliente')}}" ><i class="fa fa-users"></i> Clientes</a>
+                <a class="nav-link" href="{{url('usuario')}}" ><i class="fa fa-users"></i> Usuarios</a>
               </li>
 
               <li class="nav-item">
-                  <a class="nav-link" href="{{url('user')}}" ><i class="fa fa-users"></i> Usuarios</a>
+                  <a class="nav-link" href="{{url('cliente')}}" ><i class="fa fa-users"></i> Clientes</a>
               </li>
 
               <li class="nav-item">

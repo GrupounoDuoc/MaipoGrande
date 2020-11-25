@@ -21,14 +21,38 @@
         </thead>
         <tbody>
             <tr>
-                <td scope="col">ID</td>
-                <td scope="col">Rut</td>
-                <td scope="col">Nombre</td>
-                <td scope="col">Apellido</td>
-                <td scope="col">Correo</td>
-                <td scope="col">Perfil</td>
+            @foreach($usuarios as $usuario)
+                    <tr>
+                        <td>{{$usuario->ID_USUARIO}}</td>
+                        <td>{{$usuario->RUT}}</td>
+                        <td>{{$usuario->NOMBRE}}</td>
+                        <td>{{$usuario->APELLIDO}}</td>
+                        <td>{{$usuario->CORREO}}</td>
+                        <td>
+                            @if( $usuario->ID_PERFIL == 1)
+                            <b>
+                                Administrador
+                            </b>
+                            @elseif( $usuario->ID_PERFIL == 2)
+                            <b>
+                                Vendedor
+                            </b>
+                            @elseif( $usuario->ID_PERFIL == 3)
+                            <b>
+                                Comprador interno
+                            </b>
+                            @elseif( $usuario->ID_PERFIL == 4)
+                            <b>
+                                Comprador externo
+                            </b>
+                            @elseif( $usuario->ID_PERFIL == 5)
+                            <b>
+                                Transportista
+                            </b>
+                            @endif
                 <td><button class="btn btn-warning">Editar usuario <i class="material-icons"></i> &#128397;&#65039;</a></button> <button class="btn btn-danger">Eliminar usuario<i class="material-icons"></i> &#128465;&#65039;</a></button></td>
             </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
@@ -40,7 +64,10 @@
                 <div class="modal-header">
                     <div class="modal-body">
                         <!-- contenido del form -->
-                        <form action="">    
+                       <!-- <form action="{{ route('CrearUser') }}" method="POST" autocomplete="on" action="">    -->
+                       <form id="UserCreatedForm"> 
+                        @csrf
+                      
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="nombre">Nombre</label>
                                 <div class="col-md-9">
@@ -59,19 +86,17 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="rutUser">Rut</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="rutUser" name="rut" class="form-control" placeholder="Ingrese su rut" pattern="[0-10]{0,15}">
+                                    <input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese su rut">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" name="dv" class="form-control" placeholder="dv">
+                                    <input type="text" id="dv" name="dv" class="form-control" placeholder="dv">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="documento">Tipo de usuario</label>
-
                                 <div class="col-md-9">
-
-                                    <select class="form-control" name="tipo_documento" id="tipo_documento">
+                                    <select class="form-control" name="tipocomprador" id="tipocomprador">
                                         <option selected disabled value="">Seleccione perfil</option>
                                         <option value=1>Administrador</option>
                                         <option value=2>Vendedor</option>
@@ -84,20 +109,53 @@
 
                             </div>
 
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="documento">Tipo de persona</label>
+
+                                <div class="col-md-9">
+
+                                    <select class="form-control" name="tipopersona" id="tipopersona">
+                                        <option selected disabled value="">Seleccione tipo</option>
+                                        <option value=1>Persona natural</option>
+                                        <option value=2>Empresa</option>
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="num_documento">Nombre comercial</label>
+                                <label class="col-md-3 form-control-label" for="nombrefantasia">Nombre comercial</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="num_documento" name="num_documento" class="form-control" placeholder="Ingrese nombre de fantasia . . . ">
+                                    <input type="text" id="nombrefantasia" name="nombrefantasia" class="form-control" placeholder="Ingrese nombre de fantasia . . . ">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="documento">Comuna</label>
+
+                                <div class="col-md-9">
+
+                                    <select class="form-control" name="comuna" id="comuna">
+                                        <option selected disabled value="">Seleccione su comuna</option>}
+                                        
+                                        @foreach($comunas as $cursorcomuna)
+                                            <option value="{{ $cursorcomuna->ID}}">{{ $cursorcomuna->NOMBRECOMUNA}}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="codigopostal">Codigo postal</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="codigopostal" name="codigopostal" class="form-control" placeholder="Ingrese el telefono . . . " pattern="[0-9]{0,15}">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="telefono">Telefono</label>
                                 <div class="col-md-9">
-
                                     <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el telefono . . . " pattern="[0-9]{0,15}">
-
                                 </div>
                             </div>
 
@@ -105,23 +163,24 @@
                                 <div class="col-md-12">
                                     <label for="credencial">Ingrese sus credenciales</label>
                                 </div>
-                                <label class="col-md-3 form-control-label" for="telefono">Correo</label>
+                                <label class="col-md-3 form-control-label" for="correo">Correo</label>
                                 <div class="col-md-9">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese el correo">
+                                    <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese el correo">
                                 </div>
                                 <br>
                                 <br>
                                 <label class="col-md-3 form-control-label" for="contra">Contraseña</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" id="contra" name="email" placeholder="Ingrese su contraseña . . .">
+                                    <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="Ingrese su contraseña . . .">
                                 </div>
                                 
                             </div>
-                        </form>
+                       
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-2x"></i> Cerrar</button>
                             <button type="submit" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Guardar</button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -134,3 +193,5 @@
 
 
     @endsection
+
+    

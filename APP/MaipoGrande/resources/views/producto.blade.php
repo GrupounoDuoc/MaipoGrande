@@ -7,7 +7,7 @@
     <div class="contenedor">
     <div>
         <br>
-        <a href="#producto" data-toggle="modal"><button class="btn btn-success" style="display:flex;"><span class="material-icons">add_box</span>Producto</button></a>
+        <a href="#producto" data-toggle="modal"><button class="btn btn-success"><i class="material-icons"></i>  &#128465;&#65039; Producto</button></a>
     </div>
     <br>
     <table class="table">

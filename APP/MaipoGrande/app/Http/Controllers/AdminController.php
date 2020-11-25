@@ -45,7 +45,7 @@ class AdminController extends Controller
     public function CargarComuna() //int $rol)
     {
         $comunas = DB::select('CALL SP_GET_COMUNAS()');
-        return view('CrearUser', compact('comunas'));
+        return view('cliente', compact('comunas'));
 
         /* $comunas= comuna::select('NombreComuna','nombre')->get();
         return view('id_comuna',compact('comunas')); */
