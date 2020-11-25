@@ -1,8 +1,7 @@
-<!--
 @if(!isset($_SESSION))
 | {{ session_start() }}
 @endif
--->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +20,8 @@
 </head>
 
 <body>
+<form action="/catalogo" method="POST">
+@csrf
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <img src="imagenes/manzana.png" style="height:1.25rem; margin-right:0.8rem">
             <a class="navbar-brand" href="/">Maipo Grande</a>
@@ -56,48 +57,42 @@
                     @endif
 
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Buscar producto ..." aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                    
-                </form>
             </div>
         </nav>
+        @if(isset($_SESSION['status']))
+            <div class="alert alert-danger" role="alert">
+                {{ $_SESSION['status'] }}
+            </div>
+        @endif
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
         <div class="bg-light border-right " id="sidebar-wrapper">
             <div class="sidebar-heading">Catalogo </div>
-            <br>
             <div class="list-group list-group-flush"> 
-                <form action="{{ route('catalogo') }}" method="POST">
-                    @csrf
                     <ul>
                         <li><span><img src="imagenes/icon-fruta.png"></span>Tipo fruta</li>
                         <ul>
                             @foreach ($tipos as $tipo)
-                            @if( $tipo->TIPO_FRUTA == $tipoSelected)
-                            <li><input type="radio" name="tipo" checked value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
-                            @else
-                            <li><input type="radio" name="tipo" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
-                            @endif
+                                @if( $tipo->TIPO_FRUTA == $tipoSelected)
+                                    <li><input onclick="this.form.submit();" type="radio" name="tipo" checked="true" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                                @else
+                                    <li><input onclick="this.form.submit();" type="radio" name="tipo" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                                @endif
                             @endforeach
                         </ul>
-                        <br>
                         <li><span></span>Calidad</li>
                         <ul>
                             @foreach ($calidades as $calidad)
-                            @if( $calidad->CALIDAD == $calidadSelected)
-                            <li><input type="radio" name="calidad" checked value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
-                            @else
-                            <li><input type="radio" name="calidad" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
-                            @endif
+                                @if( $calidad->CALIDAD == $calidadSelected)
+                                    <li><input onclick="this.form.submit();" type="radio" name="calidad" checked="true" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
+                                @else
+                                    <li><input onclick="this.form.submit();" type="radio" name="calidad" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
+                                @endif
                             @endforeach
                         </ul>
                         <br>
-                        <input type="submit" class="btn btn-success" name="send" value="Filtrar">
-                        <a href="{{ action('App\Http\Controllers\pedidoController@catalogo') }}" class="btn btn-primary">Limpiar filtros </a>
+                        <input type="submit" class="card-link btn btn-secondary" name="Limpiar" value="Limpiar">
                     </ul>
-                </form>
             </div>
         </div>
 
@@ -115,98 +110,49 @@
                 <!--<a class="nav-link" href="#">Carrito <span class="sr-only">(current)</span></a>-->
                 </li>
                 <a href="carrito"><span class="icon-cart"></span></a>
-                    @if(isset($_SESSION['totalCart']))
-                    <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-                    @else
-                    <p class="cantidad">0</p>
-                    @endif
+                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
             </ul>
         </div>
         </nav>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-md-4 " style="max-width:25rem;">
-            @foreach ($ofertas as $oferta)
-                <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
-                    <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
-                        <p class="card-text">Vendedor: {{ $oferta->NOMBRE_VENDEDOR}}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Tipo de calidad: {{ $oferta->CALIDAD}}</li>
-                        <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</li>
-                    </ul>
-                    <div class="card-body">
-                        <a href="addCart/{{ $oferta->ID}}" class="card-link btn btn-primary">Añadir al carro</a>
-                        <a href="#" class="card-link btn btn-success">Ver mas</a>
-                    </div>
-                </div>    
-            @endforeach
-            </div>
-
-            <div class="col-12 col-md-4" style="max-width:25rem; margin-top:1rem">
-            @foreach ($ofertas as $oferta)
-                <div class="card">
-                    <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
-                        <p class="card-text">Vendedor: {{ $oferta->NOMBRE_VENDEDOR}}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Tipo de calidad: {{ $oferta->CALIDAD}}</li>
-                        <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</li>
-                    </ul>
-                    <div class="card-body">
-                        <a href="addCart/{{ $oferta->ID}}" class="card-link btn btn-primary">Añadir al carro</a>
-                        <a href="#" class="card-link btn btn-success">Ver mas</a>
-                    </div>
-                </div>    
-            @endforeach
-            </div>
-
-            <div class="col-12 col-md-4" style="max-width:25rem; margin-top:1rem">
-            @foreach ($ofertas as $oferta)
-                <div class="card" style="margin-bottom: 1.5rem;">
-                    <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
-                        <p class="card-text">Vendedor: {{ $oferta->NOMBRE_VENDEDOR}}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Tipo de calidad: {{ $oferta->CALIDAD}}</li>
-                        <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</li>
-                    </ul>
-                    <div class="card-body">
-                        <a href="addCart/{{ $oferta->ID}}" class="card-link btn btn-primary">Añadir al carro</a>
-                        <a href="#" class="card-link btn btn-success">Ver mas</a>
-                    </div>
-                </div>    
-            @endforeach
-            </div>
-
-            <div class="col-12 col-md-4" style="max-width:25rem; margin-top:1rem">
+            <div class="col" style="max-width:25rem;">
                 @foreach ($ofertas as $oferta)
-                    <div class="card">
+                    <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
                         <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}" class="card-img-top" alt="...">
+                        <input type="hidden" id="foto{{$oferta->ID}}" name="foto{{$oferta->ID}}" value="{{ base64_encode($oferta->FOTO) }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
+                            <input type="hidden" id="tipo_fruta{{$oferta->ID}}" name="tipo_fruta{{$oferta->ID}}" value="{{ $oferta->TIPO_FRUTA}}">
                             <p class="card-text">Vendedor: {{ $oferta->NOMBRE_VENDEDOR}}</p>
+                            <input type="hidden" id="nombre{{$oferta->ID}}" name="nombre{{$oferta->ID}}" value="{{ $oferta->NOMBRE_VENDEDOR}}">
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Tipo de calidad: {{ $oferta->CALIDAD}}</li>
-                            <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</li>
+                            <input type="hidden" id="calidad_fruta{{$oferta->ID}}" name="calidad_fruta{{$oferta->ID}}" value="{{ $oferta->CALIDAD}}">
+                            <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} </li>
+                            <input type="hidden" id="precio{{$oferta->ID}}" name="precio{{$oferta->ID}}" value="{{ $oferta->PRECIO}}">
+                            <li class="list-group-item">
+                            <label for="cantidad">Cant a comprar:</label>
+                            <div class="input-group">
+                                <input type="number" step="0.1" class="form-control" id="cantidad{{$oferta->ID}}" name="cantidad{{$oferta->ID}}" value="1"  min="1" max="{{ $oferta->CANT_KG}}" style="max-width:30%;">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Kg</span>
+                                </div>
+                            </div>
+                            (Cantidad disponible: {{ $oferta->CANT_KG}} Kg)
+                            </li>
+                            <input type="hidden" id="id" name="id" value="{{$oferta->ID}}">
                         </ul>
                         <div class="card-body">
-                            <a href="addCart/{{ $oferta->ID}}" class="card-link btn btn-primary">Añadir al carro</a>
-                            <a href="#" class="card-link btn btn-success">Ver mas</a>
+                            <input type="submit" class="card-link btn btn-primary" name="Añadir{{$oferta->ID}}" value="Añadir al carro"/>
+                            <input type="submit" class="card-link btn btn-secondary" name="Detalle{{$oferta->ID}}" value="Ver mas"/>
                         </div>
                     </div>    
                 @endforeach
             </div>
         </div>
-
     </div>
    
     
@@ -223,82 +169,6 @@
                 © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande</a>
             </div>
         </footer>
-
-
-<!--   
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <img src="imagenes/manzana.png" style="height:1.25rem; margin-right:0.8rem">
-            <a class="navbar-brand" href="/">Maipo Grande</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="catalogo"> Catalogo <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login">Entrar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="registro">Registrarse</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="maipogrande">Calidad Fruta</a>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        </nav>
-
-        <div class="row">
-            <div class="d-flex" id="wrapper">
-
-           
-            <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">Catalogo </div>
-            <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
-            </div>
-            </div>
-           
-            </div>
-            <div class="mt-4">
-                <div class="row" style="padding:20px">
-                    <div class="col-sm-12 col-md-4 col-lg-3 col-xl-2 ">
-                        @foreach ($ofertas as $oferta)
-                            <div class="card" style="width: 100%">
-                                <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
-                                    <p class="card-text">Vendedor: {{ $oferta->NOMBRE_VENDEDOR}}</p>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Tipo de calidad: {{ $oferta->CALIDAD}}</li>
-                                    <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} {{ $oferta->MONEDA }}</li>
-                                </ul>
-                                <div class="card-body">
-                                    <a href="addCart/{{ $oferta->ID}}" class="card-link">Añadir al carro</a>
-                                    <a href="#" class="card-link">Ver mas</a>
-                                </div>
-                            </div>    
-                        @endforeach
-                    </div>    
-                </div>    
-            </div>
-        </div>
--->
-
-        <!-- <div class="col-sm-12 col-md-8 col-lg-9 col-xl-10"> Esto es el contenedor del catalogo producto -->
-   
     <script>
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);

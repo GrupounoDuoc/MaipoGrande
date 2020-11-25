@@ -30,17 +30,19 @@ Route::get('/administrador', function () {
     return view('principal');
 });
 
-Route::get('/carrito', function () {
-    return view('carrito');
-});
+Route::get('deleteCart/{id}', 'App\Http\Controllers\pedidoController@deleteCart');
+
+Route::get('/carrito', 'App\Http\Controllers\pedidoController@carrito');
+
+Route::get('/comprar', 'App\Http\Controllers\pedidoController@comprar');
+
+Route::get('/compraExitosa', 'App\Http\Controllers\pedidoController@compraExitosa');
 Route::get('/catalogo', 'App\Http\Controllers\pedidoController@catalogo');
 
 Route::post('/catalogo', [
     'uses' => 'App\Http\Controllers\pedidoController@catalogo',
     'as' => 'catalogo'
 ]);
-
-Route::get('addCart/{id}', 'App\Http\Controllers\UserController@AddCart');
 
 Route::get('/descripcion', function () {
     return view('descripcion');

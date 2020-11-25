@@ -1,24 +1,6 @@
-<?php 
-
-    session_start();
-    include("php/conexion.php");
-
-    if (isset($_SESSION['datos'])) {
-        $id = $_SESSION['datos']['id'];
-        $query = "SELECT * FROM carrito_compras WHERE id_usuario = '$id'";
-
-        $consultaCarrito = $conexion->query($query);
-
-
-        $ciudad = $_SESSION['datos']['ciudad'];
-        $domicilio = $_SESSION['datos']['direccionUser'];
-        $codigoPostal = $_SESSION['datos']['codigo_postal'];
-
-    }
-
-    $subtotal = 0;
-?>
-
+@if (!isset($_SESSION))
+        {{ session_start() }}
+@endif
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,33 +49,32 @@
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
             <div class="container-buscador" id="contenido">
-                <form action="php/buscar.php?url=<?php echo $_SERVER["REQUEST_URI"] ?>" method="POST">
+                <form action="" method="POST">
                     <input type="text" id="campoBuscar" placeholder="Buscar..." name="productoBuscar">
                     <span class="icon-search"></span>
                 </form>
             </div>
             <ul id="lista-principal">
-                <?php 
-                    if (empty($_SESSION['datos'])) { ?>
-                    <li><a href="index.php">Inicio</a></li>
-                    <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"]?>">Entrar</a></li>
-                    <li><a href="registro.php">Registrarse</a></li>
-                    <li><a href="contacto.php">Contacto</a></li>
+                @if (empty($_SESSION['usuario'])) 
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="login">Entrar</a></li>
+                    <li><a href="registro">Registrarse</a></li>
+                    <li><a href="contacto">Contacto</a></li>
                     <li><span class="icon-search" id="buscador"></span></li>
                     
-                <?php }else { ?>
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="contacto.php">Contacto</a></li>
+                @else
+                <li><a href="/">Inicio</a></li>
+                <li><a href="contacto">Contacto</a></li>
                 <li><span class="icon-search" id="buscador"></span></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                 </li>
 
-                <?php } ?>
+                @endif
             </ul>
-            <?php if (isset($_SESSION['objetoNoEncontrado'])) { ?>
-                <h3 class="errorBusqueda" id="messageError"><?php echo $_SESSION['objetoNoEncontrado'] ?></h3>
-            <?php unset($_SESSION['objetoNoEncontrado']); } ?>
+            @if (isset($_SESSION['objetoNoEncontrado']))
+                <h3 class="errorBusqueda" id="messageError"></h3>
+            @endif
         </nav>  
     </header>
     <div class="menu-lateralResponsive" id="menu-responsive">
@@ -106,70 +87,44 @@
             </ul>
         </nav>  
     </div>
-
     <!--Inicio del carrito de compras-->
-        
+    @if (isset($_SESSION['producto']))
         <table>
             <tr>
+                <th>Vendedor</th>
                 <th>Producto</th>
                 <th>Imagen</th>
                 <th>Precio</th>
                 <th>Calidad</th>
                 <th>Cantidad</th>
-                <th>Total</th>
                 <th>Eliminar</th>
             </tr>
-            <?php if (isset($_SESSION['datos'])) { 
-                $id = $_SESSION['datos']['id'];
-                $query = "SELECT * FROM carrito_compras WHERE id_usuario = '$id'";
-
-                $consultaCarrito = $conexion->query($query); ?>
-
-                <?php while ($datos = mysqli_fetch_array($consultaCarrito)) { ?>
-                    <?php $producto = $datos['producto']; 
-                    $queryProducto = "SELECT * FROM productos WHERE id_producto = '$producto'";
-                    $consultaProducto = $conexion->query($queryProducto); 
-                    $informacion = mysqli_fetch_array($consultaProducto); 
-                    $operacion = $informacion['precioProducto'] * $datos['cantidad'];
-                    $data = bcdiv($operacion, '1', 3);
-                    $subtotal = $subtotal + $data;    
-                    ?>
-                    
-                    <tr>
-                        <td><p><?php echo $informacion['nombreProducto'] ?></p></td>
-                        <td><img src="<?php echo $informacion['imagenProducto'] ?>"></td>
-                        <td><p>$ <?php echo $informacion['precioProducto'] ?></p></td>
-                        <td><p><?php echo $datos['cantidad'] ?></p></td>
-                        <td><p><?php echo $datos['calidad'] ?></p></td>
-                        <td><p>$ <?php echo $data ?></p>
-                        <td><button class="btn-delete"><a href="php/quitarProducto.php?id=<?php echo $datos['id_carrito'] ?>"><img src="imagenes/basura.png"></a></button></td>
-                    </tr>
-
-                <?php } ?>
-            <?php } ?>
+            @foreach($_SESSION['producto'] as $item)        
+                <tr>
+                    <td><p>{{ $item['nombre'] }}</p></td>
+                    <td><p>{{ $item['tipo'] }}</p></td>
+                    <td><img src="data:image/png;base64,{{ chunk_split($item['foto']) }}"></td>
+                    <td><p>$ {{ $item['producto'] }}</p></td>
+                    <td><p> {{ $item['calidad']}}</p></td>
+                    <td><p> {{ $item['cantidad']}} Kg</p></td>
+                    <td><button class="btn-delete"><a href="deleteCart/{{$item['id']}}"><img src="imagenes/basura.png"></a></button></td>
+                </tr>
+            @endforeach
+                <tr>
+                    <td>
+                        Subtotal : ${{$subtotal}}
+                    </td>
+                </tr>
         </table>
-        
-        <div class="suptotal">
-            <div class="pagos"><p>Formas de pago</p>
-                <ul>
-                    <li>Paypal  | </li>
-                    <li>MasterCard  | </li>
-                    <li>Efectivo  | </li>
-                    <li>PSE</li>
-                </ul>
-            </div>
-            <?php $subtotal = number_format($subtotal,'3', '.','.') ?>
-            <div class="sup"><p>Subtotal : $ <input type="text" id="campoTotal" readonly="readonly" value="<?php echo $subtotal ?>"></p></div>
-        </div>
-        
         <div class="comya13">
-            <a href="#" id="btn-comprar"><h5>¡Compra ahora!</h5></a>
+            <a href="comprar" id="btn-comprar"><h5>¡Compra ahora!</h5></a>
         </div>
-
-        <div class="continuarlin">
-            <a href="catalogo.php"><h5>Continuar comprando</h5></a>
-        </div>
-
+    @else
+        <h2>Sin productos en el carrito</h2>
+    @endif
+    <div class="continuarlin">
+            <a href="catalogo"><h5>Continuar comprando</h5></a>
+    </div>            
     <!--fin del carrito de compras-->
 
     <!-- VENTANA EMERGENTE COMPRAR YA -->
@@ -182,30 +137,17 @@
                     <h2>INFORMACIÓN DE COMPRA</h2>
                 </div>
                 <div class="modal-body">
-                    <form action="php/insertarCompra.php" method="POST">
-                        <h3>Información de envío  <p class="precioTotal">Total a pagar: $ <?php echo $subtotal ?></p></h3>
+                    <form action="" method="POST">
+                        <h3>Información de envío  <p class="precioTotal">Total a pagar: $ </p></h3>
                         <br>
                         <label for="">Ciudad: </label>
-                        <input type="text" name="ciudad-envio" placeholder="Destino del producto" class="campo" value="<?php echo $ciudad ?>" required="">
+                        <input type="text" name="ciudad-envio" placeholder="Destino del producto" class="campo" value="" required="">
                         <label for="" class="cod-postal">Código Postal:</label>
-                        <input type="text" name="postal-envio" placeholder="Su código postal" class="campo" value="<?php echo $codigoPostal ?>" required=""><br>
+                        <input type="text" name="postal-envio" placeholder="Su código postal" class="campo" value="" required=""><br>
                         <label for="">Dirección de residencia: </label>
-                        <input type="text" name="direccion-envio" placeholder="Ingrese su dirección" class="campo-addres" value="<?php echo $domicilio ?>" required=""><br>
-
-                        <?php 
-                            date_default_timezone_set("America/Bogota");
-                            
-                            include("php/fechaEspañol.php");
-                            $d = date("d") + 3;
-                            $m = date("m");
-
-                            $time = "$d-$m-2019";
-
-                            $resultado = fechaEspañol($time);
-                            
-                        ?>
+                        <input type="text" name="direccion-envio" placeholder="Ingrese su dirección" class="campo-addres" value="" required=""><br>
                         <br><br>
-                        <p><span class="icon-airplane"></span><span class="tiempo">El envío llegará:</span><input type="text" name="fechaEntrega" readonly="readonly" value="<?php echo $resultado ?>" class="inputFecha"></p>
+                        <p><span class="icon-airplane"></span><span class="tiempo">El envío llegará:</span><input type="text" name="fechaEntrega" readonly="readonly" value="" class="inputFecha"></p>
 
                         <div class="linea-separadora"></div>
                         <h3>Método de pago</h3>
@@ -270,7 +212,7 @@
             <br><div class="cont-footer">
                 <div class="alineacion">
                 <div class="copyright">
-                    © 2019 Todos los derechos reservados | Diseñado por <a href="index.html"> Maipo Grande@ </a>
+                    © 2019 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande@ </a>
                 </div>
                 <div class="nosotros">
                     <a href=""> Preguntas Frecuentes |</a>
