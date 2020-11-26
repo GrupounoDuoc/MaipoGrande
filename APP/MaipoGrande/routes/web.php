@@ -36,7 +36,6 @@ Route::get('/carrito', 'App\Http\Controllers\pedidoController@carrito');
 
 Route::get('/comprar', 'App\Http\Controllers\pedidoController@comprar');
 
-Route::get('/compraExitosa', 'App\Http\Controllers\pedidoController@compraExitosa');
 Route::get('/catalogo', 'App\Http\Controllers\pedidoController@catalogo');
 
 Route::post('/catalogo', [

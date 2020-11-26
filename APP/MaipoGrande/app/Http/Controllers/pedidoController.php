@@ -41,7 +41,6 @@ class pedidoController extends Controller
         }
         #SE REALIZA ACCION SEGUN EL SUBMIT PRESIONADO
         if(isset($_POST['Limpiar'])){
-
             #SI SE PRESIONA LIMPIAR
             $tipoSelected = null;
             $calidadSelected = null;
@@ -59,7 +58,8 @@ class pedidoController extends Controller
             JOIN PERSONA PU ON PU.ID_USUARIO = HS.ID_PROVEEDOR
             JOIN CALIDAD C ON C.ID_CALIDAD = HS.ID_CALIDAD
             JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = HS.ID_TIPO_FRUTA
-            WHERE HS.ID_STOCK IN (SELECT MAX(ID_STOCK) FROM HISTORICO_STOCK GROUP BY ID_PROVEEDOR,ID_TIPO_FRUTA)';
+            WHERE HS.ID_STOCK IN (SELECT MAX(ID_STOCK) FROM HISTORICO_STOCK GROUP BY ID_PROVEEDOR,ID_TIPO_FRUTA)
+            ORDER BY HS.ID_PROVEEDOR';
         if($tipoSelected!=null){
             $query = ($query).('AND TF.NOMBRE=\''.($tipoSelected).'\'');
         }
@@ -75,7 +75,7 @@ class pedidoController extends Controller
                 $found=false;
                 if(isset($_SESSION['producto'])){
                     foreach($_SESSION['producto'] as $item){
-                        if($item['id'] == $idOferta){
+                        if($item['id'] == $idOferta ){
                             $found=true;
                             break;
                         }else{
@@ -85,35 +85,21 @@ class pedidoController extends Controller
                 };
 
                 if($found==true){
-                    $subtotal = $_POST['precio'.($idOferta)];
-                    $subtotal = $subtotal * number_format($_POST['cantidad'.($idOferta)]);
-                    $_SESSION['producto'][$x]['id'] = $idOferta;
+                    $cantidad = ($_POST['cantidad'.($idOferta)])+($_SESSION['producto'][$x]['cantidad']);
                     $_SESSION['producto'][$x]['cantidad'] = ($_POST['cantidad'.($idOferta)])+($_SESSION['producto'][$x]['cantidad']);
-                    $_SESSION['producto'][$x]['calidad'] = $_POST['calidad_fruta'.($idOferta)];
-                    $_SESSION['producto'][$x]['producto'] = ($subtotal)+($_SESSION['producto'][$x]['producto']);
-                    $_SESSION['producto'][$x]['nombre'] = $_POST['nombre'.($idOferta)];
-                    $_SESSION['producto'][$x]['foto'] = $_POST['foto'.($idOferta)];
-                    $_SESSION['producto'][$x]['tipo'] = $_POST['tipo_fruta'.($idOferta)];
                 }else{
-                    $subtotal = $_POST['precio'.($idOferta)];
-                    $subtotal = $subtotal * number_format($_POST['cantidad'.($idOferta)]);
-                    $_SESSION['producto'][$x]['id'] = $idOferta;//$_POST['id'];
-                    $_SESSION['producto'][$x]['cantidad'] = $_POST['cantidad'.($idOferta)];
-                    $_SESSION['producto'][$x]['calidad'] = $_POST['calidad_fruta'.($idOferta)];
-                    $_SESSION['producto'][$x]['producto'] = $subtotal;
-                    $_SESSION['producto'][$x]['nombre'] = $_POST['nombre'.($idOferta)];
-                    $_SESSION['producto'][$x]['foto']  = $_POST['foto'.($idOferta)];
-                    $_SESSION['producto'][$x]['tipo'] = $_POST['tipo_fruta'.($idOferta)];
-                    $_SESSION['totalCart'] = $x;
+                    $cantidad = $_POST['cantidad'.($idOferta)];
                 }
+                $_SESSION['producto'][$x]['id'] = $idOferta;
+                $_SESSION['producto'][$x]['cantidad'] = $cantidad;
                 if($_SESSION['producto'][$x]['cantidad'] > $oferta->CANT_KG){
                     $limiteSuperado=true;
                     unset($_SESSION['producto'][$x]);
                     if(count($_SESSION['producto'])<1){
                         unset($_SESSION['producto']);
                     }
-                    $_SESSION['totalCart'] = $_SESSION['totalCart']-1;
                 }
+                $_SESSION['totalCart'] = count($_SESSION['producto']);
             }elseif(isset($_POST['Detalle'.($idOferta)])){
                 #SI SE PRESIONA DETALLE
             }
@@ -130,55 +116,110 @@ class pedidoController extends Controller
         if(!isset($_SESSION)){
             session_start();
         }
-        $i = 0;
-        foreach ($_SESSION['producto'] as $producto){
-            $i++;
-            if($id==$producto[1]){
-                unset($_SESSION['producto'][$i]);
+        foreach ($_SESSION['producto'] as $key=>$producto){
+            if($id==$producto['id']){
+                unset($_SESSION['producto'][$key]);
                 if(count($_SESSION['producto'])<1){
                     unset($_SESSION['producto']);
+                    $_SESSION['totalCart'] = 0;
+                }else{
+                    $_SESSION['totalCart'] = count($_SESSION['producto']);
                 }
-                $i--;
             break;
             }
         }
-        $_SESSION['totalCart'] = $i;
+        
         return redirect()->action([pedidoController::class, 'carrito']);
     }
     public function comprar()
     {
+        $json=null;
+        $nCompra=null;
         if(!isset($_SESSION)){
             session_start();
-        }else{
-            $idProductos=json_encode($_SESSION['producto']);
-            //ARMAR JSON CON EL ARREGLO, QUE CONTENGA LOS DATOS NECESARIOS PARA DETALLE PEDIDO
-            //DB::insert('INSERT INTO maipo_grande.pedido(ID_COMPRADOR,ID_TIPO_PEDIDO,ID_ESTADO_PEDIDO,FECHA_CREACION,FECHA_LIMITE_O_RETIRO,FECHA_PAGO)VALUES(?,?,?,?,?,?)',[$_SESSION['usuario'],1,3,date('Y/m/d H:i:s'),null,null]);
-            $_SESSION['compraCorrecta']=true;
         }
-        return redirect()->route('compraExitosa');
+        if(!isset($_SESSION['usuario'])){
+            return redirect()->route('login');
+        }else{
+            $json=json_encode($_SESSION['producto']);
+            //ARMAR JSON CON EL ARREGLO, QUE CONTENGA LOS DATOS NECESARIOS PARA DETALLE PEDIDO
+            DB::statement('CALL SP_CREATE_PEDIDO_NACIONAL(?,?,@res);',array($_SESSION['usuario'],$json));
+            $_SESSION['nCompra'] = DB::select('SELECT @RES AS RES');
+            if(is_array($_SESSION['nCompra']) || is_object($_SESSION['nCompra'])){
+                $numero = null;
+                foreach($_SESSION['nCompra'] as $n){
+                    $numero = $n->RES;
+                    break;
+                }
+                $_SESSION['nCompra']=$numero;
+            }
+            if($_SESSION['nCompra']!= null){
+                unset($_SESSION['producto']);
+                unset($_SESSION['totalCart']);
+                return redirect()->action([pedidoController::class, 'compraExitosa']);
+            }else{
+                return redirect()->action([pedidoController::class, 'compraErronea']);
+            }
+        }
     }
     public function compraExitosa()
     {
         if(!isset($_SESSION)){
             session_start();
-        }else{
-            if($_SESSION['compraCorrecta']==true){
-                unset($_SESSION['compraCorrecta']);
-                return view('compraExitosa');
-            }
+        }
+        if(isset($_SESSION['nCompra'])){
+            $nCompra = $_SESSION['nCompra'];
+            unset($_SESSION['nCompra']);
+            return view('compraExitosa',compact('nCompra'));
+        }    
+    }
+    public function compraErronea()
+    {
+        if(!isset($_SESSION)){
+            session_start();
+        }
+        if(isset($_SESSION['nCompra'])){
+            unset($_SESSION['nCompra']);
+            return view('compraErronea');
         }
     }
     public function carrito()
     {
+        $items = null;
+        $listadoId = null;
         $subtotal = 0;
         if(!isset($_SESSION)){
             session_start();
         }
         if(isset($_SESSION['producto'])){          
-            foreach($_SESSION['producto'] as $item){
-                $subtotal = ($subtotal) + ($item['producto']);
+            foreach($_SESSION['producto'] as $row){
+                if($listadoId == null){
+                    $listadoId = ($row['id']);
+                }else{
+                    $listadoId = ($listadoId).','.($row['id']);
+                }
+            }
+            $query ='select CONCAT(PU.NOMBRE,\' \',PU.APELLIDO)  NOMBRE,
+            TF.NOMBRE   TIPO_FRUTA,
+            C.NOMBRE  CALIDAD,
+            HS.CANT_KG,
+            TF.FOTO  FOTO,
+            HS.PRECIO_X_KG  PRECIO,
+            HS.ID_STOCK  ID
+            FROM HISTORICO_STOCK HS
+            JOIN PERSONA PU ON PU.ID_USUARIO = HS.ID_PROVEEDOR
+            JOIN CALIDAD C ON C.ID_CALIDAD = HS.ID_CALIDAD
+            JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = HS.ID_TIPO_FRUTA
+            WHERE HS.ID_STOCK IN ('.($listadoId).')';
+            $items =  DB::select(DB::raw($query));
+            for($i=1;$i<=count($_SESSION['producto']);$i++){
+                foreach($items as $item){
+                    if($_SESSION['producto'][$i]['id']==$item->ID){
+                        $subtotal = ($subtotal)+($_SESSION['producto'][$i]['cantidad'])*($item->PRECIO);
+                    }
+                }
             }
         }
-        return view('/carrito',compact('subtotal'));
+        return view('/carrito',compact('items','subtotal'));
     }
 }

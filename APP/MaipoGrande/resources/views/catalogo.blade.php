@@ -121,18 +121,15 @@
                 @foreach ($ofertas as $oferta)
                     <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
                         <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}" class="card-img-top" alt="...">
-                        <input type="hidden" id="foto{{$oferta->ID}}" name="foto{{$oferta->ID}}" value="{{ base64_encode($oferta->FOTO) }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
                             <input type="hidden" id="tipo_fruta{{$oferta->ID}}" name="tipo_fruta{{$oferta->ID}}" value="{{ $oferta->TIPO_FRUTA}}">
                             <p class="card-text">Vendedor: {{ $oferta->NOMBRE_VENDEDOR}}</p>
-                            <input type="hidden" id="nombre{{$oferta->ID}}" name="nombre{{$oferta->ID}}" value="{{ $oferta->NOMBRE_VENDEDOR}}">
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Tipo de calidad: {{ $oferta->CALIDAD}}</li>
                             <input type="hidden" id="calidad_fruta{{$oferta->ID}}" name="calidad_fruta{{$oferta->ID}}" value="{{ $oferta->CALIDAD}}">
                             <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} </li>
-                            <input type="hidden" id="precio{{$oferta->ID}}" name="precio{{$oferta->ID}}" value="{{ $oferta->PRECIO}}">
                             <li class="list-group-item">
                             <label for="cantidad">Cant a comprar:</label>
                             <div class="input-group">
