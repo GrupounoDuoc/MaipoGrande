@@ -13,6 +13,12 @@ Route::get('/usuario', 'App\Http\Controllers\usuariosController\usuarioviewContr
 
 Route::post('/crearUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@CrearUser')->name('CrearUsuario');
 
+Route::post('/eliminarUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@CrearUser')->name('EliminarUsuario');
+
+Route::get('deleteUser/{rut}', 'App\Http\Controllers\usuariosController\usuarioviewController@destroyUser');
+
+Route::post('/modificarUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@ModificarUser')->name('ModificarUsuario'); // Se llama a la ruta desde el ajax 
+
 Route::get('/producto', 'App\Http\Controllers\productosController\productoviewController@ViewPanelProducto')->name('producto');
 
 
@@ -86,7 +92,7 @@ Route::get('/EliminarUsuario', function () {
 
 Route::get('deleteProducto/{id}', 'App\Http\Controllers\AdminController@destroyProducto');
 
-Route::get('deleteUser/{rut}', 'App\Http\Controllers\AdminController@destroyUser');
+//Route::get('deleteUser/{rut}', 'App\Http\Controllers\AdminController@destroyUser');
 
 Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@ListarUser');
 

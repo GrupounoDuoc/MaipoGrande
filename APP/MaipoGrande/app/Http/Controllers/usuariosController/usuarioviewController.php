@@ -30,9 +30,7 @@ class usuarioviewController extends Controller
 
     public function CrearUser(Request $request)
     
-    {
-
-        
+    {    
         $nombre = $request->get('nombre');
         $apellido = $request->get('apellido');
         $rut = $request->get('rut');
@@ -71,7 +69,54 @@ class usuarioviewController extends Controller
 
     }
 
+    public function EliminarUser(Request $request)
+    {
+        $rut = $request->get('rut');
 
-    
+        $EliminarUser = DB::select(
+            'call SP_DELETE_USUARIO(?)',
+            array($rut)
+        );
+
+        return back()->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
+    }
+
+    public function destroyUser($rut)
+    {
+        DB::select('call SP_DELETE_USUARIO(?)', [$rut]);
+
+        return back()->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
+    }
+
+    public function ModificarUser(Request $request)
+    {
+
+
+        $nombre = $request->get('nombre');
+        $apellido = $request->get('apellido');
+        $rut = $request->get('rut');
+        $tipocomprador = $request->get('tipocomprador');
+        $tipopersona = $request->get('tipopersona');
+        $comuna = $request->get('comuna');
+        $codigopostal = $request->get('codigopostal');
+        $telefono = $request->get('telefono');
+        $nombrefantasia = $request->get('nombrefantasia');
+        $correo = $request->get('correo');
+        $contrasenia = $request->get('contrasenia');
+
+
+        $ModificarUser = DB::select(
+            'call SP_UPDATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?)',
+            array(
+                $nombre, $apellido, $rut, $tipocomprador,
+                $tipopersona, $nombrefantasia, $comuna, $codigopostal,
+                $telefono, $correo, $contrasenia
+            )
+        );
+
+        return back()->with('status', "Se ha modificado el usuario con rut {$rut} satisfactoriamente!");
+    }
 
 }
+
+
