@@ -17,9 +17,15 @@ Route::post('/eliminarUsuario', 'App\Http\Controllers\usuariosController\usuario
 
 Route::get('deleteUser/{rut}', 'App\Http\Controllers\usuariosController\usuarioviewController@destroyUser');
 
-Route::post('/modificarUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@ModificarUser')->name('ModificarUsuario'); // Se llama a la ruta desde el ajax 
+Route::post('/modificarUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@ModificarUser')->name('ModificarUsuario');
+
+Route::post('/getUserByRut', 'App\Http\Controllers\usuariosController\usuarioviewController@getUserByRut')->name('getUserByRut');// Se llama a la ruta desde el ajax 
 
 Route::get('/producto', 'App\Http\Controllers\productosController\productoviewController@ViewPanelProducto')->name('producto');
+
+Route::get('/crearProducto', 'App\Http\Controllers\productosController\productoviewController@CrearProduct')->name('CrearProducto');
+
+
 
 
 //VISTAS APP

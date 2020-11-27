@@ -14,7 +14,7 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Imagen Producto</th>
+                <!--<th scope="col">Imagen Producto</th>-->
                 <th scope="col">Nombre Proveedor</th>
                 <th scope="col">Calidad</th>
                 <th scope="col">Costo</th>
@@ -24,11 +24,18 @@
         <tbody>
             <tr>
                 <th scope="row"></th>
-                <td></td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td><button class="btn btn-warning">Editar Producto <i class="material-icons"></i> &#128397;&#65039;</a></button> <button class="btn btn-danger">Eliminar Produto<i class="material-icons"></i> &#128465;&#65039;</a></button></td>
+                @foreach($frutas as $fruta)
+                    <tr>
+                        <td>{{$fruta->ID_TIPO_FRUTA}}</td>
+                        <td>{{$fruta->NOMBRE}}</td>
+                        <td>{{$fruta->DESCRIPCION}}</td>
+                        
+                        </td>
+                    </tr>
+                    @endforeach
+                <td>
+                    <button class="btn btn-warning">Editar Producto <i class="material-icons"></i> &#128397;&#65039;</a></button>
+                    <a href='deleteProducto/{{ $fruta->ID_TIPO_FRUTA }}' class="btn btn-danger">Eliminar Produto<i class="material-icons"></i> &#128465;&#65039;</a></button></td>
             </tr>
         </tbody>
     </table>

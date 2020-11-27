@@ -44,6 +44,8 @@ class usuarioviewController extends Controller
         $correo = $request->get('correo');
         $contrasenia = $request->get('contrasenia');
 
+        //$contrasenia = md5($request->get('contrasenia'));
+
 
         $CrearUser = DB::select(
             'call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
@@ -104,6 +106,8 @@ class usuarioviewController extends Controller
         $correo = $request->get('correo');
         $contrasenia = $request->get('contrasenia');
 
+        //$contrasenia = md5($request->get('contrasenia'));
+
 
         $ModificarUser = DB::select(
             'call SP_UPDATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?)',
@@ -114,8 +118,39 @@ class usuarioviewController extends Controller
             )
         );
 
-        return back()->with('status', "Se ha modificado el usuario con rut {$rut} satisfactoriamente!");
+        //return back()->with('status', "Se ha modificado el usuario con rut {$rut} satisfactoriamente!");
     }
+
+    public function getUserByRut(Request $request){
+
+
+        $Rut = $request->get('rut');
+
+       
+
+        $dataUser = DB::table('persona')
+        ->where('RUT', $Rut)
+        ->first();
+
+        // $dataUser = DB::table('persona')
+        //     ->join('usuario', 'persona.correo', 'persona.contrasenia', '=', 'usuario.')
+        //     ->join('perfil', 'persona.nombre', '=', 'orders.user_id')
+        //     ->select('users.id', 'contacts.phone', 'orders.price')
+        //     ->get();
+
+
+
+                    //SELECT ID_USUARIO,RUT, DIGITO_VERIFICADOR, NOMBRE, APELLIDO, NOMBRE_FANTASIA, CODIGO_POSTAL 
+        //FROM persona JOIN usuario
+           // ON persona.ID_USUARIO = usuario.ID_USUARIO
+
+        return response()->json( $dataUser);
+
+
+        
+
+    }
+
 
 }
 

@@ -64,40 +64,71 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js%22%3E"></script>
+
 
     <script type="text/javascript">
 
 
   function ConsultaUserbyRut(e){
 
-    var Rut = e;
+    var Rut = e; 
 
-    
 
-    alert(e)
+    $.ajax({
+          type: 'POST',
+          url: "{{ route('getUserByRut') }}",
+          data: {
+            "_token": $("meta[name='csrf-token']").attr("content"),
+
+
+            "rut": Rut,
+
+          }
+
+          ,
+          success: function(data) {
+            var json = JSON.stringify(data);
+            var Obj = JSON.parse(json);
+            console.log(Obj.NOMBRE)
+
+            document.getElementById("rut_edit").value = Obj.RUT;
+            document.getElementById("dv_edit").value = Obj.DIGITO_VERIFICADOR;
+            document.getElementById("nombre_edit").value = Obj.NOMBRE;
+            document.getElementById("apellido_edit").value = Obj.APELLIDO;
+            document.getElementById("tipocomprador_edit").value = Obj.TIPOCOMPRADOR;
+            document.getElementById("tipopersona_edit").value = Obj.TIPOPERSONA;
+            document.getElementById("nombrefantasia_edit").value = Obj.NOMBRE_FANTASIA;
+            document.getElementById("comuna_edit").value = Obj.AS;
+            document.getElementById("codigopostal_edit").value = Obj.CODIGO_POSTAL;
+            document.getElementById("telefono_edit").value = Obj.TELEFONO;
+            document.getElementById("correo_edit").value = Obj.CORREO;
+            //document.getElementById("contrasenia_edit").value = Obj.CONTRASENA;
+
+
+            $('#editarModal').modal('show')
+
+
+
+
+
+
+          },
+
+          error: (error) => {
+            
+
+            console.log(error);
+          },
+
+          })
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
 
       $('#UserCreatedForm').submit(function(e) {
-        e.preventDefault();
+        e.preventDefault(); //evitar recargar la pagina
 
 
         var nombre = $('#nombre').val();
@@ -141,7 +172,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             if(Obj.length === 0){
 
               //alert('ok')
-              $('#prueba').modal('toggle')
+              //$('#prueba').modal('toggle')
+              dat
             }else{
               alert('error')
             }
@@ -160,68 +192,76 @@ scratch. This page gets rid of all links and provides the needed markup only.
       });
 
 
-      $('#updateUserForm').submit(function(e) {
-        e.preventDefault();
-
-         //// alert('funciona')
-
-        var nombre = $('#nombre').val();
-        var apellido = $('#apellido').val();
-        var rutUser = $('#rut').val();
-        var dv = $('#dv').val();
-        var tipocomprador = $('#tipocomprador').val();
-        var tipopersona = $('#tipopersona').val();
-        var nombrefantasia = $('#nombrefantasia').val();
-        var comuna = $('#comuna').val();
-        var codigopostal = $('#codigopostal').val();
-        var telefono = $('#telefono').val();
-        var correo = $('#correo').val();
-        var contrasenia = $('#contrasenia').val();
+      //function mostrarMensaje(mensaje){
+        //$("#prueba").empty(); //limpiar modal
+        //$("#prueba").append("<p>"+mensaje+"</p>"); //limpiar modal
+        //$("#prueba").show(500); //limpiar modal
+        //$("#prueba").hide(5000); //limpiar modal
+        
+      //}
 
 
-        $.ajax({
-          type: 'POST',
-          url: "{{ route('ModificarUsuario') }}",
-          data: {
-            "_token": $("meta[name='csrf-token']").attr("content"),
+      // $('#updateUserForm').submit(function(e) {
+      //   e.preventDefault();
 
-            "nombre": nombre,
-            "apellido": apellido,
-            "rut": rutUser,
-            "dv": dv,
-            "tipocomprador": tipocomprador,
-            "tipopersona": tipopersona,
-            "nombrefantasia": nombrefantasia,
-            "comuna": comuna,
-            "codigopostal": codigopostal,
-            "telefono": telefono,
-            "correo": correo,
-            "contrasenia": contrasenia
-          },
-          success: function(data) {
-            var json = JSON.stringify(data);
-            var Obj = JSON.parse(json);
+      //    //// alert('funciona')
 
-            if(Obj.length === 0){
+      //   var nombre = $('#nombre').val();
+      //   var apellido = $('#apellido').val();
+      //   var rutUser = $('#rut').val();
+      //   var dv = $('#dv').val();
+      //   var tipocomprador = $('#tipocomprador').val();
+      //   var tipopersona = $('#tipopersona').val();
+      //   var nombrefantasia = $('#nombrefantasia').val();
+      //   var comuna = $('#comuna').val();
+      //   var codigopostal = $('#codigopostal').val();
+      //   var telefono = $('#telefono').val();
+      //   var correo = $('#correo').val();
+      //   var contrasenia = $('#contrasenia').val();
 
-              //alert('ok')
-              $('#prueba').modal('toggle')
-            }else{
-              alert('error')
-            }
 
-            console.log(Obj.length)
-          },
+      //   $.ajax({
+      //     type: 'POST',
+      //     url: "{{ route('ModificarUsuario') }}",
+      //     data: {
+      //       "_token": $("meta[name='csrf-token']").attr("content"),
 
-          error: (error) => {
-            alert('Formulario incompleto')
+      //       "nombre": nombre,
+      //       "apellido": apellido,
+      //       "rut": rutUser,
+      //       "dv": dv,
+      //       "tipocomprador": tipocomprador,
+      //       "tipopersona": tipopersona,
+      //       "nombrefantasia": nombrefantasia,
+      //       "comuna": comuna,
+      //       "codigopostal": codigopostal,
+      //       "telefono": telefono,
+      //       "correo": correo,
+      //       "contrasenia": contrasenia
+      //     },
+      //     success: function(data) {
+      //       var json = JSON.stringify(data);
+      //       var Obj = JSON.parse(json);
 
-            console.log(error);
-          },
-        });
-      });
+      //       if(Obj.length === 0){
 
-      
+      //         //alert('ok')
+      //         $('#prueba').modal('toggle')
+      //       }else{
+      //         alert('error')
+      //       }
+
+      //       console.log(Obj.length)
+      //     },
+
+      //     error: (error) => {
+      //       alert('Formulario incompleto')
+
+      //       console.log(error);
+      //     },
+      //   });
+      // });
+
 
     </script>
 </body>

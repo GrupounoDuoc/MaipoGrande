@@ -6,6 +6,7 @@
         <br>
         <a href="#prueba" data-toggle="modal"><button class="btn btn-success" style="justify-content:center;"><span class="material-icons">person_add</span>Usuario</button></a>
     </div>
+
     <br>
     <table class="table">
         <thead class="thead-dark">
@@ -200,6 +201,8 @@
     </div>
 
 
+
+
     <!-- Modal editar usuario -->
     <div class="modal fade" id="editarModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -215,16 +218,16 @@
                             <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="rutUser">Rut</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese su rut">
+                                        <input type="text" id="rut_edit" name="rut" class="form-control" placeholder="Ingrese su rut" disabled>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" id="dv" name="dv" class="form-control" placeholder="dv">
+                                        <input type="text" id="dv_edit" name="dv" class="form-control" placeholder="dv">
                                     </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="nombre">Nombre</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el Nombre" required pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$">
+                                    <input type="text" id="nombre_edit" name="nombre" class="form-control" placeholder="Ingrese el Nombre" required pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$">
 
                                 </div>
                             </div>
@@ -232,14 +235,14 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="apellido">Apellido</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese su apellido" pattern="^[a-zA-Z0-9_áéíóúñ°\s]{0,200}$">
+                                    <input type="text" id="apellido_edit" name="apellido" class="form-control" placeholder="Ingrese su apellido" pattern="^[a-zA-Z0-9_áéíóúñ°\s]{0,200}$">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="documento">Tipo de usuario</label>
                                 <div class="col-md-9">
-                                    <select class="form-control" name="tipocomprador" id="tipocomprador">
+                                    <select class="form-control" name="tipocomprador" id="tipocomprador_edit">
                                         <option selected disabled value="">Seleccione perfil</option>
                                         <option value=1>Administrador</option>
                                         <option value=2>Vendedor</option>
@@ -257,7 +260,7 @@
 
                                 <div class="col-md-9">
 
-                                    <select class="form-control" name="tipopersona" id="tipopersona">
+                                    <select class="form-control" name="tipopersona" id="tipopersona_edit">
                                         <option selected disabled value="">Seleccione tipo</option>
                                         <option value=1>Persona natural</option>
                                         <option value=2>Empresa</option>
@@ -268,7 +271,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="nombrefantasia">Nombre comercial</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="nombrefantasia" name="nombrefantasia" class="form-control" placeholder="Ingrese nombre de fantasia . . . ">
+                                    <input type="text" id="nombrefantasia_edit" name="nombrefantasia" class="form-control" placeholder="Ingrese nombre de fantasia . . . ">
                                 </div>
                             </div>
 
@@ -277,7 +280,7 @@
 
                                 <div class="col-md-9">
 
-                                    <select class="form-control" name="comuna" id="comuna">
+                                    <select class="form-control" name="comuna" id="comuna_edit">
                                         <option selected disabled value="">Seleccione su comuna</option>}
                                         
                                         @foreach($comunas as $cursorcomuna)
@@ -291,14 +294,14 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="codigopostal">Codigo postal</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="codigopostal" name="codigopostal" class="form-control" placeholder="Ingrese el telefono . . . " pattern="[0-9]{0,15}">
+                                    <input type="text" id="codigopostal_edit" name="codigopostal" class="form-control" placeholder="Ingrese el telefono . . . " pattern="[0-9]{0,15}">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="telefono">Telefono</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el telefono . . . " pattern="[0-9]{0,15}">
+                                    <input type="text" id="telefono_edit" name="telefono" class="form-control" placeholder="Ingrese el telefono . . . " pattern="[0-9]{0,15}">
                                 </div>
                             </div>
 
@@ -308,13 +311,13 @@
                                 </div>
                                 <label class="col-md-3 form-control-label" for="correo">Correo</label>
                                 <div class="col-md-9">
-                                    <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese el correo">
+                                    <input type="email" class="form-control" id="correo_edit" name="correo" placeholder="Ingrese el correo">
                                 </div>
                                 <br>
                                 <br>
                                 <label class="col-md-3 form-control-label" for="contra">Contraseña</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="Ingrese su contraseña . . .">
+                                    <input type="password" class="form-control" id="contrasenia_edit" name="contrasenia" placeholder="Ingrese su contraseña . . .">
                                 </div>
                                 
                             </div>
@@ -322,7 +325,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
                             
-                            <button type="submit" class="btn btn-warning"><i class="fa fa-pencil fa-1x"></i>Actualizar</button>
+                            <button type="submit" class="btn btn-warning" onclick="Modificar_suario()"><i class="fa fa-edit fa-1x"></i>Actualizar</button>
                         </div>
                         </form>
                     </div>
