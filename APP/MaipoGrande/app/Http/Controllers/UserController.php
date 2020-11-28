@@ -24,7 +24,7 @@ class UserController extends Controller
         $tipopersona = $request->get('tipopersona');
         $comuna = $request->get('comuna');
         $codigopostal = $request->get('codigopostal');
-        $telefonos = $request->get('telefono');
+        $telefono = $request->get('telefono');
         $nombrefantasia = $request->get('nombrefantasia');
         $correo = $request->get('correo');
         $contrasenia = $request->get('contrasenia');

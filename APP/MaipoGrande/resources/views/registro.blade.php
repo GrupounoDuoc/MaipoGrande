@@ -22,8 +22,6 @@
 </head>
 
 <body>
-
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <img src="imagenes/manzana.png" style="height:1.25rem; margin-right:0.8rem">
         <a class="navbar-brand" href="/">Maipo Grande</a>
@@ -41,10 +39,14 @@
             </ul>
         </div>
     </nav>
-
+    @if(session('status'))
+    <div class="alert alert-success" role="alert">
+        {{ session('status') }}
+    </div>
+    @endif
     <div id="register">
         <h3 class="text-center text-black pt-4">Bienvenido a Maipo Grande</h3>
-        <div class="container" >
+        <div class="container">
             <div id="register-row" class="row justify-content-center align-items-center">
                 <div id="register-column" class="col-md-6 my-5">
                     <div id="register-box" class="col-md-12">
@@ -89,7 +91,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="contraseñaUser" class="text-info">Nombre de fantasia:</label><br>
-                                <input type="text" name="clave" id="contraseñaUser" class="form-control" placeholder="Ingresa tu apodo . . ." required>
+                                <input type="text" name="clave" id="contraseñaUser" class="form-control" placeholder="Ingresa tu nombre de fantasía . . ." required>
                             </div>
                             <div class="form-group">
                                 <label for="Nombre">Datos adicionales</label>
