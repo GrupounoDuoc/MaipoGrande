@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carrito de compras</title>
+    <title>Gracias por su compra</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
@@ -87,89 +87,10 @@
             </ul>
         </nav>  
     </div>
-    <!--Inicio del carrito de compras-->
-    @if (isset($_SESSION['producto']) && (is_array($items) || is_object($items)))
-        <table>
-            <tr>
-                <th>Vendedor</th>
-                <th>Producto</th>
-                <th>Imagen</th>
-                <th>Precio</th>
-                <th>Calidad</th>
-                <th>Cantidad</th>
-                <th>Eliminar</th>
-            </tr>
-            @foreach($items as $key=>$item)        
-                <tr>
-                    <td><p>{{ $item->NOMBRE }}</p></td>
-                    <td><p>{{ $item->TIPO_FRUTA }}</p></td>
-                    <td><img src="data:image/png;base64,{{ chunk_split(base64_encode($item->FOTO)) }}"></td>
-                    <td><p> {{ $item->CALIDAD}}</p></td>
-                    @for($i=1;$i<=count($_SESSION['producto']);$i++)
-                        @if($_SESSION['producto'][$i]['id']==$item->ID)
-                            <td><p>$ {{ ($item->PRECIO)*($_SESSION['producto'][$i]['cantidad']) }} CLP</p></td>
-                            <td><p> {{ $_SESSION['producto'][$i]['cantidad']}} Kg</p></td>
-                        @endif
-                    @endfor
-                    <td><button class="btn-delete"><a href="deleteCart/{{$item->ID}}"><img src="imagenes/basura.png"></a></button></td>
-                </tr>
-            @endforeach
-                <tr>
-                    <td>
-                        Subtotal : ${{$subtotal}}
-                    </td>
-                </tr>
-        </table>
-        <div class="comya13">
-            <a href="comprar" id="btn-comprar"><h5>¡Compra ahora!</h5></a>
-        </div>
-    @else
-        <h2>Sin productos en el carrito</h2>
-    @endif
-    <div class="continuarlin">
-            <a href="catalogo"><h5>Continuar comprando</h5></a>
-    </div>            
-    <!--fin del carrito de compras-->
 
-    <!-- VENTANA EMERGENTE COMPRAR YA -->
-        
-    <div id="miModal" class="modal">
-        <div class="flex" id="flex">
-            <div class="contenido-modal">
-                <div class="modal-header">
-                    <span class="icon-cancel-circle" id="close-alert"></span>
-                    <h2>INFORMACIÓN DE COMPRA</h2>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="POST">
-                        <h3>Información de envío  <p class="precioTotal">Total a pagar: $ </p></h3>
-                        <br>
-                        <label for="">Ciudad: </label>
-                        <input type="text" name="ciudad-envio" placeholder="Destino del producto" class="campo" value="" required="">
-                        <label for="" class="cod-postal">Código Postal:</label>
-                        <input type="text" name="postal-envio" placeholder="Su código postal" class="campo" value="" required=""><br>
-                        <label for="">Dirección de residencia: </label>
-                        <input type="text" name="direccion-envio" placeholder="Ingrese su dirección" class="campo-addres" value="" required=""><br>
-                        <br><br>
-                        <p><span class="icon-airplane"></span><span class="tiempo">El envío llegará:</span><input type="text" name="fechaEntrega" readonly="readonly" value="" class="inputFecha"></p>
-
-                        <div class="linea-separadora"></div>
-                        <h3>Método de pago</h3>
-                        <ul>
-                            <li><input type="radio" name="metodo-pago" value="mastercard" checked=""><img src="imagenes/mastercard.png"></li>
-                            <li><input type="radio" name="metodo-pago" value="paypal"><img src="imagenes/paypal.png"></li>
-                            <li><input type="radio" name="metodo-pago" value="visa"><img src="imagenes/visa.png"></li>
-                            <li><input type="radio" name="metodo-pago" value="bitcoin"><img src="imagenes/bitcoin.png"></li>
-                            <li><input type="radio" name="metodo-pago" value="payment"><img src="imagenes/payment.png"></li>
-                        </ul>
-                        <input type="submit" value="COMPRAR">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- FIN VENTANA EMERGENTE -->
-
+    <h1>Gracias por su compra</h1>
+    <h3>Muchas gracias por su compra, se ha generado la solicitud de compra N° {{$nCompra}}, pronto sera contactado con los siguientes pasos a seguir.</h3>
+        <a href="/">Volver al inicio</a>
 <!--Footer-->
     <footer>
         <div class="contenedor">

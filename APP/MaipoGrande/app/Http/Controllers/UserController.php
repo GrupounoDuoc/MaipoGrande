@@ -24,7 +24,7 @@ class UserController extends Controller
         $tipopersona = $request->get('tipopersona');
         $comuna = $request->get('comuna');
         $codigopostal = $request->get('codigopostal');
-        $telefono = $request->get('telefono');
+        $telefonos = $request->get('telefono');
         $nombrefantasia = $request->get('nombrefantasia');
         $correo = $request->get('correo');
         $contrasenia = $request->get('contrasenia');
@@ -45,20 +45,5 @@ class UserController extends Controller
 
         /* $comunas= comuna::select('NombreComuna','nombre')->get();
         return view('id_comuna',compact('comunas')); */
-    }
-
-    public function addCart(Request $request, $id)
-    {
-        session_start();
-        $i=0;
-        if(isset($_SESSION['producto'])){
-            foreach ($_SESSION['producto'] as $producto){$i++;};
-            $i++;
-        }            
-        $_SESSION['producto'][$i] = $id;
-        $_SESSION['totalCart'] = $i;
-        $cart = $_SESSION['producto'];
-        return redirect()->back()->with(['cart' => $cart]);
-        //return App::call('App\Http\Controllers\pedidoController@subject' );
     }
 }

@@ -18,20 +18,16 @@ class LoginController extends Controller
         } 
         $datosLogin = DB::table('usuario')
                     ->where('CORREO',$request->get('emailUser'))
+                    ->where('CONTRASENA',md5($request->get('clave')))
                     ->get(); //Trae un objeto con los datos de la tabla.
         if(count($datosLogin) > 0){
             foreach($datosLogin as $record){
-                if($record -> CONTRASENA == $request->get('clave')){
                     if (isset($_SESSION['incorrecto'])) {
                         unset($_SESSION['incorrecto']);
                     }
                     $_SESSION['usuario'] = $record -> CORREO;
                     $_SESSION['tipo_usuario'] = $record -> ID_PERFIL;
                     return view('index');
-                }else{
-                    $_SESSION['incorrecto'] = true;
-                    return redirect()->back();
-                }
             }
         }else{
             $_SESSION['incorrecto'] = true;
