@@ -50,6 +50,8 @@ Route::get('/maipogrande', function () {
 });
 Route::get('/registro', 'App\Http\Controllers\userController@CargarComuna');
 
+Route::get('/PublicarProducto', 'App\Http\Controllers\pedidoController@CargarDatos');
+
 Route::get('/administrador', function () {
     return view('paneladministrador');
 });
@@ -117,6 +119,11 @@ Route::post('/ListarUsuario', [
 Route::post('/ListarProducto', [
     'uses' => 'App\Http\Controllers\AdminController@ListarProducto',
     'as' => 'ListarProducto'
+]);
+
+Route::post('/PublicarVenta', [
+    'uses' => 'App\Http\Controllers\pedidoController@PublicarVenta',
+    'as' => 'PublicarVenta'
 ]);
 
 Route::post('/ModificarProducto', [
