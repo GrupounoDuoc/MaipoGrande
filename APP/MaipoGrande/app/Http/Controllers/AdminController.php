@@ -155,7 +155,7 @@ class AdminController extends Controller
     {
 
         $id_tipo_fruta = $request->get('itf');
-        $nombre = $request->get('nombreFruta');
+        $tipo_fruta = $request->get('nombreFruta');
         $descripcion = $request->get('descripcion');
         $imagen = $request->get('imagen');
 
@@ -164,10 +164,10 @@ class AdminController extends Controller
         $ModificarProducto = DB::select(
             'call SP_UPDATE_TIPO_FRUTA(?,?,?,?)',
             array(
-                $id_tipo_fruta, $nombre, $descripcion, $imagen 
+                $id_tipo_fruta, $tipo_fruta, $descripcion, $imagen 
             )
         );
 
-        return back()->with('status', "Se ha modificado la fruta con id {$id_tipo_fruta} y nombre {$nombre} satisfactoriamente!");
+        return back()->with('status', "Se ha modificado la fruta con id {$id_tipo_fruta} y nombre {$tipo_fruta} satisfactoriamente!");
     }
 }

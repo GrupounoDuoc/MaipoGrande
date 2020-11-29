@@ -222,4 +222,38 @@ class pedidoController extends Controller
         }
         return view('/carrito',compact('items','subtotal'));
     }
+
+    public function PublicarVenta(Request $request)
+    {
+
+
+        $id_vendedor = $request->get('id_vendedor');
+        $id_tipo_fruta = $request->get('tipo_fruta');
+        $calidad = $request->get('calidad');
+        $cantidad = $request->get('cantidad');
+        $precioxkg = $request->get('precioxkg');
+
+
+        $PublicarVenta = DB::select(
+            'call SP_CREAR_VENTA_INTERNA(?,?,?,?,?)',
+            array(
+                $id_vendedor, $id_tipo_fruta, $calidad, $cantidad,
+                $precioxkg
+            )
+        );
+
+        return back()->with('status', "Has publicado tu producto correctamente!");
+    }
+
+
+    public function CargarDatos()
+    {
+        $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()');
+        $calidades = DB::select('CALL SP_GET_CALIDAD()');
+
+        return view('PublicarPedido', compact('frutas','calidades'));
+
+    }
+
 }
+
