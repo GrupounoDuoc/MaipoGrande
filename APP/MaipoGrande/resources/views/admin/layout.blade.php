@@ -19,6 +19,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <!-- Sweet alert--->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js">
+
   <!-- material icons google -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
@@ -53,29 +57,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- REQUIRED SCRIPTS -->
 
-    <!-- jQuery -->
-    <script src="{{asset('../plugins/jquery/jquery.min.js')}}"></script>
+    <!-- jQuery 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js%22%3E"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    
+    <script src="{{asset('../plugins/jquery/jquery.min.js')}}"></script> 
     <!-- Bootstrap 4 -->
     <script src="{{asset('../plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('../dist/js/adminlte.min.js')}}"></script>
-
+    
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js%22%3E"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 
 
     <script type="text/javascript">
+      function ConsultaUserbyRut(e) {
+
+        var Rut = e;
 
 
-  function ConsultaUserbyRut(e){
-
-    var Rut = e; 
-
-
-    $.ajax({
+        $.ajax({
           type: 'POST',
           url: "{{ route('getUserByRut') }}",
           data: {
@@ -83,54 +93,89 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
             "rut": Rut,
-
-          }
-
-          ,
-          success: function(data) {
-            var json = JSON.stringify(data);
-            var Obj = JSON.parse(json);
-            console.log(Obj.NOMBRE)
-
-            document.getElementById("rut_edit").value = Obj.RUT;
-            document.getElementById("dv_edit").value = Obj.DIGITO_VERIFICADOR;
-            document.getElementById("nombre_edit").value = Obj.NOMBRE;
-            document.getElementById("apellido_edit").value = Obj.APELLIDO;
-            document.getElementById("tipocomprador_edit").value = Obj.TIPOCOMPRADOR;
-            document.getElementById("tipopersona_edit").value = Obj.TIPOPERSONA;
-            document.getElementById("nombrefantasia_edit").value = Obj.NOMBRE_FANTASIA;
-            document.getElementById("comuna_edit").value = Obj.AS;
-            document.getElementById("codigopostal_edit").value = Obj.CODIGO_POSTAL;
-            document.getElementById("telefono_edit").value = Obj.TELEFONO;
-            document.getElementById("correo_edit").value = Obj.CORREO;
-            //document.getElementById("contrasenia_edit").value = Obj.CONTRASENA;
-
-
-            $('#editarModal').modal('show')
-
-
-
-
-
-
-          },
-
-          error: (error) => {
             
 
+          }
+          ,
+          success: function(data){
+            if (data.status == 'success'){
+                //obtener datos
+                var persona = data.persona
+                var usuario = data.usuario
+                var perfil = data.perfil
+                var tipoPersonaLegal = data.tipoPersonaLegal
+
+                //asignar datos
+                $('#rut_edit').val(persona.RUT)
+                $('#dv_edit').val(persona.DIGITO_VERIFICADOR)
+                $('#nombre_edit').val(persona.NOMBRE)
+                $('#apellido_edit').val(persona.APELLIDO)
+                $('#tipocomprador_edit').val(perfil.ID_PERFIL)
+                $('#tipopersona_edit').val(tipoPersonaLegal.ID_TIPO_PERSONA_LEGAL)
+                $('#nombrefantasia_edit').val(persona.NOMBRE_FANTASIA)
+                $('#comuna_edit').val(persona.ID_COMUNA)
+                $('#codigopostal_edit').val(persona.CODIGO_POSTAL)
+                $('#telefono_edit').val(persona.TELEFONO)
+                $('#correo_edit').val(usuario.CORREO)
+
+                $('#editarModal').modal('show')
+            } else{
+              console.log(data.exception)
+            }
+          },
+
+          error: function(error){
             console.log(error);
           },
 
-          })
-  }
+        })
+      }
 
-  
+      $('#editarModal').on('modal.bs.hidden', function(){
+        $('#rut_edit').val("")
+        $('#dv_edit').val("")
+        $('#nombre_edit').val("")
+        $('#apellido_edit').val("")
+        $('#tipocomprador_edit').val("")
+        $('#tipopersona_edit').val("")
+        $('#nombrefantasia_edit').val("")
+        $('#comuna_edit').val("")
+        $('#codigopostal_edit').val("")
+        $('#telefono_edit').val("")
+        $('#correo_edit').val("")
+        $('#codigopostal_edit').val("")
+        $('#contrasenia_edit').val("")
+      })
 
+
+
+
+
+      //alerta eliminacion usuario
+      function AlertaEliminar(e) {
+
+        var Rut = e;
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          }
+        })
+      }
 
       $('#UserCreatedForm').submit(function(e) {
         e.preventDefault(); //evitar recargar la pagina
-
-
         var nombre = $('#nombre').val();
         var apellido = $('#apellido').val();
         var rutUser = $('#rut').val();
@@ -169,13 +214,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
             var json = JSON.stringify(data);
             var Obj = JSON.parse(json);
 
-            if(Obj.length === 0){
+            if (Obj.length === 0) {
 
               //alert('ok')
               //$('#prueba').modal('toggle')
-              dat
-            }else{
-              alert('error')
+              Swal.fire('Usuario Creado!')
+
+            } else {
+              //alert('error')
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Formulario incorrecto!',
+                //footer: '<a href>Why do I have this issue?</a>'
+              })
+
             }
 
             console.log(Obj.length)
@@ -192,12 +245,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
       });
 
 
+
       //function mostrarMensaje(mensaje){
-        //$("#prueba").empty(); //limpiar modal
-        //$("#prueba").append("<p>"+mensaje+"</p>"); //limpiar modal
-        //$("#prueba").show(500); //limpiar modal
-        //$("#prueba").hide(5000); //limpiar modal
-        
+      //$("#prueba").empty(); //limpiar modal
+      //$("#prueba").append("<p>"+mensaje+"</p>"); //limpiar modal
+      //$("#prueba").show(500); //limpiar modal
+      //$("#prueba").hide(5000); //limpiar modal
+
       //}
 
 
@@ -263,6 +317,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
       // });
 
 
+
+
+      //producto 
+
+      $('#ProductCreatedForm').submit(function(e) {
+        //e.preventDefault(); //evitar recargar la pagina
+
+
+        var nombreFruta = $('#nombreFruta').val();
+        var descripcion = $('#descripcion').val();
+        var imagen = $('#imagen').val();
+
+
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('CrearProducto') }}",
+          data: {
+            "_token": $("meta[name='csrf-token']").attr("content"),
+
+
+            "nombre": nombre,
+            "descripcion": descripcion,
+            "foto": foto
+          },
+          success: function(data) {
+            var json = JSON.stringify(data);
+            var Obj = JSON.parse(json);
+
+            if (Obj.length === 0) {
+
+              //alert('ok')
+              //$('#prueba').modal('toggle')
+
+            } else {
+              alert('error')
+            }
+
+            console.log(Obj.length)
+
+
+          },
+
+          error: (error) => {
+            alert('Formulario incompleto')
+
+            console.log(error);
+          },
+        });
+      });
     </script>
 </body>
 

@@ -14,11 +14,9 @@ class productoviewController extends Controller
        return view('producto');
     }    
 
-    public function CrearProduct(Request $request)
+    public function IngresarProduct(Request $request)
     {
-
-
-        $nombreFruta = $request->get('nombreFruta');
+        $nombreFruta = $request->get('nombre');
         $descripcion = $request->get('descripcion');
         $imagen = $request->get('imagen');
 
@@ -27,5 +25,8 @@ class productoviewController extends Controller
             'call SP_CREATE_TIPO_FRUTA(?,?,?)',
             array($nombreFruta, $descripcion, $imagen)
         );
+        //return response()->json();
+        return back()->with('status', "Se ha creado la fruta {$nombreFruta} satisfactoriamente!");
     }
+    
 }

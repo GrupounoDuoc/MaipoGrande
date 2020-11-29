@@ -22,21 +22,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row"></th>
-                @foreach($frutas as $fruta)
-                    <tr>
+            @foreach($frutas as $fruta)
+                    <tr>               
                         <td>{{$fruta->ID_TIPO_FRUTA}}</td>
                         <td>{{$fruta->NOMBRE}}</td>
-                        <td>{{$fruta->DESCRIPCION}}</td>
-                        
-                        </td>
+                        <td>{{$fruta->DESCRIPCION}}</td>                   
                     </tr>
-                    @endforeach
                 <td>
                     <button class="btn btn-warning">Editar Producto <i class="material-icons"></i> &#128397;&#65039;</a></button>
-                    <a href='deleteProducto/{{ $fruta->ID_TIPO_FRUTA }}' class="btn btn-danger">Eliminar Produto<i class="material-icons"></i> &#128465;&#65039;</a></button></td>
+                    <a href='deleteProducto/{{ $tipo_fruta->ID_TIPO_FRUTA }}' class="btn btn-danger">Eliminar Produto<i class="material-icons"></i> &#128465;&#65039;</a></button>
+                </td>                    
             </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
@@ -47,7 +44,7 @@
                 <div class="modal-header">
                     <div class="modal-body">
                         <!-- contenido del form -->
-                        <form action="">  
+                        <form id="ProductCreatedForm">  
                      
                             <p class="font-weight-bold">Ingresa los datos del nuevo Producto...</p>
                             <div class="form-group">
@@ -82,3 +79,8 @@
 
 
     @endsection
+    
+    <script>
+
+
+    </script>

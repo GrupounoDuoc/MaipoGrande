@@ -21,11 +21,16 @@ Route::post('/modificarUsuario', 'App\Http\Controllers\usuariosController\usuari
 
 Route::post('/getUserByRut', 'App\Http\Controllers\usuariosController\usuarioviewController@getUserByRut')->name('getUserByRut');// Se llama a la ruta desde el ajax 
 
+
+
 Route::get('/producto', 'App\Http\Controllers\productosController\productoviewController@ViewPanelProducto')->name('producto');
 
-Route::get('/crearProducto', 'App\Http\Controllers\productosController\productoviewController@CrearProduct')->name('CrearProducto');
+Route::post('/crearProducto', 'App\Http\Controllers\productosController\productoviewController@CrearProduct')->name('CrearProducto');
 
-
+ Route::post('/IngresarProducto', [
+     'uses' => 'App\Http\Controllers\AdminController@IngresarProducto',
+     'as' => 'IngresarProducto'
+ ]);
 
 
 //VISTAS APP
