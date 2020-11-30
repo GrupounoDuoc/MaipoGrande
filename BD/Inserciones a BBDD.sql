@@ -12,6 +12,11 @@ DELETE FROM `maipo_grande`.`tipo_persona_legal` WHERE ID_TIPO_PERSONA_LEGAL>0;
 INSERT INTO `tipo_persona_legal`( `NOMBRE`, `DESCRIPCION`) VALUES ('Persona Natural','Tipo de persona natural');
 INSERT INTO `tipo_persona_legal`( `NOMBRE`, `DESCRIPCION`) VALUES ('Empresa','Empresa');
 
+##tipo_postulacion
+DELETE FROM `maipo_grande`.`tipo_postulacion` WHERE ID_TIPO_POSTULACION>0;
+INSERT INTO `maipo_grande`.`tipo_postulacion`(`ID_TIPO_POSTULACION`,`NOMBRE`, `DESCRIPCION`) VALUES (1,'Frutas','Proveedor de frutas postula con kilos');
+INSERT INTO `maipo_grande`.`tipo_postulacion`(`ID_TIPO_POSTULACION`,`NOMBRE`, `DESCRIPCION`) VALUES (2,'Transporte','Proveedor de transporte logistico postula al despacho');
+
 ##ESTADOS
 DELETE FROM `maipo_grande`.`estados` WHERE ID_ESTADO!=-1;
 INSERT INTO `maipo_grande`.`estados`(`ID_ESTADO`,`NOMBRE`,`DESCRIPCION`)VALUES(1,'POR APROBAR','OFERTA DE CLIENTE EXTERNO, EN ESPERA DE APROBACION DE ADMINISTRADOR');
@@ -20,7 +25,7 @@ INSERT INTO `maipo_grande`.`estados`(`ID_ESTADO`,`NOMBRE`,`DESCRIPCION`)VALUES(3
 INSERT INTO `maipo_grande`.`estados`(`ID_ESTADO`,`NOMBRE`,`DESCRIPCION`)VALUES(4,'DESPACHO','OFERTA SE ENCUENTRA EN DESPACHO/DISPONIBLE PARA RETIRO');
 INSERT INTO `maipo_grande`.`estados`(`ID_ESTADO`,`NOMBRE`,`DESCRIPCION`)VALUES(5,'RECIBIDA','OFERTA FUE RECIBIDA POR COMPRADOR');
 INSERT INTO `maipo_grande`.`estados`(`ID_ESTADO`,`NOMBRE`,`DESCRIPCION`)VALUES(6,'RECHAZADA','OFERTA FUE RECHAZADA POR COMPRADOR');
-
+INSERT INTO `maipo_grande`.`estados`(`ID_ESTADO`,`NOMBRE`,`DESCRIPCION`)VALUES(7,'POSTULADO','SE POSTULO A LA OFERTA');
 #CALIDAD
 DELETE FROM `maipo_grande`.`calidad` WHERE ID_CALIDAD>0;
 INSERT INTO `maipo_grande`.`calidad`(`ID_CALIDAD`,`NOMBRE`,`DESCRIPCION`)VALUES(1,'Calidad A','Calidad premuim');
@@ -49,12 +54,12 @@ INSERT INTO COMUNA VALUES(1,1,'Maipu');
 
 #USUARIS DE PRUEBA
 DELETE FROM `maipo_grande`.`usuario` WHERE ID_USUARIO>0;
-INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(1,'admin@mail.cl','42069',1);
-INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(2,'vendedor@mail.cl','42069',2);
-INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(3,'compradorinterno@mail.cl','42069',3);
-INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(4,'compradorexterno@mail.cl','42069',4);
-INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(5,'transportista@mail.cl','42069',2);
-INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(6,'vendedor2@mail.cl','42069',2);
+INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(1,'admin@mail.cl','5f4dcc3b5aa765d61d8327deb882cf99',1);
+INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(2,'vendedor@mail.cl','5f4dcc3b5aa765d61d8327deb882cf99',2);
+INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(3,'compradorinterno@mail.cl','5f4dcc3b5aa765d61d8327deb882cf99',3);
+INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(4,'compradorexterno@mail.cl','5f4dcc3b5aa765d61d8327deb882cf99',4);
+INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(5,'transportista@mail.cl','5f4dcc3b5aa765d61d8327deb882cf99',2);
+INSERT INTO `maipo_grande`.`usuario`(`ID_USUARIO`,`CORREO`,`CONTRASENA`,`ID_PERFIL`)VALUES(6,'vendedor2@mail.cl','5f4dcc3b5aa765d61d8327deb882cf99',2);
 
 #PERSONA
 DELETE FROM `maipo_grande`.`persona` WHERE ID_USUARIO>0;
@@ -66,7 +71,7 @@ INSERT INTO `maipo_grande`.`persona`(`ID_USUARIO`,`RUT`,`DIGITO_VERIFICADOR`,`NO
 
 #PEDIDO
 DELETE FROM `maipo_grande`.`pedido` WHERE ID_PEDIDO>0;
-INSERT INTO `maipo_grande`.`pedido`(`ID_PEDIDO`,`ID_COMPRADOR`,`ID_TIPO_PEDIDO`,`ID_ESTADO_PEDIDO`,`FECHA_CREACION`,`FECHA_LIMITE_O_RETIRO`,`FECHA_PAGO`)VALUES(3,4,2,2,'2020-11-11 15:35:25','2020-11-15',null);
+INSERT INTO `maipo_grande`.`pedido`(`ID_PEDIDO`,`ID_VENDEDOR`,`ID_COMPRADOR`,`ID_TIPO_PEDIDO`,`ID_ESTADO_PEDIDO`,`FECHA_CREACION`,`FECHA_LIMITE_O_RETIRO`,`FECHA_PAGO`)VALUES(3,2,4,2,2,'2020-11-11 15:35:25','2020-11-15',null);
 
 #DETALLE_PEDIDO
 DELETE FROM `maipo_grande`.`detalle_pedido` WHERE ID_PEDIDO>0;

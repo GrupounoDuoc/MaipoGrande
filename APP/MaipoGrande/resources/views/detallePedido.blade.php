@@ -8,15 +8,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carrito de compras</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <title>Detalle pedido N°{{$idOferta}}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
 
     <!-- Foonts -->
     <link rel="stylesheet" href="iconos/style.css">
-    <link rel="stylesheet" href="iconos/envio/style.css">
-    <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
 
     <!-- Slider -->
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
@@ -48,15 +46,24 @@
         <h1 class="logo">Maipo Grande</h1>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
+            <div class="container-buscador" id="contenido">
+                <form action="" method="POST">
+                    <input type="text" id="campoBuscar" placeholder="Buscar..." name="productoBuscar">
+                    <span class="icon-search"></span>
+                </form>
+            </div>
             <ul id="lista-principal">
                 @if (empty($_SESSION['usuario'])) 
                     <li><a href="/">Inicio</a></li>
                     <li><a href="login">Entrar</a></li>
                     <li><a href="registro">Registrarse</a></li>
-                    <li><a href="contacto">Contacto</a></li>                    
+                    <li><a href="contacto">Contacto</a></li>
+                    <li><span class="icon-search" id="buscador"></span></li>
+                    
                 @else
                 <li><a href="/">Inicio</a></li>
                 <li><a href="contacto">Contacto</a></li>
+                <li><span class="icon-search" id="buscador"></span></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                 </li>
@@ -78,48 +85,87 @@
             </ul>
         </nav>  
     </div>
-    <!--Inicio del carrito de compras-->
-    @if (isset($_SESSION['producto']) && (is_array($items) || is_object($items)))
-        <table>
-            <tr>
-                <th>Vendedor</th>
-                <th>Producto</th>
-                <th>Imagen</th>
-                <th>Precio</th>
-                <th>Calidad</th>
-                <th>Cantidad</th>
-                <th>Eliminar</th>
-            </tr>
-            @foreach($items as $key=>$item)        
+    <div class="encabezado-pedido">
+        <h2>Detalle pedido N°{{$idOferta}}<h2>
+        <h3>Comprador: {{ $comprador}}</h3>
+        <h3>Fecha de creacion: {{ $fechaCreacion}}</h3>
+        <h3>Estado: {{ucfirst(strtolower($estado))}}</h3>
+    </div>
+    <!--Inicio del detalle de compra-->
+    <form id="ofertaForm" action="/ofertas" method="POST">
+    @CSRF
+        <input type="hidden" value="{{$idOferta}}" name="idOfertaPostulacion" id="idOfertaPostulacion">
+        @if ((is_array($detalles) || is_object($detalles)))
+            <table>
                 <tr>
-                    <td><p>{{ $item->NOMBRE }}</p></td>
-                    <td><p>{{ $item->TIPO_FRUTA }}</p></td>
-                    <td><img src="data:image/png;base64,{{ chunk_split(base64_encode($item->FOTO)) }}"></td>
-                    <td><p> {{ $item->CALIDAD}}</p></td>
-                    @for($i=1;$i<=count($_SESSION['producto']);$i++)
-                        @if($_SESSION['producto'][$i]['id']==$item->ID)
-                            <td><p>$ {{ ($item->PRECIO)*($_SESSION['producto'][$i]['cantidad']) }} CLP</p></td>
-                            <td><p> {{ $_SESSION['producto'][$i]['cantidad']}} Kg</p></td>
+                @if($_SESSION['tipo_usuario'] == 2)
+                        <th>Seleccionar</th>
+                    @endif
+                    <th>Tipo fruta</th>
+                    <th>Calidad requerida</th>
+                    <th>Cantidad requerida</th>
+                    @if($_SESSION['tipo_usuario'] == 2)
+                        <th>Precio x kilo de aporte </th>
+                        <th>Cantidad de aporte</th>
+                    @endif
+                </tr>
+                @foreach($detalles as $key=>$item)        
+                    <tr>
+                        @if($_SESSION['tipo_usuario'] == 2)
+                            <td><input type="checkbox" name="seleccion{{$key}}" value="true"></td>
                         @endif
-                    @endfor
-                    <td><button class="btn-delete"><a href="deleteCart/{{$item->ID}}"><img src="imagenes/basura.png"></a></button></td>
-                </tr>
-            @endforeach
-                <tr>
-                    <td>
-                        Subtotal : ${{$subtotal}}
-                    </td>
-                </tr>
-        </table>
-        <div class="comya13">
-            <a href="comprar" id="btn-comprar"><h5>¡Compra ahora!</h5></a>
-        </div>
-    @else
-        <h2>Sin productos en el carrito</h2>
-    @endif
-    <div class="continuarlin">
-            <a href="catalogo"><h5>Continuar comprando</h5></a>
-    </div>            
+                        <td><p>{{ $item->TIPO_FRUTA }}</p></td>
+                        <td><p> {{ $item->CALIDAD}}</p></td>
+                        <td><p> {{ $item->CANTIDAD}} Kg</p></td>
+                        @if($_SESSION['tipo_usuario'] == 2)
+                            <td><div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" step="1" class="form-control" id="precioPostulacion{{$key}}" name="precioPostulacion{{$key}}" value="1"  min="1">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">{{$item->MONEDA}}</span>
+                                </div>
+                            </div></td>
+                            <td><div class="input-group">
+                                <input type="number" step="0.1" class="form-control" id="cantidadPostulacion{{$key}}" name="cantidadPostulacion{{$key}}" value="1"  min="1" max="{{ $item->CANTIDAD}}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Kg</span>
+                                </div>
+                            </div></td>
+                        @endif
+                    </tr>
+                @endforeach
+            </table>
+        @endif
+        @if($_SESSION['tipo_usuario'] != 4)
+            <div class="comya13">
+                    <input type="hidden" name="postular" id="postular" value="true">
+                    <a href="#" onclick="document.getElementById('ofertaForm').submit()" id="postular" name="postular"><h5>Postular a oferta</h5></a>
+            </div>
+        @endif
+        @if($_SESSION['tipo_usuario'] == 4)
+            <div class="comya13">
+                <input type="hidden" name="seguimiento" id="seguimiento" value="true">
+                <a href="#" onclick="document.getElementById('ofertaForm').submit()" id="seguimiento" name="seguimiento"><h5>Seguimiento oferta</h5></a>
+            </div>
+        @endif
+        @if($_SESSION['tipo_usuario'] == 5 && $estado=='EN LOGISTICA')
+            <div class="comya13">
+                <input type="hidden" name="actualizarSeguimiento" id="actualizarSeguimiento" value="true">
+                <a href="#" onclick="document.getElementById('ofertaForm').submit()" id="actualizarSeguimiento" name="actualizarSeguimiento"><h5>Actualizar seguimiento oferta</h5></a>
+            </div>
+        @endif
+        @if($_SESSION['tipo_usuario'] == 1)
+            <div class="comya13">
+                <input type="hidden" name="publicar" id="publicar" value="true">
+                <a href="#" onclick="document.getElementById('ofertaForm').submit()" id="publicar" name="publicar"><h5>Publicar oferta</h5></a>
+            </div>
+        @endif
+        <div class="continuarlin">
+                <a href="ofertas"><h5>Volver</h5></a>
+        </div>   
+    </form>         
     <!--fin del carrito de compras-->
 
     <!-- VENTANA EMERGENTE COMPRAR YA -->
@@ -162,7 +208,7 @@
     <!-- FIN VENTANA EMERGENTE -->
 
 <!--Footer-->
-    <footer>
+<footer>
         <div class="contenedor">
             <br><div class="cont-footer">
                 <div class="alineacion">

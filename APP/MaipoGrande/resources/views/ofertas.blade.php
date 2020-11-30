@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Catálogo</title>
+    <title>Ofertas de subastas</title>
     <link href="../public/css/simple-sidebar.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/header-footer.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<form action="/catalogo" method="POST">
+<form action="/ofertas" method="POST">
 @csrf
 <header id="cabecera">
 
@@ -48,11 +48,7 @@
 <div class="sub-menu">
 <ul class="lista-submenu">
     <li><a href="catalogo">Catálogo</a></li>
-    @if (isset($_SESSION['usuario']))
-        @if($_SESSION['tipo_usuario'] != 3)
-            <li><a href="ofertas">Ofertas</a></li>
-        @endif
-    @endif
+    <li><a href="ofertas">Ofertas</a></li>
     <ul class="subMenu-usuario" id="submenu-perfil">
         <li><a href="">Perfil</a></li>
         <li><a href="logout">Cerrar sesión</a></li>
@@ -74,38 +70,21 @@
         <li><a href="login">Entrar</a></li>
         <li><a href="registro">Registrarse</a></li>
         <li><a href="administrador">Administrador</a></li>
-        @if (isset($_SESSION['usuario']))
-            @if($_SESSION['tipo_usuario'] != 3)
-                <li><a href="catalogo">Catálogo</a></li>
-            @endif
-        @endif
-        <ul class="subMenu-usuario" id="submenu-perfil">
-            <li><a href="">Perfil</a></li>
-            <li><a href="logout">Cerrar sesión</a></li>
-        </ul>
-        <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-        @if(isset($_SESSION['totalCart']))
-        <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-        @else
-        <p class="cantidad">0</p>
-        @endif
-        @else
-        <li><a href=""><span class="icon-search"></span></a></li>
-        <li class="li-perfilUsuario">
-            <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-        </li>
         <li><a href="catalogo">Catálogo</a></li>
         <li><a href="maipogrande.html">Calidad Fruta</a></li>
         <ul class="subMenu-usuario" id="submenu-perfil">
             <li><a href="">Perfil</a></li>
             <li><a href="logout">Cerrar sesión</a></li>
         </ul>
-        <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-        @if(isset($_SESSION['totalCart']))
-        <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-        @else
-        <p class="cantidad">0</p>
-        @endif
+        <li class="li-perfilUsuario">
+            <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+        </li>
+        <li><a href="catalogo">Catálogo</a></li>
+        <li><a href="maipogrande.html">Ofertas</a></li>
+        <ul class="subMenu-usuario" id="submenu-perfil">
+            <li><a href="">Perfil</a></li>
+            <li><a href="logout">Cerrar sesión</a></li>
+        </ul>
         @endif
     </ul>
 </nav>
@@ -118,28 +97,25 @@
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
         <div class="bg-light border-right " id="sidebar-wrapper">
-            <div class="sidebar-heading">Catalogo </div>
+            <div class="sidebar-heading"><h3>Filtros</h3> </div>
             <div class="list-group list-group-flush"> 
                     <ul>
-                        <li><span><img src="imagenes/icon-fruta.png"></span>Tipo fruta</li>
+                        <li><span><h5>Estado oferta</h5></span></li>
                         <ul>
-                            @foreach ($tipos as $tipo)
-                                @if( $tipo->TIPO_FRUTA == $tipoSelected)
-                                    <li><input onclick="this.form.submit();" type="radio" name="tipo" checked="true" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                            @foreach ($estados as $estado)
+                                @if( $estado->NOMBRE == $estadoFiltroSelected)
+                                    <li><input onclick="this.form.submit();" type="radio" name="estado" checked="true" value="{{ $estado->NOMBRE}}"><label for="{{ $estado->NOMBRE}}">{{ ucfirst(strtolower($estado->NOMBRE))}}</label></li>
                                 @else
-                                    <li><input onclick="this.form.submit();" type="radio" name="tipo" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                                    <li><input onclick="this.form.submit();" type="radio" name="estado" value="{{ $estado->NOMBRE}}"><label for="{{ $estado->NOMBRE}}">{{ ucfirst(strtolower($estado->NOMBRE))}}</label></li>
                                 @endif
                             @endforeach
                         </ul>
-                        <li><span></span>Calidad</li>
+                        <li><span><h5>Rango de fecha</h5></span></li>
                         <ul>
-                            @foreach ($calidades as $calidad)
-                                @if( $calidad->CALIDAD == $calidadSelected)
-                                    <li><input onclick="this.form.submit();" type="radio" name="calidad" checked="true" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
-                                @else
-                                    <li><input onclick="this.form.submit();" type="radio" name="calidad" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
-                                @endif
-                            @endforeach
+                            <label for="fechaInicio">Fecha desde:</label>
+                            <li><input onchange="this.form.submit();" type="date" id="fechaInicio" name="fechaInicio" value="{{$fechaInicioSelected}}" min="2000/01/01" max="{{date('d/m/Y h:i:s')}}"></li>
+                            <label for="fechaFin">Hasta fecha:</label><br>
+                            <li><input onchange="this.form.submit();" type="date" id="fechaFin" name="fechaFin" value="{{$fechaFinSelected}}" min="2000/01/01" max="{{date('d/m/Y h:i:s')}}"></li>
                         </ul>
                         <br>
                         <input type="submit" class="card-link btn btn-secondary" name="Limpiar" value="Limpiar">
@@ -151,30 +127,19 @@
             <div class="col" style="max-width:25rem;">
                 @foreach ($ofertas as $oferta)
                     <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
-                        <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
-                            <input type="hidden" id="tipo_fruta{{$oferta->ID}}" name="tipo_fruta{{$oferta->ID}}" value="{{ $oferta->TIPO_FRUTA}}">
-                            <p class="card-text">Vendedor: {{ $oferta->NOMBRE_VENDEDOR}}</p>
+                            <h5 class="card-title">Comprador: {{ $oferta->NOMBRE_COMPRADOR}}</h5>
+                            <p class="card-text">Fecha publicacion: {{ $oferta->FECHA}}</p>
+                            <p class="card-text">Estado: {{ ucfirst(strtolower($oferta->ESTADO))}}</p>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Tipo de calidad: {{ $oferta->CALIDAD}}</li>
-                            <input type="hidden" id="calidad_fruta{{$oferta->ID}}" name="calidad_fruta{{$oferta->ID}}" value="{{ $oferta->CALIDAD}}">
-                            <li class="list-group-item">Precio: $ {{ $oferta->PRECIO}} </li>
-                            <li class="list-group-item">
-                            <label for="cantidad">Cant a comprar:</label>
-                            <div class="input-group">
-                                <input type="number" step="0.1" class="form-control" id="cantidad{{$oferta->ID}}" name="cantidad{{$oferta->ID}}" value="1"  min="1" max="{{ $oferta->CANT_KG}}" style="max-width:30%;">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Kg</span>
-                                </div>
-                            </div>
-                            (Cantidad disponible: {{ $oferta->CANT_KG}} Kg)
-                            </li>
                             <input type="hidden" id="id" name="id" value="{{$oferta->ID}}">
                         </ul>
                         <div class="card-body">
-                            <input type="submit" class="card-link btn btn-primary" name="Añadir{{$oferta->ID}}" value="Añadir al carro"/>
+                            <input type="submit" class="card-link btn btn-secondary" name="detalle{{$oferta->ID}}" value="Ver detalles"/>
+                            @if($oferta->ESTADO == 'EN LOGISTICA')
+                                <input type="submit" class="card-link btn btn-secondary" name="seguimiento{{$oferta->ID}}" value="Seguimiento"/>
+                            @endif
                         </div>
                     </div>    
                 @endforeach
