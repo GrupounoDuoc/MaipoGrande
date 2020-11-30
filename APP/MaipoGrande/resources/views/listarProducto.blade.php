@@ -72,7 +72,7 @@
                     @foreach($frutas as $fruta)
                     <tr>
                         <td>{{$fruta->ID_TIPO_FRUTA}}</td>
-                        <td>{{$fruta->TIPO_FRUTA}}</td>
+                        <td>{{$fruta->NOMBRE}}</td>
                         <td>{{$fruta->DESCRIPCION}}</td>
                         <td><a href='deleteProducto/{{ $fruta->ID_TIPO_FRUTA }}'>Borrar</a>
                             <a href='ModificarProducto'>Modificar</a>

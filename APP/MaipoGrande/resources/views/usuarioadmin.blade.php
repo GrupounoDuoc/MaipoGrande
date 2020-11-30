@@ -231,7 +231,7 @@
                     <h4 class="modal-tittle">Editar usuario</h4>
                     <!-- contenido del form -->
                     <!-- <form action={{ route('ModificarUser') }} method="POST" autocomplete="on" action="">    -->
-                    <form action="{{ route('ModificarUser') }}" method="POST" id="updateUserForm">
+                    <form action="{{ route('ModificarUsuario') }}" method="POST">
                         @csrf
 
                         <div class="form-group row">
@@ -346,7 +346,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
 
-                            <button type="submit" class="btn btn-warning"><i class="fa fa-edit fa-1x"></i>Actualizar</button>
+                            <button type="submit" class="btn btn-warning" ><i class="fa fa-edit fa-1x"></i>Actualizar</button>
                         </div>
                     </form>
                 </div>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\usuariosController;
 
+use Illuminate\Support\Facades\Log;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,6 +11,7 @@ use App\Models\persona;
 use App\Models\usuario;
 use App\Models\tipo_persona_legal;
 use App\Models\perfil;
+
 
 class usuarioviewController extends Controller
 {
@@ -73,7 +76,7 @@ class usuarioviewController extends Controller
 
     } catch (\Exception $e){
         session()->flash('type', 'danger');
-        session()->flash('message', 'No se creo el usuario','{$nombre}');
+        session()->flash('message', 'No se creo el usuario');
     }
 
         //if($CrearUser){
@@ -138,15 +141,20 @@ class usuarioviewController extends Controller
                     $telefono, $correo, $contrasenia
                 )
             );
-
+            
+            //Log::info($ModificarUser[0]);
+            
             session()->flash('type', 'success');
             session()->flash('message', 'Usuario modificado');
         } catch (\Exception $e){
             session()->flash('type', 'danger');
+            //session()->flash('message', $e->getMessage());
             session()->flash('message', 'No se modifico el usuario');
+            
         }
-
+        //return redirect('index');
         return redirect()->back();
+        
     }
 
     public function getUserByRut(Request $request){
