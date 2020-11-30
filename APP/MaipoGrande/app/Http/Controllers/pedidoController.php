@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use DB;
 
 use Illuminate\Http\Request;
-use DB;
 
 use App\pedido;
 use App\detalle_pedido;
@@ -58,13 +58,12 @@ class pedidoController extends Controller
             JOIN PERSONA PU ON PU.ID_USUARIO = HS.ID_PROVEEDOR
             JOIN CALIDAD C ON C.ID_CALIDAD = HS.ID_CALIDAD
             JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = HS.ID_TIPO_FRUTA
-            WHERE HS.ID_STOCK IN (SELECT MAX(ID_STOCK) FROM HISTORICO_STOCK GROUP BY ID_PROVEEDOR,ID_TIPO_FRUTA)
-            ORDER BY HS.ID_PROVEEDOR';
+            WHERE HS.ID_STOCK IN (SELECT MAX(ID_STOCK) FROM HISTORICO_STOCK GROUP BY ID_PROVEEDOR,ID_TIPO_FRUTA)';
         if($tipoSelected!=null){
-            $query = ($query).('AND TF.NOMBRE=\''.($tipoSelected).'\'');
+            $query = ($query).(' AND TF.NOMBRE=\''.($tipoSelected).'\'');
         }
         if($calidadSelected!=null){
-            $query = ($query).('AND C.NOMBRE=\''.($calidadSelected).'\'');
+            $query = ($query).(' AND C.NOMBRE=\''.($calidadSelected).'\'');
         }
         $ofertas = DB::select(DB::raw($query));
         foreach($ofertas as $oferta){
@@ -100,16 +99,133 @@ class pedidoController extends Controller
                     }
                 }
                 $_SESSION['totalCart'] = count($_SESSION['producto']);
-            }elseif(isset($_POST['Detalle'.($idOferta)])){
-                #SI SE PRESIONA DETALLE
             }
         }
         if($limiteSuperado==true){
             $_SESSION['status']="No se puede seleccionar mas cantidad de la disponible, se ha quitado del carro";
         }
         return view('/catalogo', compact('ofertas','tipos','calidades','calidadSelected','tipoSelected','found'));
-        
-        
+    }
+    public function ofertas()
+    {
+        #SE VERFICA SI SE HA CREADO UNA SESION
+        if(!isset($_SESSION)){
+            session_start();
+        }
+        if(!isset($_SESSION['usuario'])){
+            return redirect()->route('/');
+        }
+        #SE LLENAN ARREGLOS CON CRITERIOS DE FILTRO
+        $estados = DB::table('estados')
+                        ->where('ID_ESTADO','<=','6')
+                        ->get(); //Trae un objeto con los datos de la tabla.
+        $fechaInicioSelected=null;
+        $fechaFinSelected=null;
+        $estadoFiltroSelected=null;
+        $found=false;
+        $limiteSuperado=false;
+        $idOferta=null;
+        #SI SE PRESIONA FILTAR
+        if(isset($_POST['fechaInicio'])){
+            $fechaInicioSelected = $_POST['fechaInicio'];
+        }
+        if(isset($_POST['fechaFin'])){
+            $fechaFinSelected = $_POST['fechaFin'];
+        }
+        if(isset($_POST['estado'])){
+            $estadoFiltroSelected = $_POST['estado'];
+        }
+        #SE REALIZA ACCION SEGUN EL SUBMIT PRESIONADO
+        if(isset($_POST['Limpiar'])){
+            #SI SE PRESIONA LIMPIAR
+            $fechaInicioSelected=null;
+            $fechaFinSelected=null;
+            $estadoFiltroSelected=null;
+        }
+        #OPCION POR DEFECTO
+        $query = 'select  P.ID_PEDIDO ID,
+        CONCAT(PC.NOMBRE,\' \',PC.APELLIDO)  NOMBRE_COMPRADOR,
+        FECHA_CREACION FECHA,
+        E.NOMBRE ESTADO
+        FROM PEDIDO P
+        JOIN PERSONA PV ON PV.ID_USUARIO = P.ID_VENDEDOR
+        JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
+        JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
+        WHERE ID_TIPO_PEDIDO = 2';
+        if($estadoFiltroSelected!=null){
+            $query = ($query).(' AND E.NOMBRE = \''.($estadoFiltroSelected).'\'');
+        }
+        if($fechaInicioSelected!=null && $fechaFinSelected!=null){
+            $query = ($query).(' AND P.FECHA_CREACION BETWEEN \''.($fechaInicioSelected).'\' AND \''.($fechaFinSelected).'\'');
+        }elseif($fechaInicioSelected!=null){
+            $query = ($query).(' AND P.FECHA_CREACION=\''.($fechaInicioSelected).'\'');
+        }elseif($fechaFinSelected!=null){
+            $query = ($query).(' AND P.FECHA_CREACION=\''.($fechaFinSelected).'\'');
+        }
+        $ofertas = DB::select(DB::raw($query));
+        foreach($ofertas as $oferta){
+            $idOferta =$oferta->ID;
+            if(isset($_POST['detalle'.($idOferta)]) || isset($_POST['postular'.($idOferta)])){
+                $comprador = $oferta->NOMBRE_COMPRADOR;
+                $fechaCreacion = $oferta->FECHA;
+                $estado = $oferta->ESTADO;
+                #SI SE PRESIONA DETALLE
+                $query = 'SELECT
+                C.NOMBRE CALIDAD,
+                TF.NOMBRE TIPO_FRUTA,
+                DP.CANT_KG CANTIDAD,
+                DP.PRECIO_KG PRECIO,
+                DP.COD_MONEDA MONEDA
+                FROM PEDIDO P
+                JOIN DETALLE_PEDIDO DP ON DP.ID_PEDIDO = P.ID_PEDIDO
+                JOIN CALIDAD C ON C.ID_CALIDAD = DP.ID_CALIDAD
+                JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = DP.ID_TIPO_FRUTA
+                JOIN PERSONA PV ON PV.ID_USUARIO = P.ID_VENDEDOR
+                JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
+                JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
+                WHERE P.ID_PEDIDO = '.($idOferta);
+                break;
+            }
+        }
+        $detalles = DB::select(DB::raw($query));
+        if(isset($_POST['detalle'.($idOferta)])){
+            #SI SE PRESIONA DETALLE
+            return view('/detallePedido', compact('detalles','idOferta','comprador','fechaCreacion','estado'));
+        }elseif(isset($_POST['postular'.($idOferta)])){
+            #SI SE PRESIONA POSTULAR
+            $postulacion=null;
+            $idOfertaPostulacion = $_POST['idOfertaPostulacion'];
+            foreach($detalles as $key=>$detalle){
+                if(isset($_POST['seleccion'.($key)])){
+                    DB::statement('CALL SP_CREATE_POSTULACION(?,?,?,?,?,?,@RES);',
+                                array($idOfertaPostulacion,
+                                $_SESSION['usuario'],
+                                $detalle->TIPO_FRUTA,
+                                $detalle->CALIDAD,
+                                $_POST['cantidadPostulacion'.($key)],
+                                $_POST['precioPostulacion'.($key)]));
+                    $postulacion = DB::select('SELECT @RES AS RES');
+                    if(is_array($postulacion) || is_object($postulacion)){
+                        $numero = null;
+                        foreach($postulacion as $n){
+                            $numero = $n->RES;
+                            break;
+                        }
+                        if($postulacion==null){
+                            $postulacion=$numero;
+                        }else{
+                            $postulacion=($postulacion).(',').($numero);
+                        }
+                    }
+                }
+            }
+            if($postulacion!= null){
+                return view('/postulacionCompleta', compact('postulacion','idOfertaPostulacion'));
+            }else{
+                return view('/postulacionCompleta', compact('idOfertaPostulacion'));
+            }
+        }
+        return view('/ofertas', compact('ofertas','estados','fechaInicioSelected','fechaFinSelected','estadoFiltroSelected'));
     }
     public function deleteCart($id)
     {
@@ -222,7 +338,6 @@ class pedidoController extends Controller
         }
         return view('/carrito',compact('items','subtotal'));
     }
-
     public function PublicarVenta(Request $request)
     {
 
@@ -254,6 +369,4 @@ class pedidoController extends Controller
         return view('PublicarPedido', compact('frutas','calidades'));
 
     }
-
 }
-

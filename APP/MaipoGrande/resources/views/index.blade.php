@@ -66,11 +66,8 @@
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
                 <li><a href="administrador">Administrador</a></li>
-                <li><span class="icon-search" id="buscador"></span></li>
-
                 @else
                 <li><a href="/">Inicio</a></li>
-                <li><span class="icon-search" id="buscador"></span></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                 </li>
@@ -82,7 +79,11 @@
     <div class="sub-menu">
         <ul class="lista-submenu">
             <li><a href="catalogo">Catálogo</a></li>
-            <li><a href="maipogrande">Calidad Fruta</a></li>
+            @if (isset($_SESSION['usuario']))
+                @if($_SESSION['tipo_usuario'] != 3)
+                    <li><a href="ofertas">Ofertas</a></li>
+                @endif
+            @endif
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="">Perfil</a></li>
                 <li><a href="logout">Cerrar sesión</a></li>
@@ -105,7 +106,11 @@
                 <li><a href="registro">Registrarse</a></li>
                 <li><a href="administrador">Administrador</a></li>
                 <li><a href="catalogo">Catálogo</a></li>
-                <li><a href="maipogrande.html">Calidad Fruta</a></li>
+                @if (isset($_SESSION['usuario']))
+                    @if($_SESSION['tipo_usuario'] != 3)
+                        <li><a href="ofertas">Ofertas</a></li>
+                    @endif
+                @endif
                 <ul class="subMenu-usuario" id="submenu-perfil">
                     <li><a href="">Perfil</a></li>
                     <li><a href="logout">Cerrar sesión</a></li>
@@ -117,12 +122,15 @@
                 <p class="cantidad">0</p>
                 @endif
                 @else
-                <li><a href=""><span class="icon-search"></span></a></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                 </li>
                 <li><a href="catalogo">Catálogo</a></li>
-                <li><a href="maipogrande.html">Calidad Fruta</a></li>
+                @if (isset($_SESSION['usuario']))
+                    @if($_SESSION['tipo_usuario'] != 3)
+                        <li><a href="ofertas">Ofertas</a></li>
+                    @endif
+                @endif
                 <ul class="subMenu-usuario" id="submenu-perfil">
                     <li><a href="">Perfil</a></li>
                     <li><a href="logout">Cerrar sesión</a></li>

@@ -55,6 +55,13 @@ Route::post('/catalogo', [
     'as' => 'catalogo'
 ]);
 
+Route::get('/ofertas', 'App\Http\Controllers\pedidoController@ofertas');
+
+Route::post('/ofertas', [
+    'uses' => 'App\Http\Controllers\pedidoController@ofertas',
+    'as' => 'ofertas'
+]);
+
 Route::get('/descripcion', function () {
     return view('descripcion');
 });

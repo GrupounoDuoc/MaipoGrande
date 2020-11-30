@@ -94,54 +94,10 @@
 <!--Footer-->
     <footer>
         <div class="contenedor">
-            <div class="cont-body">                
-                <div class="columna1">    
-                    <div class="suscripcionfooter">
-                        <h1> Entérate de nuevos eventos</h1>
-                        <input type="email" name="emailUser" id="suscribefooter" placeholder="Correo electrónico" required="">                            <input type="submit" id="submitfooter" name="" value="Suscríbete">
-                    </div>
-                </div>
-                <div class="columna2">
-            
-                    <h1> Nuestras Redes Sociales </h1>
-                    <div class="fila">
-                        <img src="imagenes/facebook1.png">
-                        <label> Síguenos en Facebook</label>
-                    </div> 
-
-                    <div class="fila">
-                        <img src="imagenes/google1.png">
-                        <label> Síguenos en Google+</label>
-                    </div>
-            
-                    <div class="fila">
-                        <img src="imagenes/twitter1.png">
-                        <label> Síguenos en Twitter</label>
-                    </div>
-                </div>
-                <div class="columna3">
-                    <h1> Cambiar Idioma </h1>
-                    <div class="fila-columna3">
-                        <fieldset>
-                            <div class="form-group">
-                                <select class="custom-select">
-                                    <option selected="">Español</option>
-                                    <option value="1">Inglés</option>
-                                    <option value="2">Portugés</option>
-                                </select>
-                            </div>
-                        </fieldset> 
-                    </div>  
-                </div>
-            </div>
             <br><div class="cont-footer">
                 <div class="alineacion">
                 <div class="copyright">
                     © 2019 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande@ </a>
-                </div>
-                <div class="nosotros">
-                    <a href=""> Preguntas Frecuentes |</a>
-                    <a href=""> Términos y condiciones </a>
                 </div>
             </div>
         </div>

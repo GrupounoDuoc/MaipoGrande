@@ -87,10 +87,14 @@
             </ul>
         </nav>  
     </div>
-
-    <h1>Error al procesar pedido</h1>
-    <h3>Ha ocurrido un error durante la transaccion, por favor reintente en unos momentos.</h3>
-        <a href="/">Volver al inicio</a>
+    @if($postulacion != null)
+        <h1>Postulacion realizada</h1>
+        <h3>Se recibio la postulacion para el pedido N°{{$idOfertaPostulacion}}, con el siguiente correlativo: {{postulaciones}}</h3>
+    @else
+    <h1>Postulacion erronea</h1>
+        <h3>No se ha podido realizar la postulacion al pedido N°{{$idOfertaPostulacion}}</h3>
+    @endif
+    <a href="/">Volver al inicio</a>
 <!--Footer-->
     <footer>
         <div class="contenedor">
