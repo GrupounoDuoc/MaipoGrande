@@ -12,13 +12,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>Administrador | Maipo Grande</title>
+  <!-- Font family-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Montserrat:ital,wght@0,400;0,500;0,900;1,500;1,700;1,800&display=swap" rel="stylesheet">
 
   <!-- Sweet alert--->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js">
@@ -36,7 +40,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @include('admin.sidebar')
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="background: url(../imagenes/contacto.jpg) no-repeat center; background-size: cover; font-family: 'Cinzel Decorative', cursive;
+      font-family: 'Montserrat', sans-serif;">
+
+<!--style="background: url(../imagenes/contacto.jpg) no-repeat center; background-size: cover; font-family: 'Cinzel Decorative', cursive;
+      font-family: 'Montserrat', sans-serif; -->
 
 
       <!-- Main content -->
@@ -174,8 +182,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
         })
       }
 
+      $('#eliminar').submit(function(e){
+    e.preventDefault();
+    url = $(this).parent().attr('action');
+
+      BootstrapDialog.confirm(
+        '¿Está seguro que desea eliminar el elemento?', function(result){
+
+        if(result) {
+              $.ajax(url);
+        }
+
+      });
+  });
+
       $('#UserCreatedForm').submit(function(e) {
-        e.preventDefault(); //evitar recargar la pagina
+        //e.preventDefault(); //evitar recargar la pagina
+
+        
+
+        //setTimeout(refresh, 10000);
         var nombre = $('#nombre').val();
         var apellido = $('#apellido').val();
         var rutUser = $('#rut').val();
@@ -216,6 +242,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             if (Obj.length === 0) {
 
+              console.log(json);
               //alert('ok')
               //$('#prueba').modal('toggle')
               Swal.fire('Usuario Creado!')
@@ -255,108 +282,71 @@ scratch. This page gets rid of all links and provides the needed markup only.
       //}
 
 
-      // $('#updateUserForm').submit(function(e) {
-      //   e.preventDefault();
+      $('#updateUserForm').submit(function(e) {
+        e.preventDefault();
 
-      //    //// alert('funciona')
+         //// alert('funciona')
 
-      //   var nombre = $('#nombre').val();
-      //   var apellido = $('#apellido').val();
-      //   var rutUser = $('#rut').val();
-      //   var dv = $('#dv').val();
-      //   var tipocomprador = $('#tipocomprador').val();
-      //   var tipopersona = $('#tipopersona').val();
-      //   var nombrefantasia = $('#nombrefantasia').val();
-      //   var comuna = $('#comuna').val();
-      //   var codigopostal = $('#codigopostal').val();
-      //   var telefono = $('#telefono').val();
-      //   var correo = $('#correo').val();
-      //   var contrasenia = $('#contrasenia').val();
+        var nombre = $('#nombre_edit').val();
+        var apellido = $('#apellido_edit').val();
+        var rutUser = $('#rut_edit').val();
+        //var dv = $('#dv').val();
+        var tipocomprador = $('#tipocomprador_edit').val();
+        var tipopersona = $('#tipopersona_edit').val();
+        var nombrefantasia = $('#nombrefantasia_edit').val();
+        var comuna = $('#comuna_edit').val();
+        var codigopostal = $('#codigopostal_edit').val();
+        var telefono = $('#telefono_edit').val();
 
-
-      //   $.ajax({
-      //     type: 'POST',
-      //     url: "{{ route('ModificarUsuario') }}",
-      //     data: {
-      //       "_token": $("meta[name='csrf-token']").attr("content"),
-
-      //       "nombre": nombre,
-      //       "apellido": apellido,
-      //       "rut": rutUser,
-      //       "dv": dv,
-      //       "tipocomprador": tipocomprador,
-      //       "tipopersona": tipopersona,
-      //       "nombrefantasia": nombrefantasia,
-      //       "comuna": comuna,
-      //       "codigopostal": codigopostal,
-      //       "telefono": telefono,
-      //       "correo": correo,
-      //       "contrasenia": contrasenia
-      //     },
-      //     success: function(data) {
-      //       var json = JSON.stringify(data);
-      //       var Obj = JSON.parse(json);
-
-      //       if(Obj.length === 0){
-
-      //         //alert('ok')
-      //         $('#prueba').modal('toggle')
-      //       }else{
-      //         alert('error')
-      //       }
-
-      //       console.log(Obj.length)
-      //     },
-
-      //     error: (error) => {
-      //       alert('Formulario incompleto')
-
-      //       console.log(error);
-      //     },
-      //   });
-      // });
-
-
-
-
-      //producto 
-
-      $('#ProductCreatedForm').submit(function(e) {
-        //e.preventDefault(); //evitar recargar la pagina
-
-
-        var nombreFruta = $('#nombreFruta').val();
-        var descripcion = $('#descripcion').val();
-        var imagen = $('#imagen').val();
+        
+        // var apellido = $('#apellido_edit').val();
+        // var rutUser = $('#rut_edit').val();
+        // //var dv = $('#dv').val();
+        // var tipocomprador = $('#tipocomprador_edit').val();
+        // var tipopersona = $('#tipopersona_edit').val();
+        // var nombrefantasia = $('#nombrefantasia_edit').val();
+        // var comuna = $('#comuna_edit').val();
+        // var codigopostal = $('#codigopostal_edit').val();
+        // var telefono = $('#telefono_edit').val();
+        //var correo = $('#correo').val();
+        //var contrasenia = $('#contrasenia').val();
 
 
         $.ajax({
           type: 'POST',
-          url: "{{ route('CrearProducto') }}",
+          url: "{{ route('ModificarUsuario') }}",
           data: {
             "_token": $("meta[name='csrf-token']").attr("content"),
 
-
             "nombre": nombre,
-            "descripcion": descripcion,
-            "foto": foto
+            "apellido": apellido,
+            "rut": rutUser,
+            //"dv": dv,
+            "tipocomprador": tipocomprador,
+            "tipopersona": tipopersona,
+            "nombrefantasia": nombrefantasia,
+            "comuna": comuna,
+            "codigopostal": codigopostal,
+            "telefono": telefono,
+            //"correo": correo,
+            //"contrasenia": contrasenia
           },
           success: function(data) {
             var json = JSON.stringify(data);
             var Obj = JSON.parse(json);
 
-            if (Obj.length === 0) {
+            if(Obj.length === 0){
 
-              //alert('ok')
-              //$('#prueba').modal('toggle')
-
-            } else {
+              console.log(json);
+             
+              alert('ok')
+              
+              //$('#editarModal').modal('toggle')
+            }else{
               alert('error')
             }
 
-            console.log(Obj.length)
-
-
+            //console.log(Obj.length)
           },
 
           error: (error) => {
@@ -366,6 +356,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
           },
         });
       });
+
+
+
+
+      //producto 
     </script>
 </body>
 

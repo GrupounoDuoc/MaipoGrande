@@ -5,16 +5,20 @@ namespace App\Http\Controllers\productosController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\tipo_fruta;
 
 class productoviewController extends Controller
 {
-    public function ViewPanelProducto()
+    public function ViewPanelProducto(Request $request)
     
     {
-       return view('producto');
+        $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()', array());
+
+      
+       return view('/producto',compact('frutas'));
     }    
 
-    public function IngresarProducto(Request $request)
+    public function CrearProducto(Request $request)
     {
         $nombreFruta = $request->get('nombre');
         $descripcion = $request->get('descripcion');
@@ -29,13 +33,7 @@ class productoviewController extends Controller
         return back()->with('status', "Se ha creado la fruta {$nombreFruta} satisfactoriamente!");
     }
 
-    public function listarProducto(Request $request)
-    {
-        $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()', array());
-
-        return view('/ListarProducto', compact('frutas'));
-    }
-
+    
     public function destroyProducto($id)
     {
         DB::select('call SP_DELETE_TIPO_FRUTA(?)', [$id]);
@@ -68,5 +66,13 @@ class productoviewController extends Controller
 
         return back()->with('status', "Se ha modificado la fruta con id {$id_tipo_fruta} y nombre {$tipo_fruta} satisfactoriamente!");
     }
+
+    public function listarProducto(Request $request)
+    {
+        $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()', array());
+
+        return view('/producto', compact('frutas'));
+    }
+
     
 }

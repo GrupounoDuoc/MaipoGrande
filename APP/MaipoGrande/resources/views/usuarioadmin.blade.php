@@ -72,7 +72,7 @@
                     @endif
                 <td>
                     <!-- <button class="btn btn-warning" data-toggle="modal" data-target="#editarModal"> -->
-                    <button class="btn btn-warning" onclick="ConsultaUserbyRut('{{$usuario->RUT}}')">
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#editarModal" onclick="ConsultaUserbyRut('{{$usuario->RUT}}')">
                         Editar usuario
                         <input type="hidden" value="{{$usuario->RUT}}">
                         <i class="material-icons"></i> &#128397;&#65039;</a>
@@ -231,7 +231,7 @@
                     <h4 class="modal-tittle">Editar usuario</h4>
                     <!-- contenido del form -->
                     <!-- <form action={{ route('ModificarUser') }} method="POST" autocomplete="on" action="">    -->
-                    <form action="{{ route('ModificarUsuario') }}" method="POST">
+                    <form id="updateUserForm">
                         @csrf
 
                         <div class="form-group row">

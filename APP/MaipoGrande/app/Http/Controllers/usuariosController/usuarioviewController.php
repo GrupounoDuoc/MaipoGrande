@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use App\Models\persona;
 use App\Models\usuario;
 use App\Models\tipo_persona_legal;
@@ -104,7 +105,7 @@ class usuarioviewController extends Controller
             array($rut)
         );
 
-        return back()->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
+        
         
     }
     
@@ -113,32 +114,38 @@ class usuarioviewController extends Controller
     {
         DB::select('call SP_DELETE_USUARIO(?)', [$rut]);
 
-        return back()->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
+        session()->flash('type', 'success');
+        session()->flash('message', 'Usuario eliminado con exito!');
+
+        return redirect('usuario');
+
+        //return redirect('usuario')->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
     }
 
     public function ModificarUser(Request $request)
     {
         try {
-            $nombre = $request->get('nombre');
-            $apellido = $request->get('apellido');
-            $rut = $request->get('rut');
-            $tipocomprador = $request->get('tipocomprador');
-            $tipopersona = $request->get('tipopersona');
-            $comuna = $request->get('comuna');
-            $codigopostal = $request->get('codigopostal');
-            $telefono = $request->get('telefono');
-            $nombrefantasia = $request->get('nombrefantasia');
-            $correo = $request->get('correo');
-            $contrasenia = $request->get('contrasenia');
+            $nombre = $request->get('nombre_edit');
+            $apellido = $request->get('apellido_edit');
+            $rut = $request->get('rut_edit');
+            $tipocomprador = $request->get('tipocomprador_edit');
+            $tipopersona = $request->get('tipopersona_edit');
+            $nombrefantasia = $request->get('nombrefantasia_edit');
+            $comuna = $request->get('comuna_edit');
+            $codigopostal = $request->get('codigopostal_edit');
+            $telefono = $request->get('telefono_edit');
+            
+            //$correo = $request->get('correo');
+            //$contrasenia = $request->get('contrasenia');
 
             //$contrasenia = md5($request->get('contrasenia'));
 
             $ModificarUser = DB::select(
-                'call SP_UPDATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?)',
+                'call SP_UPDATE_USUARIO(?,?,?,?,?,?,?,?,?)',
                 array(
                     $nombre, $apellido, $rut, $tipocomprador,
                     $tipopersona, $nombrefantasia, $comuna, $codigopostal,
-                    $telefono, $correo, $contrasenia
+                    $telefono //$correo, $contrasenia
                 )
             );
             
@@ -153,7 +160,7 @@ class usuarioviewController extends Controller
             
         }
         //return redirect('index');
-        return redirect()->back();
+        return response()->json( $ModificarUser);
         
     }
 
