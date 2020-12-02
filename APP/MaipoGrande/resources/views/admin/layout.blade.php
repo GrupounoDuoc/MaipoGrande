@@ -40,8 +40,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @include('admin.sidebar')
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" style="background: url(../imagenes/contacto.jpg) no-repeat center; background-size: cover; font-family: 'Cinzel Decorative', cursive;
-      font-family: 'Montserrat', sans-serif;">
+    <div class="content-wrapper" style="font-family: 'Montserrat', sans-serif;">
 
 <!--style="background: url(../imagenes/contacto.jpg) no-repeat center; background-size: cover; font-family: 'Cinzel Decorative', cursive;
       font-family: 'Montserrat', sans-serif; -->
@@ -198,9 +197,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       $('#UserCreatedForm').submit(function(e) {
         //e.preventDefault(); //evitar recargar la pagina
-
-        
-
         //setTimeout(refresh, 10000);
         var nombre = $('#nombre').val();
         var apellido = $('#apellido').val();
@@ -271,8 +267,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         });
       });
 
-
-
       //function mostrarMensaje(mensaje){
       //$("#prueba").empty(); //limpiar modal
       //$("#prueba").append("<p>"+mensaje+"</p>"); //limpiar modal
@@ -313,7 +307,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
         $.ajax({
-          type: 'POST',
+          type: 'POST', // PUT ES PARA MODIFICAR
           url: "{{ route('ModificarUsuario') }}",
           data: {
             "_token": $("meta[name='csrf-token']").attr("content"),
@@ -352,6 +346,57 @@ scratch. This page gets rid of all links and provides the needed markup only.
           error: (error) => {
             alert('Formulario incompleto')
 
+            console.log(error);
+          },
+        });
+      });
+
+
+
+      $('#ProductCreatedForm').submit(function(e) {
+        //e.preventDefault(); //evitar recargar la pagina
+        //setTimeout(refresh, 10000);
+        var nombreFruta = $('#nombreFruta').val();
+        var descripcion = $('#descripcion').val();
+        var imagen = $('#imagen').val();
+      
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('CrearProducto') }}",
+          data: {
+            "_token": $("meta[name='csrf-token']").attr("content"),
+
+
+            "nombreFruta": nombreFruta,
+            "descripcion": descripcion,
+            "imagenP": imagen
+          },
+          success: function(data) {
+            var json = JSON.stringify(data);
+            var Obj = JSON.parse(json);
+
+            if (Obj.length === 0) {
+
+              console.log(json);
+              //alert('ok')
+              //$('#prueba').modal('toggle')
+              Swal.fire('Producto Creado!')
+
+            } else {
+              //alert('error')
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Formulario incorrecto!',
+                //footer: '<a href>Why do I have this issue?</a>'
+              })
+
+            }
+            console.log(Obj.length)
+          },
+
+          error: (error) => {
+            alert('Formulario incompleto')
             console.log(error);
           },
         });

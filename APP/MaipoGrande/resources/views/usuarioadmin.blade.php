@@ -100,7 +100,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="nombre">Nombre</label>
+                            <label class="col-md-3 form-control-label" for="nombre">Nombre:</label>
                             <div class="col-md-9">
                                 <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el Nombre" required pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$">
 
@@ -108,14 +108,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="apellido">Apellido</label>
+                            <label class="col-md-3 form-control-label" for="apellido">Apellido:</label>
                             <div class="col-md-9">
                                 <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese su apellido" required pattern="^[a-zA-Z0-9_áéíóúñ°\s]{0,200}$">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="rutUser">Rut</label>
+                            <label class="col-md-3 form-control-label" for="rutUser">Rut:</label>
                             <div class="col-md-6">
                                 <input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese su rut" required>
                             </div>
@@ -125,7 +125,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="documento">Tipo de usuario</label>
+                            <label class="col-md-3 form-control-label" for="documento">Tipo de usuario:</label>
                             <div class="col-md-9">
                                 <select class="form-control" name="tipocomprador" id="tipocomprador" required>
                                     <option selected disabled value="">Seleccione perfil</option>
@@ -141,7 +141,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="documento">Tipo de persona</label>
+                            <label class="col-md-3 form-control-label" for="documento">Tipo de persona:</label>
 
                             <div class="col-md-9">
 
@@ -154,14 +154,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="nombrefantasia">Nombre comercial</label>
+                            <label class="col-md-3 form-control-label" for="nombrefantasia">Nombre comercial:</label>
                             <div class="col-md-9">
                                 <input type="text" id="nombrefantasia" name="nombrefantasia" class="form-control" required placeholder="Ingrese nombre de fantasia . . . ">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="documento">Comuna</label>
+                            <label class="col-md-3 form-control-label" for="documento">Comuna:</label>
 
                             <div class="col-md-9">
 
@@ -177,14 +177,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="codigopostal">Codigo postal</label>
+                            <label class="col-md-3 form-control-label" for="codigopostal">Codigo postal:</label>
                             <div class="col-md-9">
                                 <input type="text" id="codigopostal" name="codigopostal" class="form-control" placeholder="Ingrese el telefono . . . " required maxlength="8">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="telefono">Telefono</label>
+                            <label class="col-md-3 form-control-label" for="telefono">Telefono:</label>
                             <div class="col-md-9">
                                 <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el telefono . . . " required maxlength="9">
                             </div>
@@ -194,13 +194,13 @@
                             <div class="col-md-12">
                                 <label for="credencial">Ingrese sus credenciales</label>
                             </div>
-                            <label class="col-md-3 form-control-label" for="correo">Correo</label>
+                            <label class="col-md-3 form-control-label" for="correo">Correo:</label>
                             <div class="col-md-9">
                                 <input type="email" class="form-control" id="correo" name="correo" required placeholder="Ingrese el correo">
                             </div>
                             <br>
                             <br>
-                            <label class="col-md-3 form-control-label" for="contra">Contraseña</label>
+                            <label class="col-md-3 form-control-label" for="contra">Contraseña:</label>
                             <div class="col-md-9">
                                 <input type="password" class="form-control" id="contrasenia" name="contrasenia" required placeholder="Ingrese su contraseña . . .">
                             </div>

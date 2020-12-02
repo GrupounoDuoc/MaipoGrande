@@ -10,24 +10,43 @@
         <a href="#producto" data-toggle="modal"><button class="btn btn-success"><i class="material-icons"></i>  &#128465;&#65039; Producto</button></a>
     </div>
     <br>
+    <h2>Lista de productos registrados</h2>
+
+    @if(Session::has('message'))
+        <div class="alert alert-{{ Session::get('type') }} alert-dismissable fade show text-center" role="alert">
+            {{ Session::get('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Id</th>
                 <!--<th scope="col">Imagen Producto</th>-->
                 <th scope="col">Nombre Proveedor</th>
-                <th scope="col">Calidad</th>
-                <th scope="col">Costo</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Accion</th>
             </tr>
         </thead>
         <tbody>
         @foreach($frutas as $fruta)
                     <tr>
                         <td>{{$fruta->ID_TIPO_FRUTA}}</td>
-                        <td>{{$fruta->NOMBRE}}</td>
+                        <td>{{$fruta->TIPO_FRUTA}}</td>
                         <td>{{$fruta->DESCRIPCION}}</td>
-                        <td><a href='deleteProducto/{{ $fruta->ID_TIPO_FRUTA }}'>Borrar</a>
-                            <a href='ModificarProducto'>Modificar</a>
+                        <td>{{$fruta->FOTO}}</td>
+                        <td>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#editarModal" onclick="ConsultaUserbyRut('{{$fruta->ID_TIPO_FRUTA}}')"> <!--<a href='ModificarProducto'>Modificar</a> -->
+                                Editar usuario
+                                <input type="hidden" value="{{$fruta->ID_TIPO_FRUTA}}">
+                                <i class="material-icons"></i> &#128397;&#65039;</a>
+                            </button>
+
+                            <a href='deleteProducto/{{ $fruta->ID_TIPO_FRUTA }}' role="button" class="btn btn-danger">Eliminar Producto<i class="material-icons"></i> &#128465;&#65039;</a>
                         </td>
                     </tr>
         @endforeach
@@ -42,18 +61,19 @@
                     <div class="modal-body">
                         <!-- contenido del form -->
                         <form id="ProductCreatedForm">
+                        @csrf
                         <!--<form action="{{ route('CrearProducto') }}" method="POST" autocomplete="on" action="">-->
                             <p class="font-weight-bold">Ingresa los datos del nuevo Producto...</p>
                             <div class="form-group">
                                 <div class="col-xs-4">
                                     <div class="col-xs-4">
                                         <label for="nombre1">Nombre del producto:</label>
-                                        <input type="text" id="nombre1" class="form-control" name=nombreFruta placeholder="Nombre" required>
+                                        <input type="text" id="nombreFruta" class="form-control" name=nombreFruta placeholder="Nombre" required>
                                     </div>
                                     <br>
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Descipcion del producto:</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" id="descripcion" rows="3"></textarea>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" id="descripcion" name="descripcion" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -80,24 +100,24 @@
                 <div class="modal-header">
                     <div class="modal-body">
                         <!-- contenido del form -->
-                        <form id="">  
+                        <form id="ProductCreatedForm">  
                      
                             <p class="font-weight-bold">Ingresa los datos del nuevo Producto...</p>
                             <div class="form-group">
                                 <div class="col-xs-4">
                                     <div class="col-xs-4">
                                         <label for="nombre1">Nombre del producto:</label>
-                                        <input type="text" id="nombre1" class="form-control" name=nombreFruta placeholder="Nombre" required>
+                                        <input type="text" id="nombreP" class="form-control" name=nombreFruta placeholder="Nombre" required>
                                     </div>
                                     <br>
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Descipcion del producto:</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" id="descripcion" rows="3"></textarea>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" id="descripcionP" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="file1">Cargar imagen de producto</label>
-                                    <input type="file" class="form-control-file" name="imagen" id="imagen" accept="image/*">
+                                    <input type="file" class="form-control-file" name="imagen" id="imagenP" accept="image/*">
                                 </div>
                             </div>
                         
@@ -118,50 +138,5 @@
     @endsection
     
     <script>
-         $('#ProductCreatedForm').submit(function(e) {
-        e.preventDefault(); //evitar recargar la pagina
-
-
-        var nombreFruta = $('#nombreFruta').val();
-        var descripcion = $('#descripcion').val();
-        var imagen = $('#imagen').val();
-
-
-        $.ajax({
-          type: 'POST',
-          url: "{{ route('CrearProducto') }}",
-          data: {
-            "_token": $("meta[name='csrf-token']").attr("content"),
-
-
-            "nombre": nombre,
-            "descripcion": descripcion,
-            "foto": foto
-          },
-          success: function(data) {
-            var json = JSON.stringify(data);
-            var Obj = JSON.parse(json);
-
-            if (Obj.length === 0) {
-
-              //alert('ok')
-              //$('#prueba').modal('toggle')
-
-            } else {
-              alert('error')
-            }
-
-            console.log(Obj.length)
-
-
-          },
-
-          error: (error) => {
-            alert('Formulario incompleto')
-
-            console.log(error);
-          },
-        });
-      });
-
+        
     </script>
