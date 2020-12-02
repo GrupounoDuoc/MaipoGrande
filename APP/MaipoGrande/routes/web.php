@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -7,7 +8,37 @@ use Illuminate\Support\Facades\Route;
 //Routes Admin
 Route::get('/admin', 'App\Http\Controllers\adminController\adminviewController@ViewPanelAdmin')->name('admin');
 
-Route::get('/cliente', 'App\Http\Controllers\clientesController\clienteviewController@ViewPanelCliente')->name('cliente');
+//Route::get('/cliente', 'App\Http\Controllers\clientesController\clienteviewController@ViewPanelCliente')->name('cliente');
+
+Route::get('/usuario', 'App\Http\Controllers\usuariosController\usuarioviewController@ViewPanelUsuario')->name('usuario');
+
+Route::post('/crearUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@CrearUser')->name('CrearUsuario');
+
+Route::post('/eliminarUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@EliminarUser')->name('EliminarUsuario');
+
+Route::get('deleteUser/{rut}', 'App\Http\Controllers\usuariosController\usuarioviewController@destroyUser');
+
+Route::post('/modificarUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@ModificarUser')->name('ModificarUsuario');// ruta es = Modificar Usuario
+
+Route::post('/getUserByRut', 'App\Http\Controllers\usuariosController\usuarioviewController@getUserByRut')->name('getUserByRut');// Se llama a la ruta desde el ajax 
+
+
+
+Route::get('/producto', 'App\Http\Controllers\productosController\productoviewController@ViewPanelProducto')->name('producto');
+
+Route::post('/crearProducto', 'App\Http\Controllers\productosController\productoviewController@CrearProduct')->name('CrearProducto');
+
+
+//pdf
+//Route::get('/pdf', 'PDFController@PDF')->name('descargarPDF');
+
+
+
+
+Route::post('/IngresarProducto', [
+     'uses' => 'App\Http\Controllers\AdminController@IngresarProducto',
+     'as' => 'IngresarProducto'
+ ]);
 
 
 //VISTAS APP

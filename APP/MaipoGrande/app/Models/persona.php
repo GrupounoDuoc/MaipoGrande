@@ -9,4 +9,6 @@ class persona extends Model
 {
     use HasFactory;
     protected $table ='persona';
+
+    protected $primaryKey = 'RUT';
 }
