@@ -18,27 +18,45 @@ class productoviewController extends Controller
        return view('/producto',compact('frutas'));
     }    
 
-    public function CrearProducto(Request $request)
+    public function CrearProduct(Request $request)
     {
-        $nombreFruta = $request->get('nombre');
-        $descripcion = $request->get('descripcion');
-        $imagen = $request->get('imagen');
+        $this->validate($request,[
+            'imagen' => 'required'
+        ]);
+        try{
+            $nombreFruta = $request->get('nombreFruta');
+            $descripcion = $request->get('descripcion');
+            $imagen = $request->file('imagen')->storeAs('frutas',$request->file('imagen')->getClientOriginalName(),'public');
+            $IngresarProducto = DB::select(
+                'call SP_CREATE_TIPO_FRUTA(?,?,?)',
+                array($nombreFruta, $descripcion, $imagen)
+            );
 
+        session()->flash('type', 'success');
+        session()->flash('message', 'Producto creado con exito!');
 
-        $IngresarProducto = DB::select(
-            'call SP_CREATE_TIPO_FRUTA(?,?,?)',
-            array($nombreFruta, $descripcion, $imagen)
-        );
-        //return response()->json();
-        return back()->with('status', "Se ha creado la fruta {$nombreFruta} satisfactoriamente!");
+    } catch (\Exception $e){
+        session()->flash('type', 'danger');
+        session()->flash('message', 'No se creo el producto!');
+    }
+        return redirect()->back();
+        //return back()->with('status', "Se ha creado la fruta {$nombreFruta} satisfactoriamente!");
     }
 
     
     public function destroyProducto($id)
     {
         DB::select('call SP_DELETE_TIPO_FRUTA(?)', [$id]);
-        return back()->with('status', "Se ha eliminado la fruta con ID {$id} satisfactoriamente!");
+
+        session()->flash('type', 'success');
+        session()->flash('message', 'Usuario eliminado con exito!');
+
+        return redirect('producto');
+
+        //return back()->with('status', "Se ha eliminado la fruta con ID {$id} satisfactoriamente!");
     }
+
+    
 
     public function CargarDatosProducto(Request $request)
     {
@@ -63,6 +81,7 @@ class productoviewController extends Controller
                 $id_tipo_fruta, $tipo_fruta, $descripcion, $imagen 
             )
         );
+        
 
         return back()->with('status', "Se ha modificado la fruta con id {$id_tipo_fruta} y nombre {$tipo_fruta} satisfactoriamente!");
     }
@@ -72,6 +91,33 @@ class productoviewController extends Controller
         $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()', array());
 
         return view('/producto', compact('frutas'));
+    }
+
+    public function editProduct(Request $request)
+    {
+        return json_encode(tipo_fruta::find($request->id));
+    }
+
+    public function updateProduct(Request $request)
+    {
+        
+        $foto = '';
+        if($request->has('imagen')){
+            $foto = $request->file('imagen')->storeAs('frutas',$request->file('imagen')->getClientOriginalName(),'public');
+        }else{
+            $foto = $request->old_foto;
+        }
+
+        $res = tipo_fruta::find($request->id)->update([
+            'NOMBRE' => $request->nombreFruta,
+            'DESCRIPCION' =>$request->descripcionP,
+            'FOTO' => $foto
+        ]);
+
+        if($res){
+            return redirect()->back()->with('succes','Se actualizo.');
+        }
+        return redirect()->back()->with('error','No se actualizo.');
     }
 
     

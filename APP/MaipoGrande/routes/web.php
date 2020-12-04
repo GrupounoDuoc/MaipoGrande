@@ -26,7 +26,9 @@ Route::post('/getUserByRut', 'App\Http\Controllers\usuariosController\usuariovie
 
 Route::get('/producto', 'App\Http\Controllers\productosController\productoviewController@ViewPanelProducto')->name('producto');
 
-Route::post('/crearProducto', 'App\Http\Controllers\productosController\productoviewController@IngresarProducto')->name('CrearProducto');
+Route::post('/crearProducto', 'App\Http\Controllers\productosController\productoviewController@CrearProduct')->name('CrearProducto');
+Route::get('/editProduct', 'App\Http\Controllers\productosController\productoviewController@editProduct')->name('editProduct');
+Route::put('/updateProduct', 'App\Http\Controllers\productosController\productoviewController@updateProduct')->name('updateProduct');
 
 
 //pdf

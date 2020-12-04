@@ -20,14 +20,53 @@
 </head>
 
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <img src="imagenes/manzana.png" style="height:1.25rem; margin-right:0.8rem">
+            <a class="navbar-brand" href="/">Maipo Grande</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    @if (empty($_SESSION['usuario']))
+                    <li class="nav-item active">
+                        <a class="nav-link " href="catalogo"> Catalogo <span class="sr-only">(current)</span></a>
+                        
+                    </li>
+                    <li><a class="nav-link" href="/">Inicio</a></li>
+                    <li><a class="nav-link" href="login">Entrar</a></li>
+                    <li><a class="nav-link" href="registro">Registrarse</a></li>
+                    <li><a class="nav-link" href="administrador">Administrador</a></li>
+
+                    @else
+                    <li class="nav-item active"><a href="/">Inicio</a></li>
+
+                    <!--
+                    <li class="li-perfilUsuario">
+                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                    </li>
+                        Sirve este y el img de abajo -->
+
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="maipogrande">Calidad Fruta</a>
+                    </li>
+                    <li><i class="fas fa-user"></i>
+                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                    </li> -->
+
+                    @endif
+                    
+                </ul>
+            </div>
+        </nav>
 <form action="/catalogo" method="POST">
 @csrf
-<header id="cabecera">
+<!-- <header id="cabecera">
 
 <img src="imagenes/manzana.png" class="img-logo">
 <h2 class="logo">Maipo Grande</h2>
 <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
-<nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul id="lista-principal">
         @if (empty($_SESSION['usuario']))
         <li><a href="/">Inicio</a></li>
@@ -43,8 +82,8 @@
 
         @endif
     </ul>
-</nav>
-</header>
+</nav> -->
+<!-- </header>
 <div class="sub-menu">
 <ul class="lista-submenu">
     <li><a href="catalogo">Catálogo</a></li>
@@ -108,8 +147,8 @@
         @endif
         @endif
     </ul>
-</nav>
-</div>
+</nav>  -->
+    </div>
         @if(isset($_SESSION['status']))
             <div class="alert alert-danger" role="alert">
                 {{ $_SESSION['status'] }}
@@ -207,7 +246,9 @@
     $("#wrapper").toggleClass("toggled");
     });
     </script>
+
     <script src="{{asset('js/jquery.min.js')}}"></script>
+
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>

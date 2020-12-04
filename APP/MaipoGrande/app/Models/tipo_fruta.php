@@ -9,4 +9,14 @@ class tipo_fruta extends Model
 {
     use HasFactory;
     protected $table ='tipo_fruta';
+
+    protected $fillable = [
+        'ID_TIPO_FRUTA',
+        'NOMBRE',
+        'DESCRIPCION',
+        'FOTO'
+    ];
+
+    protected $primaryKey = 'ID_TIPO_FRUTA';
+    public $timestamps = false;
 }

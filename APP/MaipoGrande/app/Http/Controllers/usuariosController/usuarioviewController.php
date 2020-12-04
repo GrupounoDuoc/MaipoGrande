@@ -59,10 +59,11 @@ class usuarioviewController extends Controller
         $telefono = $request->get('telefono');
         $nombrefantasia = $request->get('nombrefantasia');
         $correo = $request->get('correo');
-        $contrasenia = $request->get('contrasenia');
+    
 
         //$contrasenia = md5($request->get('contrasenia'));
 
+        $contrasenia = md5($request->get('contrasenia'));
 
         $CrearUser = DB::select(
             'call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
@@ -108,6 +109,8 @@ class usuarioviewController extends Controller
         
         
     }
+
+    
     
 
     public function destroyUser($rut)
@@ -122,32 +125,51 @@ class usuarioviewController extends Controller
         //return redirect('usuario')->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
     }
 
+
+
+
     public function ModificarUser(Request $request)
     {
-        try {
-            $nombre = $request->get('nombre_edit');
-            $apellido = $request->get('apellido_edit');
-            $rut = $request->get('rut_edit');
-            $tipocomprador = $request->get('tipocomprador_edit');
-            $tipopersona = $request->get('tipopersona_edit');
-            $nombrefantasia = $request->get('nombrefantasia_edit');
-            $comuna = $request->get('comuna_edit');
-            $codigopostal = $request->get('codigopostal_edit');
-            $telefono = $request->get('telefono_edit');
-            
-            //$correo = $request->get('correo');
-            //$contrasenia = $request->get('contrasenia');
+        $res = persona::where('RUT',$request->rut)->update([
+            "NOMBRE" => $request->nombre,
+            "APELLIDO" => $request->apellido,
+            "NOMBRE_FANTASIA" => $request->nombrefantasia,
+            "ID_COMUNA" => $request->comuna,
+            "CODIGO_POSTAL" => $request->codigopostal,
+            "TELEFONO" => $request->telefono,
+        ]);
+    //$request->all() --- sirve para llamar todos los input dependiendo del nombre del form 
+         
+        $res = persona::find($request->rut)->usuario; // si no especifica se busca por "id"
+        $res->ID_PERFIL = $request->tipocomprador;
+        $res->save();
 
-            //$contrasenia = md5($request->get('contrasenia'));
+        try {
+           
+            // $nombre = $request->get('nombre_edit');
+            // $apellido = $request->get('apellido_edit');
+            // $rut = $request->get('rut_edit');
+            // $tipocomprador = $request->get('tipocomprador_edit');
+            // $tipopersona = $request->get('tipopersona_edit');
+            // $nombrefantasia = $request->get('nombrefantasia_edit');
+            // $comuna = $request->get('comuna_edit');
+            // $codigopostal = $request->get('codigopostal_edit');
+            // $telefono = $request->get('telefono_edit');
+            
+            // //$correo = $request->get('correo');
+            // //$contrasenia = $request->get('contrasenia');
+
+            // //$contrasenia = md5($request->get('contrasenia'));
+
 
             $ModificarUser = DB::select(
                 'call SP_UPDATE_USUARIO(?,?,?,?,?,?,?,?,?)',
                 array(
-                    $nombre, $apellido, $rut, $tipocomprador,
-                    $tipopersona, $nombrefantasia, $comuna, $codigopostal,
-                    $telefono //$correo, $contrasenia
-                )
-            );
+                    $request->nombre, $request->apellido, $request->rut, $request->tipocomprador,
+                    $request->tipopersona, $request->nombrefantasia, $request->comuna, $request->codigopostal,
+                    $request->telefono,   //$correo, $contrasenia
+               )
+             );
             
             //Log::info($ModificarUser[0]);
             
@@ -160,7 +182,7 @@ class usuarioviewController extends Controller
             
         }
         //return redirect('index');
-        return response()->json( $ModificarUser);
+        return response()->json( $ModificarUser); 
         
     }
 
