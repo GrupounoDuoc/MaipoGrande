@@ -12,6 +12,11 @@
     <br>
     <h2>Lista de productos registrados</h2>
 
+    <form class="form-inline my-2 my-lg-0 float-right" >
+        <input name="name" class="form-control mr-sm-2" type="search" placeholder="Buscar por producto" aria-label="Search" value="">
+        <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form> 
+    <br><br>
 
     @if(Session::has('message'))
         <div class="alert alert-{{ Session::get('type') }} alert-dismissable fade show text-center" role="alert">
@@ -27,7 +32,7 @@
             <tr>
                 <th scope="col">ID</th>
                 <!--<th scope="col">Imagen Producto</th>-->
-                <th scope="col">Nombre Proveedor</th>
+                <th scope="col">Nombre Producto</th>
                 <th scope="col">Descripcion</th>
                 <th scope="col">Imagen</th>
                 <th scope="col">Accion</th>
@@ -37,7 +42,7 @@
         @foreach($frutas as $fruta)
                     <tr>
                         <td>{{$fruta->ID_TIPO_FRUTA}}</td>
-                        <td>{{$fruta->TIPO_FRUTA}}</td>
+                        <td>{{$fruta->NOMBRE}}</td>
                         <td>{{$fruta->DESCRIPCION}}</td>
                         
                         <td><img src="{{Storage::url($fruta->FOTO)}}" alt="" width="80px" height="80px" onerror="this.onerror=null;this.src='{{ asset("default/not-available.jpg")}}';" class="img-fluid"></td>
@@ -56,6 +61,7 @@
         </tbody>
     </table>
 </div>
+{{$frutas->links()}}
 
 <div class="modal" id="producto" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

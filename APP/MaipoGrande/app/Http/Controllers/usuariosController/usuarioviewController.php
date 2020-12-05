@@ -17,7 +17,7 @@ use App\Models\perfil;
 class usuarioviewController extends Controller
 {
 
-    const PAGINACION=10;
+    //const PAGINACION=10;
     public function ViewPanelUsuario(Request $request)
     
     {
@@ -28,13 +28,19 @@ class usuarioviewController extends Controller
             $tipo_persona_legal = tipo_persona_legal::all();
             $perfil = perfil::all();
 
+            $personas = persona::paginate(5);
+
+            if(isset($_GET['name'])){
+                $personas =  persona::where('NOMBRE','like','%'.$_GET['name'].'%')->paginate(5);
+            }
 
             $data = [
 
                 'perfil' => $perfil,
                 'tipo_persona_legal' => $tipo_persona_legal,
                 'usuarios' => $usuarios,
-                'comunas' => $comunas
+                'comunas' => $comunas,
+                'personas' => $personas
             ];
 
            //return dd($usuarios);
@@ -42,7 +48,6 @@ class usuarioviewController extends Controller
            return view('/usuarioadmin', $data);
    
     }
-
    
     public function CrearUser(Request $request)
     {

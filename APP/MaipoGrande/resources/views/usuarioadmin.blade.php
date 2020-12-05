@@ -9,10 +9,11 @@
     <br>
     <h2>Lista de usuarios registrados</h2>
 
-    <form class="form-inline my-2 my-lg-0 float-right">
-        <input name="buscarpor" class="form-control mr-sm-2" type="search" placeholder="Buscar por nombre" aria-label="Search" value="">
-        <button class="btn btn-success my-2 my-sm-0" type="submit">buscar</button>
+    <form class="form-inline my-2 my-lg-0 float-right" >
+        <input name="name" class="form-control mr-sm-2" type="search" placeholder="Buscar por nombre" aria-label="Search" value="">
+        <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
     </form>
+    <br><br>
 
     @if(Session::has('message'))
         <div class="alert alert-{{ Session::get('type') }} alert-dismissable fade show text-center" role="alert">
@@ -38,47 +39,32 @@
         </thead>
         <tbody>
             <tr>
-                @foreach($usuarios as $usuario)
+            <div class="container">
+            @foreach($personas as $key => $persona)
             <tr>
-                <td>{{$usuario->ID_USUARIO}}</td>
-                <td>{{$usuario->RUT}}</td>
-                <td>{{$usuario->DIGITO_VERIFICADOR}}</td>
-                <td>{{$usuario->NOMBRE}}</td>
-                <td>{{$usuario->APELLIDO}}</td>
-                <td>{{$usuario->CORREO}}</td>
+                <td>{{$persona->ID_USUARIO}}</td>
+                <td>{{$persona->RUT}}</td>
+                <td>{{$persona->DIGITO_VERIFICADOR}}</td>
+                <td>{{$persona->NOMBRE}}</td>
+                <td>{{$persona->APELLIDO}}</td>
+                <td>{{$persona->usuario->CORREO}}</td>
 
 
                 <td>
-                    @if( $usuario->ID_PERFIL == 1)
+                    
                     <b>
-                        Administrador
+                        {{$persona->usuario->profile->NOMBRE}}
                     </b>
-                    @elseif( $usuario->ID_PERFIL == 2)
-                    <b>
-                        Vendedor
-                    </b>
-                    @elseif( $usuario->ID_PERFIL == 3)
-                    <b>
-                        Comprador interno
-                    </b>
-                    @elseif( $usuario->ID_PERFIL == 4)
-                    <b>
-                        Comprador externo
-                    </b>
-                    @elseif( $usuario->ID_PERFIL == 5)
-                    <b>
-                        Transportista
-                    </b>
-                    @endif
+                   
                 <td>
                     <!-- <button class="btn btn-warning" data-toggle="modal" data-target="#editarModal"> -->
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#editarModal" onclick="ConsultaUserbyRut('{{$usuario->RUT}}')">
-                        Editar usuario
-                        <input type="hidden" value="{{$usuario->RUT}}">
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#editarModal" onclick="ConsultaUserbyRut('{{$persona->RUT}}')">
+                        Editar persona
+                        <input type="hidden" value="{{$persona->RUT}}">
                         <i class="material-icons"></i> &#128397;&#65039;</a>
                     </button>
 
-                    <a href='deleteUser/{{ $usuario->RUT }}' role="button" class="btn btn-danger">Eliminar usuario<i class="material-icons"></i> &#128465;&#65039;</a>
+                    <a href='deleteUser/{{ $persona->RUT }}' role="button" class="btn btn-danger">Eliminar persona<i class="material-icons"></i> &#128465;&#65039;</a>
 
                 </td>
             </tr>
@@ -86,6 +72,7 @@
         </tbody>
     </table>
 </div>
+{{$personas->links()}}
 
 
 <div class="modal" id="prueba" tabindex="-1" role="dialog">

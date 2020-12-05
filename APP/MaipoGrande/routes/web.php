@@ -24,7 +24,9 @@ Route::post('/getUserByRut', 'App\Http\Controllers\usuariosController\usuariovie
 
 
 
+
 Route::get('/producto', 'App\Http\Controllers\productosController\productoviewController@ViewPanelProducto')->name('producto');
+Route::get('deleteUser/{rut}', 'App\Http\Controllers\productosController\productoviewController@destroyProducto');
 
 Route::post('/crearProducto', 'App\Http\Controllers\productosController\productoviewController@CrearProduct')->name('CrearProducto');
 Route::get('/editProduct', 'App\Http\Controllers\productosController\productoviewController@editProduct')->name('editProduct');

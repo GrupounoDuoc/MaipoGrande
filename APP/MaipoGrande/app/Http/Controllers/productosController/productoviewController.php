@@ -14,7 +14,14 @@ class productoviewController extends Controller
     {
         $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()', array());
 
-      
+        $frutas = tipo_fruta::paginate(5);
+
+         if(isset($_GET['name'])){
+             $frutas =  tipo_fruta::where('NOMBRE','like','%'.$_GET['name'].'%')->paginate(5);
+         }
+
+
+        $request->session()->flash('alert-success', 'Producto creado con exito!');
        return view('/producto',compact('frutas'));
     }    
 
