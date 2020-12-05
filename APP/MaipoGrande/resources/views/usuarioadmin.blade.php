@@ -73,6 +73,7 @@
     </table>
 </div>
 {{$personas->links()}}
+{{$personas->total()}}
 
 
 <div class="modal" id="prueba" tabindex="-1" role="dialog">

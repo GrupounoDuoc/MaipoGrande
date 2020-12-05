@@ -42,7 +42,7 @@
         @foreach($frutas as $fruta)
                     <tr>
                         <td>{{$fruta->ID_TIPO_FRUTA}}</td>
-                        <td>{{$fruta->TIPO_FRUTA}}</td>
+                        <td>{{$fruta->NOMBRE}}</td>
                         <td>{{$fruta->DESCRIPCION}}</td>
                         
                         <td><img src="{{Storage::url($fruta->FOTO)}}" alt="" width="80px" height="80px" onerror="this.onerror=null;this.src='{{ asset("default/not-available.jpg")}}';" class="img-fluid"></td>
