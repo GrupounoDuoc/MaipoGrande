@@ -57,8 +57,8 @@
 
     <div class="contenedor seccion contenido-centrado">
         <h2 class="centrar-texto">Crear Usuario</h2>
-        <!--<form action="{{ route('CrearUser') }}" method="POST" autocomplete="on" action="">-->
-            
+        <form action="{{ route('CrearUser') }}" method="POST" autocomplete="on" action="">
+            <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
             @csrf
             <fieldset>
                 <p class="font-weight-bold">Ingresa los datos del nuevo usuario...</p>

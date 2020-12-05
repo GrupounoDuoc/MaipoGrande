@@ -27,8 +27,7 @@ class UserController extends Controller
         $telefono = $request->get('telefono');
         $nombrefantasia = $request->get('nombrefantasia');
         $correo = $request->get('correo');
-        $contrasenia = $request->get('contrasenia');
-
+        $contrasenia = md5($request->get('contrasenia'));
 
         $InsertarUser = DB::select(
             'call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',

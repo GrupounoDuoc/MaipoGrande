@@ -49,7 +49,7 @@
     @laravelPWA
 
     @if(!isset($_SESSION))
-     {{ session_start() }}
+    {{ session_start() }}
     @endif
 </head>
 
@@ -80,14 +80,15 @@
         <ul class="lista-submenu">
             <li><a href="catalogo">Catálogo</a></li>
             @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] != 3)
-                    <li><a href="ofertas">Ofertas</a></li>
-                @endif
+            @if($_SESSION['tipo_usuario'] != 3)
+            <li><a href="ofertas">Ofertas</a></li>
+            @endif
             @endif
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="">Perfil</a></li>
                 <li><a href="logout">Cerrar sesión</a></li>
                 <li><a href="PublicarProducto">Publicar producto</a></li>
+                <li><a href="Reportes">Reportes</a></li>
             </ul>
             <a href="carrito"><span class="icon-cart"></span></a>
             @if(isset($_SESSION['totalCart']))
@@ -107,9 +108,9 @@
                 <li><a href="administrador">Administrador</a></li>
                 <li><a href="catalogo">Catálogo</a></li>
                 @if (isset($_SESSION['usuario']))
-                    @if($_SESSION['tipo_usuario'] != 3)
-                        <li><a href="ofertas">Ofertas</a></li>
-                    @endif
+                @if($_SESSION['tipo_usuario'] != 3)
+                <li><a href="ofertas">Ofertas</a></li>
+                @endif
                 @endif
                 <ul class="subMenu-usuario" id="submenu-perfil">
                     <li><a href="">Perfil</a></li>
@@ -127,9 +128,9 @@
                 </li>
                 <li><a href="catalogo">Catálogo</a></li>
                 @if (isset($_SESSION['usuario']))
-                    @if($_SESSION['tipo_usuario'] != 3)
-                        <li><a href="ofertas">Ofertas</a></li>
-                    @endif
+                @if($_SESSION['tipo_usuario'] != 3)
+                <li><a href="ofertas">Ofertas</a></li>
+                @endif
                 @endif
                 <ul class="subMenu-usuario" id="submenu-perfil">
                     <li><a href="">Perfil</a></li>

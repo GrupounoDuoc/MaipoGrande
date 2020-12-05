@@ -49,22 +49,16 @@ Route::post('/IngresarProducto', [
 Route::get('/', function () {
     return view('index');
 });
-
-
-
 Route::get('/contacto', function () {
     return view('contacto');
 });
 Route::get('/administrador', function () {
-    return view('principal');
+    return view('administrador');
 });
 
-Route::get('deleteCart/{id}', 'App\Http\Controllers\pedidoController@deleteCart');
-
-Route::get('/carrito', 'App\Http\Controllers\pedidoController@carrito');
-
-Route::get('/comprar', 'App\Http\Controllers\pedidoController@comprar');
-
+Route::get('/carrito', function () {
+    return view('carrito');
+});
 Route::get('/catalogo', 'App\Http\Controllers\pedidoController@catalogo');
 
 Route::post('/catalogo', [
@@ -78,6 +72,7 @@ Route::post('/ofertas', [
     'uses' => 'App\Http\Controllers\pedidoController@ofertas',
     'as' => 'ofertas'
 ]);
+Route::get('addCart/{id}', 'App\Http\Controllers\UserController@AddCart');
 
 Route::get('/descripcion', function () {
     return view('descripcion');
@@ -102,18 +97,22 @@ Route::get('/administrador', function () {
     return view('paneladministrador');
 });
 
-//Route::get('/usuario', function () {
-  //  return view('usuario');
-//});
+Route::get('/usuario', function () {
+    return view('usuario');
+});
 
 Route::get('/IngresarProducto', function () {
     return view('IngresarProducto');
 });
 
-//panel de admin - para comunas
-//Route::get('/cliente', 'App\Http\Controllers\AdminController@CargarComuna');
+Route::get('/CrearUsuario', 'App\Http\Controllers\AdminController@CargarComuna');
+
+Route::get('/Reportes', 'App\Http\Controllers\ReportesController@CargarReporte');
 
 Route::get('/ModificarUsuario', 'App\Http\Controllers\AdminController@CargarComunaB');
+
+
+Route::get('/ModificarContratos', 'App\Http\Controllers\AdminController@CargarUsuarios');
 
 Route::get('/ModificarProducto', function () {
     return view('ModificarProducto');
@@ -125,11 +124,16 @@ Route::get('/EliminarUsuario', function () {
 
 Route::get('deleteProducto/{id}', 'App\Http\Controllers\AdminController@destroyProducto');
 
-//Route::get('deleteUser/{rut}', 'App\Http\Controllers\AdminController@destroyUser');
+Route::get('deleteUser/{rut}', 'App\Http\Controllers\AdminController@destroyUser');
 
-Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@ListarUser');
+Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@Listaruser');
 
 Route::get('/ListarProducto', 'App\Http\Controllers\adminController@Listarproducto');
+
+Route::get('/ListarProducto', 'App\Http\Controllers\adminController@Listarproducto');
+
+//Ruta para imprimir PDF de reporte
+Route::name('imprimir')->get('/Reporte', 'App\Http\Controllers\ReportesController@imprimir');
 
 
 // Post form data
@@ -143,7 +147,7 @@ Route::post('/EliminarUsuario', [
     'as' => 'EliminarUser'
 ]);
 
-Route::post('/cliente', [
+Route::post('/CrearUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@CrearUser',
     'as' => 'CrearUser'
 ]);
@@ -178,6 +182,10 @@ Route::post('/ModificarProducto', [
     'as' => 'ModificarProducto'
 ]);
 
+Route::post('/ModificarContrato', [
+    'uses' => 'App\Http\Controllers\AdminController@ModificarContrato',
+    'as' => 'ModificarContrato'
+]);
 
 //VISTAS DE PRUEBA
 

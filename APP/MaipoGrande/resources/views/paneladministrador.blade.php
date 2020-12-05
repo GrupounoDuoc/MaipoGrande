@@ -93,6 +93,7 @@
                     <label for="" class=FormItem>Mantenedor usuarios </label>
                     <a href="CrearUsuario" class="btn btn-success">Crear Usuario</a>
                     <a href="ListarUsuario" class="btn btn-success">Listar Usuarios</a>
+                    <a href="ModificarContratos" class="btn btn-success">Modificar Contratos</a>
                 </div>
 
             </div>
