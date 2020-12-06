@@ -1,3 +1,4 @@
+@laravelPWA
 @extends('admin.layout')
 
 @section('content')
@@ -115,13 +116,11 @@
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="documento">Tipo de usuario:</label>
                             <div class="col-md-9">
-                                <select class="form-control" name="tipocomprador" id="tipocomprador" required>
+                            <select class="form-control" name="tipocomprador" id="tipocomprador" required>
                                     <option selected disabled value="">Seleccione perfil</option>
-                                    <option value=1>Administrador</option>
-                                    <option value=2>Vendedor</option>
-                                    <option value=3>Compras Nacionales</option>
-                                    <option value=4>Compras Internacionales</option>
-                                    <option value=4>Transportista</option>
+                                    @foreach ($perfil as $perfil1)
+                                    <option value="{{$perfil1->ID_PERFIL}}">{{$perfil1->NOMBRE}}</option>
+                                    @endforeach
                                 </select>
 
                             </div>

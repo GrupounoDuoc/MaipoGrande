@@ -65,7 +65,7 @@
                 <li><a href="/">Inicio</a></li>
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
-                <li><a href="administrador">Administrador</a></li>
+                <li><a href="admin">Administrador</a></li>
                 @else
                 <li><a href="/">Inicio</a></li>
                 <li class="li-perfilUsuario">
@@ -88,7 +88,12 @@
                 <li><a href="">Perfil</a></li>
                 <li><a href="logout">Cerrar sesión</a></li>
                 <li><a href="PublicarProducto">Publicar producto</a></li>
+                @if (isset($_SESSION['usuario']))
+                @if($_SESSION['tipo_usuario'] != 3)
                 <li><a href="Reportes">Reportes</a></li>
+                @endif
+                @endif
+
             </ul>
             <a href="carrito"><span class="icon-cart"></span></a>
             @if(isset($_SESSION['totalCart']))
@@ -105,7 +110,7 @@
 
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
-                <li><a href="administrador">Administrador</a></li>
+                <li><a href="admin">Administrador</a></li>
                 <li><a href="catalogo">Catálogo</a></li>
                 @if (isset($_SESSION['usuario']))
                 @if($_SESSION['tipo_usuario'] != 3)

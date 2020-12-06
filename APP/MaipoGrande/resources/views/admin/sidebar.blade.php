@@ -71,7 +71,10 @@
               </li>
               -->
               <li class="nav-item">
-                  <a class="nav-link" href="{{url('rol')}}" ><i class="fa fa-users"></i> Reportes</a>
+                  <a class="nav-link" href="{{url('ModificarContratos')}}" ><i class="fa fa-docs"></i> Contratos</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="" ><i class="fa fa-docs"></i> Pedidos internacionales</a>
               </li>
             </ul>
           </li>

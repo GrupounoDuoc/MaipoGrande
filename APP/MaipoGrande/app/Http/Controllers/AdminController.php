@@ -28,7 +28,7 @@ class AdminController extends Controller
         $telefono = $request->get('telefono');
         $nombrefantasia = $request->get('nombrefantasia');
         $correo = $request->get('correo');
-        $contrasenia = $request->get('contrasenia');
+        $contrasenia = md5($request->get('contrasenia'));
 
 
         $CrearUser = DB::select(
@@ -45,7 +45,7 @@ class AdminController extends Controller
     public function CargarComuna() //int $rol)
     {
         $comunas = DB::select('CALL SP_GET_COMUNAS()');
-        return view('cliente', compact('comunas'));
+        return view('CrearUser', compact('comunas'));
 
         /* $comunas= comuna::select('NombreComuna','nombre')->get();
         return view('id_comuna',compact('comunas')); */
@@ -86,7 +86,7 @@ class AdminController extends Controller
         $telefono = $request->get('telefono');
         $nombrefantasia = $request->get('nombrefantasia');
         $correo = $request->get('correo');
-        $contrasenia = $request->get('contrasenia');
+        $contrasenia = md5($request->get('contrasenia'));
 
 
         $ModificarUser = DB::select(
@@ -170,4 +170,30 @@ class AdminController extends Controller
 
         return back()->with('status', "Se ha modificado la fruta con id {$id_tipo_fruta} y nombre {$tipo_fruta} satisfactoriamente!");
     }
+
+    public function CargarUsuarios() //int $rol)
+    {
+        $usuarios = DB::select('call SP_GET_USUARIOS_CON_CONTRATO()');
+        return view('ModificarContratos', compact('usuarios'));
+    }
+
+    public function ModificarContrato(Request $request)
+    {
+
+        $id_usuario = $request->get('id_usuario');
+        $contrato = $request->get('contrato');
+        $fecha_termino = $request->get('fecha_termino');
+
+
+
+        $ModificarContrato = DB::select(
+            'call SP_UPDATE_CONTRATO(?,?,?)',
+            array(
+                $id_usuario, $contrato, $fecha_termino
+            )
+        );
+
+        return back()->with('status', "Se ha modificado el contrato del usuario satisfactoriamente!");
+    }
+
 }

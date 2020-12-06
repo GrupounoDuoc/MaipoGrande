@@ -49,7 +49,7 @@
                         
                         <td>
                             <button class="btn btn-warning" data-toggle="modal" data-target="#editarPModal" onclick="getFruitById('{{$fruta->ID_TIPO_FRUTA}}')"> <!--<a href='ModificarProducto'>Modificar</a> -->
-                                Editar usuario
+                                Editar Producto
                                 <input type="hidden" value="{{$fruta->ID_TIPO_FRUTA}}">
                                 <i class="material-icons"></i> &#128397;&#65039;</a>
                             </button>

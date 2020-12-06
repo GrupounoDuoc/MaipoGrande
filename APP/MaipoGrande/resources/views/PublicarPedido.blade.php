@@ -125,7 +125,6 @@
                                 <input type="number" min=1 max=9999 class="form-control" name=precioxkg placeholder="Precio por KG" required>
                             </div>
                         </div>
-
                     </div>
                 </div>
     </div>

@@ -6,6 +6,7 @@ INSERT INTO `perfil`( `NOMBRE`, `DESCRIPCION`) VALUES ('Vendedor','Vendedor del 
 INSERT INTO `perfil`( `NOMBRE`, `DESCRIPCION`) VALUES ('Comprador Interno','Comprador interno, puede realizar compras nacionales a traves de la vista del catalogo');
 INSERT INTO `perfil`( `NOMBRE`, `DESCRIPCION`) VALUES ('Comprador externo','Comprador externo, realiza compras a través de solicitudes para procesos de compra externa');
 INSERT INTO `perfil`( `NOMBRE`, `DESCRIPCION`) VALUES ('Transportista','Transportista de la aplicación, realiza transportes de ambos tipos de venta');
+INSERT INTO `perfil`( `NOMBRE`, `DESCRIPCION`) VALUES ('Consultor','Usuario consultor encargado de generar reportería de sistema');
 
 ##tipo_persona_legal
 DELETE FROM `maipo_grande`.`tipo_persona_legal` WHERE ID_TIPO_PERSONA_LEGAL>0;

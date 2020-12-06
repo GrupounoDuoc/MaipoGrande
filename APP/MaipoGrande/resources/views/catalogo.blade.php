@@ -190,7 +190,7 @@
             <div class="col" style="max-width:25rem;">
                 @foreach ($ofertas as $oferta)
                     <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
-                        <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO)) }}" class="card-img-top" alt="...">
+                        <img src="data:image/png;base64,{{ chunk_split(base64_encode($oferta->FOTO))}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
                             <input type="hidden" id="tipo_fruta{{$oferta->ID}}" name="tipo_fruta{{$oferta->ID}}" value="{{ $oferta->TIPO_FRUTA}}">
