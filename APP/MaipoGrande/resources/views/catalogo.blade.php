@@ -89,7 +89,7 @@
     <li><a href="catalogo">Catálogo</a></li>
     @if (isset($_SESSION['usuario']))
         @if($_SESSION['tipo_usuario'] != 3)
-            <li><a href="ofertas">Ofertas</a></li>
+            <li><a href="pedidos">Pedidos</a></li>
         @endif
     @endif
     <ul class="subMenu-usuario" id="submenu-perfil">

@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ofertas de subastas</title>
+    <title>Pedidos de subastas</title>
     <link href="../public/css/simple-sidebar.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/header-footer.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<form action="/ofertas" method="POST">
+<form action="/pedidos" method="POST">
 @csrf
 <header id="cabecera">
 
@@ -48,7 +48,7 @@
 <div class="sub-menu">
 <ul class="lista-submenu">
     <li><a href="catalogo">Catálogo</a></li>
-    <li><a href="ofertas">Ofertas</a></li>
+    <li><a href="pedidos">Pedidos</a></li>
     <ul class="subMenu-usuario" id="submenu-perfil">
         <li><a href="">Perfil</a></li>
         <li><a href="logout">Cerrar sesión</a></li>
@@ -80,7 +80,7 @@
             <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
         </li>
         <li><a href="catalogo">Catálogo</a></li>
-        <li><a href="maipogrande.html">Ofertas</a></li>
+        <li><a href="maipogrande.html">Pedidos</a></li>
         <ul class="subMenu-usuario" id="submenu-perfil">
             <li><a href="">Perfil</a></li>
             <li><a href="logout">Cerrar sesión</a></li>
@@ -100,7 +100,7 @@
             <div class="sidebar-heading"><h3>Filtros</h3> </div>
             <div class="list-group list-group-flush"> 
                     <ul>
-                        <li><span><h5>Estado oferta</h5></span></li>
+                        <li><span><h5>Estado pedido</h5></span></li>
                         <ul>
                             @foreach ($estados as $estado)
                                 @if( $estado->NOMBRE == $estadoFiltroSelected)
@@ -125,20 +125,20 @@
     <div id="page-content-wrapper">
     <div class="container-fluid">
             <div class="col" style="max-width:25rem;">
-                @foreach ($ofertas as $oferta)
+                @foreach ($pedidos as $pedido)
                     <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
                         <div class="card-body">
-                            <h5 class="card-title">Comprador: {{ $oferta->NOMBRE_COMPRADOR}}</h5>
-                            <p class="card-text">Fecha publicacion: {{ $oferta->FECHA}}</p>
-                            <p class="card-text">Estado: {{ ucfirst(strtolower($oferta->ESTADO))}}</p>
+                            <h5 class="card-title">Comprador: {{ $pedido->NOMBRE_COMPRADOR}}</h5>
+                            <p class="card-text">Fecha publicacion: {{ $pedido->FECHA}}</p>
+                            <p class="card-text">Estado: {{ ucfirst(strtolower($pedido->ESTADO))}}</p>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <input type="hidden" id="id" name="id" value="{{$oferta->ID}}">
+                            <input type="hidden" id="id" name="id" value="{{$pedido->ID}}">
                         </ul>
                         <div class="card-body">
-                            <input type="submit" class="card-link btn btn-secondary" name="detalle{{$oferta->ID}}" value="Ver detalles"/>
-                            @if($oferta->ESTADO == 'EN LOGISTICA')
-                                <input type="submit" class="card-link btn btn-secondary" name="seguimiento{{$oferta->ID}}" value="Seguimiento"/>
+                            <input type="submit" class="card-link btn btn-secondary" name="detalle{{$pedido->ID}}" value="Ver detalles"/>
+                            @if($pedido->ESTADO == 'DESPACHO' || $pedido->ESTADO == 'ENTREGADO')
+                                <input type="submit" class="card-link btn btn-secondary" name="seguimiento{{$pedido->ID}}" value="Seguimiento"/>
                             @endif
                         </div>
                     </div>    

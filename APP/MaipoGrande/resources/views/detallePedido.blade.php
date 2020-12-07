@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Detalle pedido N°{{$idOferta}}</title>
+    <title>Detalle pedido N°{{$idPedido}}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
@@ -86,15 +86,15 @@
         </nav>  
     </div>
     <div class="encabezado-pedido">
-        <h2>Detalle pedido N°{{$idOferta}}<h2>
+        <h2>Detalle pedido N°{{$idPedido}}<h2>
         <h3>Comprador: {{ $comprador}}</h3>
         <h3>Fecha de creacion: {{ $fechaCreacion}}</h3>
         <h3>Estado: {{ucfirst(strtolower($estado))}}</h3>
     </div>
     <!--Inicio del detalle de compra-->
-    <form id="ofertaForm" action="/ofertas" method="POST">
+    <form id="pedidoForm" action="/pedidos" method="POST">
     @CSRF
-        <input type="hidden" value="{{$idOferta}}" name="idOfertaPostulacion" id="idOfertaPostulacion">
+        <input type="hidden" value="{{$idPedido}}" name="idPedidoPostulacion" id="idPedidoPostulacion">
         @if ((is_array($detalles) || is_object($detalles)))
             <table>
                 <tr>
@@ -141,29 +141,45 @@
         @if($_SESSION['tipo_usuario'] != 4)
             <div class="comya13">
                     <input type="hidden" name="postular" id="postular" value="true">
-                    <a href="#" onclick="document.getElementById('ofertaForm').submit()" id="postular" name="postular"><h5>Postular a oferta</h5></a>
-            </div>
-        @endif
-        @if($_SESSION['tipo_usuario'] == 4)
-            <div class="comya13">
-                <input type="hidden" name="seguimiento" id="seguimiento" value="true">
-                <a href="#" onclick="document.getElementById('ofertaForm').submit()" id="seguimiento" name="seguimiento"><h5>Seguimiento oferta</h5></a>
-            </div>
-        @endif
-        @if($_SESSION['tipo_usuario'] == 5 && $estado=='EN LOGISTICA')
-            <div class="comya13">
-                <input type="hidden" name="actualizarSeguimiento" id="actualizarSeguimiento" value="true">
-                <a href="#" onclick="document.getElementById('ofertaForm').submit()" id="actualizarSeguimiento" name="actualizarSeguimiento"><h5>Actualizar seguimiento oferta</h5></a>
+                    <a href="#" onclick="document.getElementById('pedidoForm').submit()" id="postular" name="postular"><h5>Postular a pedido</h5></a>
             </div>
         @endif
         @if($_SESSION['tipo_usuario'] == 1)
             <div class="comya13">
                 <input type="hidden" name="publicar" id="publicar" value="true">
-                <a href="#" onclick="document.getElementById('ofertaForm').submit()" id="publicar" name="publicar"><h5>Publicar oferta</h5></a>
+                <a href="#" onclick="document.getElementById('pedidoForm').submit()" id="publicar" name="publicar"><h5>Publicar pedido</h5></a>
+            </div>
+        @endif
+        @if($_SESSION['tipo_usuario'] == 4 && $estado=='ENTREGADO')
+            <!-- Boton finalizar pedido para Modal de confirmacion -->
+            <div class="comya13">
+                <input type="hidden" name="finalizar{{$idPedido}}" id="finalizar{{$idPedido}}" value="true">
+                <a data-toggle="modal" data-target="#confirmacionModal" href="#confirmacionModal" id="correcto"><h5>Finalizar pedido</h5></a>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="confirmacionModal" tabindex="-1" role="dialog" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmacionModalLabel">Confirmar recibo de despacho</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            En caso de aceptar el recibo del pedido, se renuncia a la posibilidad de devolucion. 
+                            En caso de rechazo se coordinara con el transportista el retiro de los productos.
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" name="aceptarPedido" value="Aceptar pedido">
+                            <input type="submit" class="btn btn-primary" name="rechazarPedido" value="Rechazar pedido">
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
         <div class="continuarlin">
-                <a href="ofertas"><h5>Volver</h5></a>
+                <a href="pedidos"><h5>Volver</h5></a>
         </div>   
     </form>         
     <!--fin del carrito de compras-->
@@ -219,8 +235,8 @@
         </div>
     </footer>
     
-    <script src="js/buscar.js"></script>
-    <script src="js/ventanaComprar.js"></script>
-    <script src="js/aparecerIcono.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -87,14 +87,19 @@
             </ul>
         </nav>  
     </div>
-    @if($postulacion != null)
-        <h1>Postulacion realizada</h1>
-        <h3>Se recibio la postulacion para el pedido N°{{$idPedidoPostulacion}}, con el siguiente correlativo: {{postulaciones}}</h3>
-    @else
-    <h1>Postulacion erronea</h1>
-        <h3>No se ha podido realizar la postulacion al pedido N°{{$idPedidoPostulacion}}</h3>
+    @if($estado != null )
+        <h1>Error al procesar pedido {N°{$idPedido}}</h1>
+        <h3>No se ha podido actualizar el pedido, por favor intente mas tarde.</h3>
+    @elseif($estado == 'RECHAZADO')
+        <h1>Pedido N°{{$idPedido}} rechazado</h1>
+        <h3>El pedido se ha rechazado, contactaremos al transportista para que realice el retiro de los productos enviados.<br>
+            Le notificaremos cuando se retiren los productos</h3>
+    @elseif($estado == 'PAGADO')
+        <h1>Pedido N°{{$idPedido}} aceptado</h1>
+        <h3>Se le enviara los datos para realizar el pago de los productos. <br>
+            Muchas gracias por preferirnos</h3>
     @endif
-    <a href="/">Volver al inicio</a>
+        <a href="/pedidos">Volver al inicio</a>
 <!--Footer-->
     <footer>
         <div class="contenedor">

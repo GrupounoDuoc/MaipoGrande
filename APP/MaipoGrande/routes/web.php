@@ -65,17 +65,19 @@ Route::post('/catalogo', [
     'as' => 'catalogo'
 ]);
 
-Route::get('/ofertas', 'App\Http\Controllers\pedidoController@ofertas');
+Route::get('/pedidos', 'App\Http\Controllers\pedidoController@pedidos');
 
-Route::post('/ofertas', [
-    'uses' => 'App\Http\Controllers\pedidoController@ofertas',
-    'as' => 'ofertas'
+Route::post('/pedidos', [
+    'uses' => 'App\Http\Controllers\pedidoController@pedidos',
+    'as' => 'pedidos'
 ]);
 Route::get('addCart/{id}', 'App\Http\Controllers\UserController@AddCart');
 
 Route::get('/descripcion', function () {
     return view('descripcion');
 });
+
+Route::get('/seguimiento', 'App\Http\Controllers\SeguimientoController@seguimiento')-> name('seguimiento');
 
 route::get('login', function () {
     return view('login');

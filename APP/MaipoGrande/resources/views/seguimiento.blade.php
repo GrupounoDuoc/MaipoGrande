@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Maipo Grande</title>
+    <title>Seguimiento pedido N°{{$idPedido}}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/testimonios.css">
@@ -65,7 +65,7 @@
                 <li><a href="/">Inicio</a></li>
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
-                <li><a href="admin">Administrador</a></li>
+                <li><a href="administrador">Administrador</a></li>
                 @else
                 <li><a href="/">Inicio</a></li>
                 <li class="li-perfilUsuario">
@@ -81,19 +81,14 @@
             <li><a href="catalogo">Catálogo</a></li>
             @if (isset($_SESSION['usuario']))
             @if($_SESSION['tipo_usuario'] != 3)
-            <li><a href="pedidos">Pedidos</a></li>
+            <li><a href="Pedidos">Pedidos</a></li>
             @endif
             @endif
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="">Perfil</a></li>
                 <li><a href="logout">Cerrar sesión</a></li>
                 <li><a href="PublicarProducto">Publicar producto</a></li>
-                @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] != 3)
                 <li><a href="Reportes">Reportes</a></li>
-                @endif
-                @endif
-
             </ul>
             <a href="carrito"><span class="icon-cart"></span></a>
             @if(isset($_SESSION['totalCart']))
@@ -107,10 +102,9 @@
         <nav class="nav-responsive">
             <ul>
                 @if (empty($_SESSION['usuario']))
-
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
-                <li><a href="admin">Administrador</a></li>
+                <li><a href="administrador">Administrador</a></li>
                 <li><a href="catalogo">Catálogo</a></li>
                 @if (isset($_SESSION['usuario']))
                 @if($_SESSION['tipo_usuario'] != 3)
@@ -151,68 +145,105 @@
             </ul>
         </nav>
     </div>
-
-    <div class="container-inicio">
-        <div class="slider-wrapper theme-mi-slider">
-            <div id="slider" class="nivoSlider">
-                <img src="img-slider/slider2.jpg">
-                <img src="img-slider/slider3.jpg">
-                <img src="img-slider/slider4.jpg">
-            </div>
-        </div>
+    <div style="padding-left: 35%;width:90%">
+        <table class="table" style="alligment: center;width:40%;">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="2">
+                        <h2 style="text-align:center">Detalles despacho</h2>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($despacho as $row)
+                    <tr>
+                        <th scope="col" style="text-align:center" >
+                            Transportista
+                        </th>
+                        <td>
+                            {{$row->NOMBRE_TRANSPORTISTA}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col" style="text-align:center">
+                            Estado despacho
+                        </th>
+                        <td>
+                            {{$row->ESTADO}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col" style="text-align:center">
+                            Fecha del despacho
+                        </th>
+                        <td>
+                            {{$row->FECHA_DESPACHO}}
+                        </td>
+                    </tr>
+                    @if($row->FECHA_RECIBIDO != NULL)
+                        <tr>
+                            <th scope="col" style="text-align:center">
+                                Fecha recibido
+                            </th>
+                            <td>
+                                {{$row->FECHA_RECIBIDO}}
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
+            </tbody>
+        </table>
     </div>
-
-
-    <div class="wrapper">
-        <div class="slider-testimonial">
-            <div class="testimonial-item">
-                <div class="testimonial-client">
-                    <img src="testimonios/testimonioalvaromellado.jpg" alt="">
-                    <p class="client-name">Alvaro Mellado</p>
-                </div>
-                <div class="testimonial-text">
-                    <p>Me encanta Maipo Grande ya que ofrece productos, con calidad y descuentos muy buenos, y esto no lo hace cualquier empresa dedicada</p>
-                </div>
-            </div>
-            <div class="testimonial-item">
-                <div class="testimonial-client">
-                    <img src="testimonios/testimonioEB.png" alt="">
-                    <p class="client-name">Edgar Barrera</p>
-                </div>
-                <div class="testimonial-text">
-                    <p>Ofrecen una atención inolvidable, realmente recomiendo a Maipo Grande para comprar Frutas o verduras.</p>
-                </div>
-            </div>
-            <div class="testimonial-item">
-                <div class="testimonial-client">
-                    <img src="testimonios/testimonio2.png" alt="">
-                    <p class="client-name">Christofer Quiroz</p>
-                </div>
-                <div class="testimonial-text">
-                    <p>Productos como lo que ofrece Maipo Grande no se consiguen en otra parte, tienes mi voto de confianza para que compres</p>
-                </div>
-            </div>
-            <div class="testimonial-item">
-                <div class="testimonial-client">
-                    <img src="testimonios/testimonio1.png" alt="">
-                    <p class="client-name">Millaray Rojas</p>
-                </div>
-                <div class="testimonial-text">
-                    <p>Con los productos que ofrece Maipo Grande mi vida es mucha más saludable, adquiere los productos te los recomiendo para tu salud que es lo más importante</p>
-                </div>
-            </div>
-            <div class="testimonial-item">
-                <div class="testimonial-client">
-                    <img src="testimonios/testimoniosjason.jpg" alt="">
-                    <p class="client-name">Jason Leon</p>
-                </div>
-                <div class="testimonial-text">
-                    <p>La navegabilidad que ofrece la página web es muy buena, recibí mi producto en período de tiempo muy corto</p>
-                </div>
-            </div>
-        </div>
+    <br>
+    <h2 style="text-align:center">Historial de actualizacion</h2>
+    <div style="padding-left: 20%;">
+        
+        <table class="table" style="width:20%">
+            <tbody>
+                @if(count($historial)>0)
+                    @foreach($historial as $key=>$item)
+                    <tr>
+                        <th scope="col">
+                            #
+                        </th>
+                        <td>
+                            {{$key+1}}
+                        </td>
+                        <th scope="col">
+                            Tipo actualización
+                        </th>
+                        <td>
+                            {{$item->ESTADO}}
+                        </td>
+                        <th scope="col">
+                            Fecha de la actualización
+                        </th>
+                        <td>
+                            {{$item->FECHA_ACTUALIZACION}}
+                        </td>
+                        <th scope="col">
+                            Detalle actualización
+                        </th>
+                        <td>
+                            {{$item->DESCRIPCION}}
+                        </td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <th scope="col">
+                            <h2>No hay actualizaciones del despacho</h2>
+                        </th>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
     </div>
-
+    <div style="padding: 7px;height: 50%;margin: 20px 25% 80px 25%;width: 50%;background-color: #ff9a00;border-radius: 25px;font-size: 27px;box-shadow: 0px 0px 5px;font-family: 'Encode Sans Condensed', sans-serif;">
+                <a href="pedidos" style="text-align: center;text-decoration: none;color: #ffffff;"><h5>Volver</h5></a>
+        </div> 
     <!--Footer-->
     <footer>
         <div class="contenedor">
