@@ -74,7 +74,7 @@
                   <a class="nav-link" href="{{url('ModificarContratos')}}" ><i class="fa fa-docs"></i> Contratos</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="" ><i class="fa fa-docs"></i> Pedidos internacionales</a>
+                  <a class="nav-link" href="{{url('VentasExternas')}}" ><i class="fa fa-docs"></i> Pedidos internacionales</a>
               </li>
             </ul>
           </li>

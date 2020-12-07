@@ -129,7 +129,7 @@ Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@Listaruser');
 
 Route::get('/ListarProducto', 'App\Http\Controllers\adminController@Listarproducto');
 
-Route::get('/ListarProducto', 'App\Http\Controllers\adminController@Listarproducto');
+Route::get('/VentasExternas', 'App\Http\Controllers\pedidoController@CargarVentasExternas');
 
 //Ruta para imprimir PDF de reporte
 Route::name('imprimir')->get('/Reporte', 'App\Http\Controllers\ReportesController@imprimir');
@@ -184,6 +184,11 @@ Route::post('/ModificarProducto', [
 Route::post('/ModificarContrato', [
     'uses' => 'App\Http\Controllers\AdminController@ModificarContrato',
     'as' => 'ModificarContrato'
+]);
+
+Route::post('/VentasExternas', [
+    'uses' => 'App\Http\Controllers\pedidoController@ActualizarEstado',
+    'as' => 'ActualizarEstado'
 ]);
 
 //VISTAS DE PRUEBA
