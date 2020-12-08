@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
-
+use Barryvdh\DomPDF\Facade as PDF;
+use App\Models\persona;
 
 
 //Routes Admin
@@ -214,4 +215,22 @@ Route::get('saludo/{name}/{nickname?}', function ($name, $nickname = null) {
     } else {
         return "Bienvenido {$name}, no tienes apodo";
     }
+});
+
+Auth::routes(['login' => false]);
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('verpdf',function(){
+
+    $personas = persona::all();
+    $data = [
+        'personas' => $personas
+    ];
+
+    $pdf = PDF::loadView('prueba', $data);
+
+    return $pdf->stream('usuario.pdf');
 });

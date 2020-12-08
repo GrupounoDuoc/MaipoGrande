@@ -78,12 +78,12 @@ class usuarioviewController extends Controller
             )
         );
 
-        session()->flash('type', 'success');
-        session()->flash('message', 'Usuario Creado');
+        $request->session()->flash('type', 'success');
+        $request->session()->flash('message', 'Usuario Creado');
 
     } catch (\Exception $e){
-        session()->flash('type', 'danger');
-        session()->flash('message', 'No se creo el usuario');
+        $request->session()->flash('type', 'danger');
+        $request->session()->flash('message', 'No se creo el usuario');
     }
 
         //if($CrearUser){
@@ -122,10 +122,10 @@ class usuarioviewController extends Controller
     {
         DB::select('call SP_DELETE_USUARIO(?)', [$rut]);
 
-        session()->flash('type', 'success');
+        session()->flash('type', 'danger');
         session()->flash('message', 'Usuario eliminado con exito!');
 
-        return redirect('usuario');
+        return redirect('usuarioadmin');
 
         //return redirect('usuario')->with('status', "Se ha eliminado el usuario con rut {$rut} satisfactoriamente!");
     }

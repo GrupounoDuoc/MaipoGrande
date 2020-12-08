@@ -40,12 +40,12 @@ class productoviewController extends Controller
                 array($nombreFruta, $descripcion, $imagen)
             );
 
-        session()->flash('type', 'success');
-        session()->flash('message', 'Producto creado con exito!');
+        $request->session()->flash('type', 'success');
+        $request->session()->flash('message', 'Producto creado con exito!');
 
     } catch (\Exception $e){
-        session()->flash('type', 'danger');
-        session()->flash('message', 'No se creo el producto!');
+        $request->session()->flash('type', 'danger');
+        $request->session()->flash('message', 'No se creo el producto!');
     }
         return redirect()->back();
         //return back()->with('status', "Se ha creado la fruta {$nombreFruta} satisfactoriamente!");
