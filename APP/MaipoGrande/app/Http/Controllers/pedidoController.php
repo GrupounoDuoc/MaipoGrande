@@ -505,8 +505,6 @@ class pedidoController extends Controller
 
         return back()->with('status', "Has publicado tu producto correctamente!");
     }
-
-
     public function CargarDatos()
     {
         $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()');

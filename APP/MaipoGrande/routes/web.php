@@ -47,7 +47,7 @@ Route::post('/IngresarProducto', [
 //VISTAS APP
 Route::get('/', function () {
     return view('index');
-});
+})->name('/');
 Route::get('/contacto', function () {
     return view('contacto');
 });

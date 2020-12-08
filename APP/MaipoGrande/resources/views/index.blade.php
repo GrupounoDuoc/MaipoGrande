@@ -78,11 +78,14 @@
     </header>
     <div class="sub-menu">
         <ul class="lista-submenu">
-            <li><a href="catalogo">Catálogo</a></li>
             @if (isset($_SESSION['usuario']))
-            @if($_SESSION['tipo_usuario'] != 3)
-            <li><a href="pedidos">Pedidos</a></li>
-            @endif
+                @if($_SESSION['tipo_usuario'] == 3)
+                <li><a href="catalogo">Catálogo</a></li>
+                 @else
+                <li><a href="pedidos">Pedidos</a></li>
+                @endif
+            @else
+                <li><a href="catalogo">Catálogo</a></li>
             @endif
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="">Perfil</a></li>
