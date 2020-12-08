@@ -119,6 +119,9 @@
                         </ul>
                         <br>
                         <input type="submit" class="card-link btn btn-secondary" name="Limpiar" value="Limpiar">
+                        @if($_SESSION['tipo_usuario'] == 4)
+                            <input type="submit" class="card-link btn btn-success" name="crearPedido" value="Crear nuevo pedido">
+                        @endif
                     </ul>
             </div>
         </div>
