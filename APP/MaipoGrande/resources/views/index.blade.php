@@ -79,24 +79,26 @@
     <div class="sub-menu">
         <ul class="lista-submenu">
             @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] == 3)
-                <li><a href="catalogo">Catálogo</a></li>
-                 @else
-                <li><a href="pedidos">Pedidos</a></li>
-                @endif
+            @if($_SESSION['tipo_usuario'] == 3)
+            <li><a href="catalogo">Catálogo</a></li>
             @else
-                <li><a href="catalogo">Catálogo</a></li>
+            <li><a href="pedidos">Pedidos</a></li>
+            @endif
+            @else
+            <li><a href="catalogo">Catálogo</a></li>
             @endif
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="">Perfil</a></li>
                 <li><a href="logout">Cerrar sesión</a></li>
-                <li><a href="PublicarProducto">Publicar producto</a></li>
                 @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] != 3)
+                @if($_SESSION['tipo_usuario'] == 5)
                 <li><a href="Reportes">Reportes</a></li>
+                @elseif($_SESSION['tipo_usuario'] == 4)
+                <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
+                @elseif($_SESSION['tipo_usuario'] == 2)
+                <li><a href="PublicarProducto">Publicar producto</a></li>
                 @endif
                 @endif
-
             </ul>
             <a href="carrito"><span class="icon-cart"></span></a>
             @if(isset($_SESSION['totalCart']))
@@ -116,8 +118,12 @@
                 <li><a href="admin">Administrador</a></li>
                 <li><a href="catalogo">Catálogo</a></li>
                 @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] != 3)
-                <li><a href="pedidos">Pedidos</a></li>
+                @if($_SESSION['tipo_usuario'] == 5)
+                <li><a href="Reportes">Reportes</a></li>
+                @elseif($_SESSION['tipo_usuario'] == 4)
+                <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
+                @elseif($_SESSION['tipo_usuario'] == 2)
+                <li><a href="PublicarProducto">Publicar producto</a></li>
                 @endif
                 @endif
                 <ul class="subMenu-usuario" id="submenu-perfil">
@@ -136,8 +142,13 @@
                 </li>
                 <li><a href="catalogo">Catálogo</a></li>
                 @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] != 3)
+                @if($_SESSION['tipo_usuario'] == 3)
                 <li><a href="pedidos">Pedidos</a></li>
+                @endif
+                @endif
+                @if (isset($_SESSION['usuario']))
+                @if($_SESSION['tipo_usuario'] == 4)
+                <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
                 @endif
                 @endif
                 <ul class="subMenu-usuario" id="submenu-perfil">
