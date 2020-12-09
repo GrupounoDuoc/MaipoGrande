@@ -66,7 +66,7 @@
                                 <input type="submit" name="submit" class="btn btn-info btn-md" value="Iniciar sesion">
                             </div>
                             <div id="register-link" class="text-right">
-                                <a href="registro" class="text-info">Registrate aca!</a>
+                                <a href="registro" class="text-info">Registrate aqui!</a>
                             </div>
                         </div>
                         <div class="footer">

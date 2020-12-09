@@ -5,7 +5,7 @@
     <a href="/" class="brand-link">
       <img src="dist/img/icon-72x72.png" alt="Admin Maipo Grande" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Admin|Maipo Grande</span>
+      <span class="brand-text font-weight-light">Maipo Grande</span>
     </a>
 
     <!-- Sidebar -->
@@ -71,10 +71,10 @@
               </li>
               -->
               <li class="nav-item">
-                  <a class="nav-link" href="{{url('ModificarContratos')}}" ><i class="fa fa-docs"></i> Contratos</a>
+                  <a class="nav-link" href="{{url('ModificarContratos')}}" ><i class="fas fa-file-alt"></i> Contratos</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="{{url('VentasExternas')}}" ><i class="fa fa-docs"></i> Pedidos internacionales</a>
+                  <a class="nav-link" href="{{url('VentasExternas')}}" ><i class="fas fa-id-card-alt"></i> Pedidos internacionales</a>
               </li>
             </ul>
           </li>

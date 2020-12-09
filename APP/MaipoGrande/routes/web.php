@@ -217,7 +217,7 @@ Route::get('saludo/{name}/{nickname?}', function ($name, $nickname = null) {
     }
 });
 
-Auth::routes(['login' => false]);
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

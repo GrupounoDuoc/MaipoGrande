@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="iconos/style.css">
+    <link rel="stylesheet" href="css/catalogo.css">
     <!-- PWA -->
     @laravelPWA
 </head>
@@ -54,12 +55,7 @@
         <li><a href="logout">Cerrar sesión</a></li>
         <li><a href="PublicarProducto">Publicar producto</a></li>
     </ul>
-    <a href="carrito"><span class="icon-cart"></span></a>
-    @if(isset($_SESSION['totalCart']))
-    <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-    @else
-    <p class="cantidad">0</p>
-    @endif
+
 </ul>
 </div>
 <div class="menu-lateralResponsive" id="menu-responsive">
