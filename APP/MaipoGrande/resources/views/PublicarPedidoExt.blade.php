@@ -85,55 +85,59 @@
     @endif
 
     <div class="contenedor seccion contenido-centrado">
-        <h1 class="centrar-texto">Publicar pedido</h1>
+        <h1 class="centrar-texto" style="justify-content: center; display:flex;">Publicar solicitud de compra internacional</h1>
 
         <form action="{{ route('PublicarVenta') }}" method="POST" autocomplete="on" action="">
             <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
             @csrf
             <fieldset>
-                <p class="font-weight-bold">Ingresa los datos de tu publicación...</p>
+                <p class="font-weight-bold" style="justify-content: center; display:flex;">Ingresa los datos de tu solicitud...</p>
                 <div class="form-group">
 
-                    @if (isset($_SESSION['tipo_usuario']))
-                    <input id="prodId" name="id_vendedor" type="hidden" value="{{$_SESSION['tipo_usuario']}}">
+                    @if (isset($_SESSION['id_usuario']))
+                    <input id="prodId" name="id_vendedor" type="hidden" value="{{$_SESSION['id_usuario']}}">
                     @endif
 
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <select name="tipo_fruta" class="form-control" required>
-                                    <option selected disabled value="">Selecciona la fruta que venderás</option>
+                                    <option selected disabled value="">Selecciona la fruta que requieres</option>
                                     @foreach($frutas as $cursorfruta)
                                     <option value="{{ $cursorfruta->ID_TIPO_FRUTA}}">{{ $cursorfruta->TIPO_FRUTA}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <select name="calidad" class="form-control" required>
-                                    <option selected disabled value="">Selecciona la calidad de la fruta</option>
+                                    <option selected disabled value="">Selecciona la calidad de la fruta requerida</option>
                                     @foreach($calidades as $cursorcalidad)
                                     <option value="{{ $cursorcalidad->ID_CALIDAD}}">{{ $cursorcalidad->CALIDAD}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <input type="number" min=1 max=9999 class="form-control" name=cantidad placeholder="Cantidad (en KG)" required>
                             </div>
-                            <div class="form-group col-md-4">
-                                <input type="number" min=1 max=9999 class="form-control" name=precioxkg placeholder="Precio por KG" required>
+                            <div class="form-group col-md-3">
+                                <select name="tipo_refrigeracion" class="form-control" id="tipo_refrigeracion" required>
+                                    <option selected disabled value="">¿Requiere refrigeración?</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
+            </fieldset>
+        </form>
     </div>
 
 
-    </fieldset>
+
     <fieldset>
-        <div class="container-boton">
-            <input type="submit" name="" value="Publicar">
+        <div class="container-boton" style="justify-content: center; display:flex;">
+            <input class="btn btn-success" type="submit" name="" value="Publicar">
         </div>
     </fieldset>
     </form>

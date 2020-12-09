@@ -27,6 +27,7 @@ class LoginController extends Controller
                     }
                     $_SESSION['usuario'] = $record -> CORREO;
                     $_SESSION['tipo_usuario'] = $record -> ID_PERFIL;
+                    $_SESSION['id_usuario'] = $record -> ID_USUARIO;
                     return view('index');
             }
         }else{

@@ -94,8 +94,8 @@
                 <p class="font-weight-bold">Ingresa los datos de tu publicación...</p>
                 <div class="form-group">
 
-                    @if (isset($_SESSION['tipo_usuario']))
-                    <input id="prodId" name="id_vendedor" type="hidden" value="{{$_SESSION['tipo_usuario']}}">
+                    @if (isset($_SESSION['id_usuario']))
+                    <input id="prodId" name="id_vendedor" type="hidden" value="{{$_SESSION['id_usuario']}}">
                     @endif
 
                     <div class="form-group">
@@ -127,10 +127,12 @@
                         </div>
                     </div>
                 </div>
+            </fieldset>
+        </form>
     </div>
 
 
-    </fieldset>
+
     <fieldset>
         <div class="container-boton">
             <input type="submit" name="" value="Publicar">
