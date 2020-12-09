@@ -56,9 +56,12 @@ Route::get('/administrador', function () {
     return view('administrador');
 });
 
-Route::get('/carrito', function () {
-    return view('carrito');
-});
+Route::get('/carrito', 'App\Http\Controllers\pedidoController@carrito');
+
+Route::get('/comprar', 'App\Http\Controllers\pedidoController@comprar');
+
+Route::get('/compraErronea', 'App\Http\Controllers\pedidoController@compraErronea');
+
 Route::get('/catalogo', 'App\Http\Controllers\pedidoController@catalogo');
 
 Route::post('/catalogo', [
