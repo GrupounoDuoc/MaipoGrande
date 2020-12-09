@@ -95,6 +95,8 @@ Route::get('/registro', 'App\Http\Controllers\userController@CargarComuna');
 
 Route::get('/PublicarProducto', 'App\Http\Controllers\pedidoController@CargarDatos');
 
+Route::get('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@CargarDatosB');
+
 Route::get('/administrador', function () {
     return view('paneladministrador');
 });

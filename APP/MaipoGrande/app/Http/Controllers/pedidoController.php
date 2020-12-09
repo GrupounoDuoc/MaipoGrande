@@ -544,4 +544,12 @@ class pedidoController extends Controller
 
         return back()->with('status', "Se ha actualizado el pedido con id {$id_pedido} satisfactoriamente!");
     }
+
+    public function CargarDatosB()
+    {
+        $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()');
+        $calidades = DB::select('CALL SP_GET_CALIDAD()');
+
+        return view('PublicarPedidoExt', compact('frutas', 'calidades'));
+    }
 }
