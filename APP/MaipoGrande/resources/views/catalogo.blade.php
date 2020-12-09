@@ -40,8 +40,19 @@
 
                 @else
                 <li><a class="nav-link" href="/">Inicio</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
                 <li>
-                    <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
+                    <a href="carrito" class="nav-link"><span class="icon-cart"></span></a>
                     @if(isset($_SESSION['totalCart']))
                     <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
                     @else
