@@ -128,16 +128,16 @@
                     <div class="sidebar-heading"></div>
 
                     <div class="list-group list-group-flush">
-                        <ul>
+                        <ul class="navbar-nav align-items-left">
                             <h4>Catalogo</h4>
                             <br>
-                            <li><span><img src="imagenes/icon-fruta.png"></span>Tipo fruta</li>
-                            <ul>
+                            <li class="nav-item active">Tipo fruta <span><img src="imagenes/icon-fruta.png"></span></li>
+                            <ul class="navbar-nav align-items-left">
                                 @foreach ($tipos as $tipo)
                                 @if( $tipo->TIPO_FRUTA == $tipoSelected)
-                                <li><input onclick="this.form.submit();" type="radio" name="tipo" checked="true" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                                <li class="nav-item"><input onclick="this.form.submit();" type="radio" name="tipo" checked="true" value="{{ $tipo->TIPO_FRUTA}}"> <label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
                                 @else
-                                <li><input onclick="this.form.submit();" type="radio" name="tipo" value="{{ $tipo->TIPO_FRUTA}}"><label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
+                                <li class="nav-item"><input onclick="this.form.submit();" type="radio" name="tipo" value="{{ $tipo->TIPO_FRUTA}}"> <label for="{{ $tipo->TIPO_FRUTA}}">{{ $tipo->TIPO_FRUTA}}</label></li>
                                 @endif
                                 @endforeach
                             </ul>
@@ -146,12 +146,12 @@
                                 <h4>Calidad</h4>
                                 <br>
                             </li>
-                            <ul>
+                            <ul class="navbar-nav align-items-left">
                                 @foreach ($calidades as $calidad)
                                 @if( $calidad->CALIDAD == $calidadSelected)
-                                <li><input onclick="this.form.submit();" type="radio" name="calidad" checked="true" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
+                                <li class="nav-item"><input onclick="this.form.submit();" type="radio" name="calidad" checked="true" value="{{ $calidad->CALIDAD}}"> <label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
                                 @else
-                                <li><input onclick="this.form.submit();" type="radio" name="calidad" value="{{ $calidad->CALIDAD}}"><label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
+                                <li class="nav-item"><input onclick="this.form.submit();" type="radio" name="calidad" value="{{ $calidad->CALIDAD}}"> <label for="{{ $calidad->CALIDAD}}">{{ $calidad->CALIDAD}}</label></li>
                                 @endif
                                 @endforeach
                             </ul>
@@ -163,10 +163,14 @@
                 </div>
 
 
-
+ 
                 <div class="col-sm-10">
+        
                     <div class="card-deck">
+                   
+
                         <div class="col-sm-12">
+                            
                             @foreach ($ofertas as $oferta)
                             <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem; width:22rem;">
                                 <img src="{{Storage::url($oferta->FOTO)}}" class="card-img-top" alt="..." style="height:150px; width:200px;">
@@ -196,10 +200,18 @@
                                 </div>
                             </div>
                             @endforeach
+                            
 
                         </div>
+                        <div class="offset-sm-9">
+                        {{$ofertas->links()}}
+                        
+                        </div>
+                        
+                       
                     </div>
                 </div>
+                
 
             </div>
         </div>
@@ -208,14 +220,24 @@
 
 
 
+    <footer class="page-footer font-small" style="position: absolute; width: 100%; height: 140px;">
+     
+     <br><div class="cont-footer" style="text-align: center; display:flex;">
+         <div class="alineacion">
+             <br>
+         <div class="copyright">
+             © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
+         </div>
+     </div>
 
+</footer>
+ 
 
-
-        <footer class="page-footer font-small blue black">
+        <!-- <footer class="page-footer font-small blue black" style="position: absolute; width: 100%; height: 130px;">
             <div class="footer-copyright text-center py-3">
                 © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande</a>
             </div>
-        </footer>
+        </footer>  -->
         <script>
             if (window.history.replaceState) {
                 window.history.replaceState(null, null, window.location.href);

@@ -194,7 +194,7 @@
                     <p class="client-name">Edgar Barrera</p>
                 </div>
                 <div class="testimonial-text">
-                    <p>Ofrecen una atención inolvidable, realmente recomiendo a Maipo Grande para comprar Frutas o verduras.</p>
+                    <p>Ofrecen una atención inolvidable, realmente recomiendo a Maipo Grande para comprar Frutas.</p>
                 </div>
             </div>
             <div class="testimonial-item">

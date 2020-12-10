@@ -142,8 +142,8 @@
     </div>
 
     <!--Footer-->
-    <footer class="footer2">
-        <div class="contenedor">
+    <footer class="footer2">  <!-- style="position: absolute; bottom: 0; width: 100%; height: 130px;" -->
+         <div class="contenedor">
             <div class="d-flex p-2 justify-content-center">
                 <div class="copyright">
                     © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>

@@ -61,8 +61,6 @@
                     <li><a href="/">Inicio</a></li>
                     <li><a href="login.php?url=<?php echo $_SERVER["REQUEST_URI"]?>">Entrar</a></li>
                     <li><a href="registro.php">Registrarse</a></li>
-                    <li><a href="contacto.php">Contacto</a></li>
-                    <li><span class="icon-search" id="buscador"></span></li>
                     
                 <?php }else { ?>
                 <li><a href="index.php">Inicio</a></li>
@@ -81,22 +79,6 @@
             
         </nav>
     </header>
-    <div class="sub-menu">
-        <ul class="lista-submenu">
-            <li><a href="catalogo.php">Catálogo</a></li>
-            <li><a href="maipogrande.php">Calidad Fruta</a></li>
-            <ul class="subMenu-usuario" id="submenu-perfil">
-                <li><a href="php/validarUsuario.php">Perfil</a></li>
-                <li><a href="php/cerrar.php">Cerrar sesión</a></li>
-            </ul>
-            <a href="carrito"><span class="icon-cart"></span></a>
-            @if(isset($_SESSION['totalCart']))
-                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-            @else
-                <p class="cantidad">0</p>
-            @endif
-        </ul>
-    </div>
     <div class="menu-lateralResponsive" id="menu-responsive">
         <nav class="nav-responsive">
             <ul>
@@ -159,48 +141,7 @@
             </section>
 <!--Footer-->
 <footer>
-    <div class="contenedor">
-        <div class="cont-body">                
-            <div class="columna1">    
-                    <div class="suscripcionfooter">
-                            <h1> Entérate de nuevos eventos</h1>
-                            <input type="email" name="emailUser" id="suscribefooter" placeholder="Correo electrónico" required="">
-                            <input type="submit" id="submitfooter" name="" value="Suscríbete">
-                    </div>
-            </div>
-            <div class="columna2">
-        
-                    <h1> Nuestras Redes Sociales </h1>
-                    <div class="fila">
-                        <img src="imagenes/facebook1.png">
-                        <label> Síguenos en Facebook</label>
-                    </div> 
-
-                    <div class="fila">
-                        <img src="imagenes/google1.png">
-                        <label> Síguenos en Google+</label>
-                    </div>
-        
-                    <div class="fila">
-                        <img src="imagenes/twitter1.png">
-                        <label> Síguenos en Twitter</label>
-                    </div>
-            </div>
-            <div class="columna3">
-                <h1> Cambiar Idioma </h1>
-                <div class="fila-columna3">
-                    <fieldset>
-                        <div class="form-group">
-                            <select class="custom-select">
-                                <option selected="">Español</option>
-                                <option value="1">Inglés</option>
-                                <option value="2">Portugés</option>
-                            </select>
-                        </div>
-                    </fieldset> 
-                </div>  
-            </div>
-        </div>
+    
 
         <button onclick="topFunction()" id="myBtn" title="Go to top">Arriba</button>
 
@@ -229,12 +170,9 @@ function topFunction() {
         <br><div class="cont-footer">
             <div class="alineacion">
             <div class="copyright">
-                © 2019 Todos los derechos reservados | Diseñado por <a href="index.html"> Maipo Grande @</a>
+                © 2020 Todos los derechos reservados | Diseñado por <a href="index.html"> Maipo Grande @</a>
             </div>
-            <div class="nosotros">
-                <a href=""> Preguntas Frecuentes |</a>
-                <a href=""> Términos y condiciones </a>
-            </div>
+            
         </div>
     </div>
 </footer>
