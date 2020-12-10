@@ -36,7 +36,7 @@
                     <li><a href="/">Inicio</a></li>
                     <li><a href="login">Entrar</a></li>
                     <li><a href="registro">Registrarse</a></li>
-                    <li><a href="administrador">Administrador</a></li>
+                    <li><a href="admin">Administrador</a></li>
 
                     @else
                     <li><a href="/">Inicio</a></li>

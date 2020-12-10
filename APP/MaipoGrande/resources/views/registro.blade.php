@@ -90,8 +90,8 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="contraseñaUser" class="text-info">Nombre de fantasia:</label><br>
-                                <input type="text" name="clave" id="contraseñaUser" class="form-control" placeholder="Ingresa tu nombre de fantasía . . ." required>
+                                <label for="nombrefantasia" class="text-info">Nombre de fantasia:</label><br>
+                                <input type="text" name="nombrefantasia" id="nombrefantasia" class="form-control" placeholder="Ingresa tu nombre de fantasía . . ." required>
                             </div>
                             <div class="form-group">
                                 <label for="Nombre">Datos adicionales</label>

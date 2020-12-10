@@ -137,7 +137,8 @@ Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@Listaruser');
 
 Route::get('/ListarProducto', 'App\Http\Controllers\adminController@Listarproducto');
 
-Route::get('/VentasExternas', 'App\Http\Controllers\pedidoController@CargarVentasExternas');
+Route::get('/VentasExternas', 'App\Http\Controllers\pedidoController@CargarVentasExternas')->name('VentasExternas');
+
 
 //Ruta para imprimir PDF de reporte
 Route::name('imprimir')->get('/Reporte', 'App\Http\Controllers\ReportesController@imprimir');

@@ -12,6 +12,8 @@ use App\historico_stock;
 use App\calidad;
 use App\tipo_fruta;
 use App\tipo_pedido;
+use App\Mail\SendNotification;
+use Illuminate\Support\Facades\Mail;
 
 class pedidoController extends Controller
 {
@@ -528,6 +530,7 @@ class pedidoController extends Controller
         foreach ($VentasExt as $ventas) {
             $id_pedido = $ventas->ID_PEDIDO;
             $nuevo_estado = $request->get('nuevo_estado'.($id_pedido));
+            $correo = $request->get('correo'.($id_pedido));
             if (isset($_POST['Actualizar' . ($id_pedido)])) {
                 break;
             }
@@ -539,8 +542,9 @@ class pedidoController extends Controller
                 $id_pedido, $nuevo_estado
             )
         );
-
-
+        if($nuevo_estado==2){
+            Mail::to($correo)->send(new SendNotification());
+        }
 
         return back()->with('status', "Se ha actualizado el pedido con id {$id_pedido} satisfactoriamente!");
     }
@@ -552,4 +556,5 @@ class pedidoController extends Controller
 
         return view('PublicarPedidoExt', compact('frutas', 'calidades'));
     }
+
 }
