@@ -162,15 +162,15 @@
     <!-- FIN VENTANA EMERGENTE -->
 
 <!--Footer-->
-    <footer>
-        <div class="contenedor">
-            <br><div class="cont-footer">
+    <footer style="position: absolute; width: 100%; bottom:0px; height: 130px;">
+     
+            <br><div class="cont-footer" style="text-align: center; display:flex;">
                 <div class="alineacion">
                 <div class="copyright">
                     © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
                 </div>
             </div>
-        </div>
+      
     </footer>
     
     <script src="js/buscar.js"></script>

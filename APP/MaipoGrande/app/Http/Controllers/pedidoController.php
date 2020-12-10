@@ -10,6 +10,7 @@ use App\pedido;
 use App\detalle_pedido;
 use App\historico_stock;
 use App\calidad;
+use App\Http\Gestores\CollectionHelper;
 use App\tipo_fruta;
 use App\tipo_pedido;
 
@@ -101,9 +102,13 @@ class pedidoController extends Controller
                 $_SESSION['totalCart'] = count($_SESSION['producto']);
             }
         }
+        $ofertas = collect($ofertas);
+        $ofertas = CollectionHelper::paginate($ofertas,4);
+        
         if ($limiteSuperado == true) {
             $_SESSION['status'] = "No se puede seleccionar mas cantidad de la disponible, se ha quitado del carro";
         }
+        
         return view('/catalogo', compact('ofertas', 'tipos', 'calidades', 'calidadSelected', 'tipoSelected', 'found'));
     }
     public function pedidos()
@@ -552,4 +557,5 @@ class pedidoController extends Controller
 
         return view('PublicarPedidoExt', compact('frutas', 'calidades'));
     }
+
 }
