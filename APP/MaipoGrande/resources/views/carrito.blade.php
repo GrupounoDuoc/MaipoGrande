@@ -130,7 +130,7 @@
                 @endforeach
                 <tr class="table-secondary">
                     <td colspan="7">
-                        <b>Subtotal : ${{$subtotal}}</b>
+                        <p><b>Subtotal : ${{$subtotal}} CLP</b></p>
 
                     </td>
                 </tr>

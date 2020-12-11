@@ -77,6 +77,8 @@ Route::post('/pedidos', [
 ]);
 Route::get('addCart/{id}', 'App\Http\Controllers\UserController@AddCart');
 
+Route::get('deleteCart/{id}', 'App\Http\Controllers\pedidoController@deleteCart');
+
 Route::get('/descripcion', function () {
     return view('descripcion');
 });
@@ -96,9 +98,10 @@ Route::get('/maipogrande', function () {
 });
 Route::get('/registro', 'App\Http\Controllers\userController@CargarComuna');
 
-Route::get('/PublicarProducto', 'App\Http\Controllers\pedidoController@CargarDatos');
 
-Route::get('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@CargarDatosB');
+Route::get('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@pedidoExterno')->name('PublicarPedidoExt');
+
+Route::post('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@pedidoExterno');
 
 Route::get('/administrador', function () {
     return view('paneladministrador');
@@ -137,7 +140,8 @@ Route::get('/ListarUsuario', 'App\Http\Controllers\adminController@Listaruser');
 
 Route::get('/ListarProducto', 'App\Http\Controllers\adminController@Listarproducto');
 
-Route::get('/VentasExternas', 'App\Http\Controllers\pedidoController@CargarVentasExternas');
+Route::get('/VentasExternas', 'App\Http\Controllers\pedidoController@CargarVentasExternas')->name('VentasExternas');
+
 
 //Ruta para imprimir PDF de reporte
 Route::name('imprimir')->get('/Reporte', 'App\Http\Controllers\ReportesController@imprimir');

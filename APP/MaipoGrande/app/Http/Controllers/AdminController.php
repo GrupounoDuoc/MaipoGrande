@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Mail\SendNotification;
+use Illuminate\Support\Facades\Mail;
+
 
 
 class AdminController extends Controller
@@ -195,5 +198,4 @@ class AdminController extends Controller
 
         return back()->with('status', "Se ha modificado el contrato del usuario satisfactoriamente!");
     }
-
 }

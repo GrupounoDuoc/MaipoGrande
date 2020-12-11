@@ -43,9 +43,9 @@
                     <td>{{$venta->ID_PEDIDO}}</td>
                     <input type="hidden" name="id_pedido{{$venta->ID_PEDIDO}}" value="{{$venta->ID_PEDIDO}}">
                     <td>{{$venta->CORREO}}</td>
+                    <input type="hidden" name="correo{{$venta->ID_PEDIDO}}" value="{{$venta->CORREO}}">
                     <td>{{$venta->FECHA_LIMITE_O_RETIRO}}</td>
                     <td>{{$venta->NOMBRE}}</td>
-
                     <td>
                         <select class="form-control" name="nuevo_estado{{$venta->ID_PEDIDO}}" id="nuevo_estado" required>
                             @foreach($Estados as $estado)
