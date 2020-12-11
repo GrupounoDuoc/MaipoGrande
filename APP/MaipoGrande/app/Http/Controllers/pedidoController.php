@@ -122,16 +122,30 @@ class pedidoController extends Controller
         if (!isset($_SESSION['usuario'])) {
             return redirect()->route('/');
         }
+        #SI SE DESEA CREAR NUEVO PREDIDO SE REDIRIJE A LA PAGINA DE CREACION
+        if(isset($_POST['crearPedido'])){
+            return redirect()->route('PublicarPedidoExt');
+        }
         #SE LLENAN ARREGLOS CON CRITERIOS DE FILTRO
-        $estados = DB::table('estados')
-            ->where('ID_ESTADO', '<=', '7')
-            ->get(); //Trae un objeto con los datos de la tabla.
-        $fechaInicioSelected = null;
-        $fechaFinSelected = null;
-        $estadoFiltroSelected = null;
-        $found = false;
-        $limiteSuperado = false;
-        $idPedido = null;
+        if($_SESSION['tipo_usuario'] == 4){
+            $estados = DB::table('estados')
+                            ->whereIn('NOMBRE',['POR APROBAR','PUBLICADO','EN LOGISTICA','DESPACHO','RECHAZADO','PAGADO'])
+                            ->get(); //Trae un objeto con los datos de la tabla.
+        }elseif($_SESSION['tipo_usuario'] == 2){
+            $estados = DB::table('estados')
+                            ->whereIn('NOMBRE',['PUBLICADO','RECHAZADO','PAGADO','POSTULADO','POSTULACION ACEPTADA','POSTULACION RECHAZADA'])
+                            ->get(); //Trae un objeto con los datos de la tabla.
+        }elseif($_SESSION['tipo_usuario'] == 5){
+            $estados = DB::table('estados')
+                            ->whereIn('NOMBRE',['EN LOGISTICA','DESPACHO','RECHAZADO','PAGADO','POSTULADO','POSTULACION ACEPTADA','POSTULACION RECHAZADA'])
+                            ->get(); //Trae un objeto con los datos de la tabla.
+        }
+        $fechaInicioSelected=null;
+        $fechaFinSelected=null;
+        $estadoFiltroSelected=null;
+        $found=false;
+        $limiteSuperado=false;
+        $idPedido=null;
         #SI SE PRESIONA FILTAR
         if (isset($_POST['fechaInicio'])) {
             $fechaInicioSelected = $_POST['fechaInicio'];
@@ -183,9 +197,21 @@ class pedidoController extends Controller
         JOIN PERSONA PV ON PV.ID_USUARIO = P.ID_VENDEDOR
         JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
         JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
-        WHERE ID_TIPO_PEDIDO = 2';
-        if ($estadoFiltroSelected != null) {
-            $query = ($query) . (' AND E.NOMBRE = \'' . ($estadoFiltroSelected) . '\'');
+        JOIN USUARIO U ON U.ID_USUARIO = P.ID_VENDEDOR
+        WHERE ID_TIPO_PEDIDO = 2 ';
+        if($_SESSION['tipo_usuario'] == 2 || $_SESSION['tipo_usuario'] == 5 ){
+            $query = ($query).'AND U.CORREO IN 
+            (SELECT CORREO FROM POSTULACION P 
+            JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO 
+            WHERE U.CORREO = \''.($_SESSION['usuario']).'\' )';
+            if($_SESSION['tipo_usuario'] == 2){
+                $query = ($query).'AND E.NOMBRE IN (\'PUBLICADO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'POSTULACION ACEPTADA\',\'POSTULACION RECHAZADA\')';
+            }elseif($_SESSION['tipo_usuario'] == 5 ){
+                $query = ($query).'AND E.NOMBRE IN (\'EN LOGISTICA\',\'DESPACHO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'POSTULACION ACEPTADA\',\'POSTULACION RECHAZADA\')';
+            }
+        }
+        if($estadoFiltroSelected!=null){
+            $query = ($query).(' AND E.NOMBRE = \''.($estadoFiltroSelected).'\'');
         }
         if ($fechaInicioSelected != null && $fechaFinSelected != null) {
             $query = ($query) . (' AND P.FECHA_CREACION BETWEEN \'' . ($fechaInicioSelected) . '\' AND \'' . ($fechaFinSelected) . '\'');
@@ -265,131 +291,6 @@ class pedidoController extends Controller
         }
         return view('/pedidos', compact('pedidos', 'estados', 'fechaInicioSelected', 'fechaFinSelected', 'estadoFiltroSelected'));
     }
-    public function ofertas()
-    {
-        #SE VERFICA SI SE HA CREADO UNA SESION
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        if (!isset($_SESSION['usuario'])) {
-            return redirect()->route('/');
-        }
-        #SE LLENAN ARREGLOS CON CRITERIOS DE FILTRO
-        $estados = DB::table('estados')
-            ->where('ID_ESTADO', '<=', '6')
-            ->get(); //Trae un objeto con los datos de la tabla.
-        $fechaInicioSelected = null;
-        $fechaFinSelected = null;
-        $estadoFiltroSelected = null;
-        $found = false;
-        $limiteSuperado = false;
-        $idOferta = null;
-        #SI SE PRESIONA FILTAR
-        if (isset($_POST['fechaInicio'])) {
-            $fechaInicioSelected = $_POST['fechaInicio'];
-        }
-        if (isset($_POST['fechaFin'])) {
-            $fechaFinSelected = $_POST['fechaFin'];
-        }
-        if (isset($_POST['estado'])) {
-            $estadoFiltroSelected = $_POST['estado'];
-        }
-        #SE REALIZA ACCION SEGUN EL SUBMIT PRESIONADO
-        if (isset($_POST['Limpiar'])) {
-            #SI SE PRESIONA LIMPIAR
-            $fechaInicioSelected = null;
-            $fechaFinSelected = null;
-            $estadoFiltroSelected = null;
-        }
-        #OPCION POR DEFECTO
-        $query = 'select  P.ID_PEDIDO ID,
-        CONCAT(PC.NOMBRE,\' \',PC.APELLIDO)  NOMBRE_COMPRADOR,
-        FECHA_CREACION FECHA,
-        E.NOMBRE ESTADO
-        FROM PEDIDO P
-        JOIN PERSONA PV ON PV.ID_USUARIO = P.ID_VENDEDOR
-        JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
-        JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
-        WHERE ID_TIPO_PEDIDO = 2';
-        if ($estadoFiltroSelected != null) {
-            $query = ($query) . (' AND E.NOMBRE = \'' . ($estadoFiltroSelected) . '\'');
-        }
-        if ($fechaInicioSelected != null && $fechaFinSelected != null) {
-            $query = ($query) . (' AND P.FECHA_CREACION BETWEEN \'' . ($fechaInicioSelected) . '\' AND \'' . ($fechaFinSelected) . '\'');
-        } elseif ($fechaInicioSelected != null) {
-            $query = ($query) . (' AND P.FECHA_CREACION=\'' . ($fechaInicioSelected) . '\'');
-        } elseif ($fechaFinSelected != null) {
-            $query = ($query) . (' AND P.FECHA_CREACION=\'' . ($fechaFinSelected) . '\'');
-        }
-        $ofertas = DB::select(DB::raw($query));
-        foreach ($ofertas as $oferta) {
-            $idOferta = $oferta->ID;
-            if (isset($_POST['detalle' . ($idOferta)]) || isset($_POST['postular' . ($idOferta)])) {
-                $comprador = $oferta->NOMBRE_COMPRADOR;
-                $fechaCreacion = $oferta->FECHA;
-                $estado = $oferta->ESTADO;
-                #SI SE PRESIONA DETALLE
-                $query = 'SELECT
-                C.NOMBRE CALIDAD,
-                TF.NOMBRE TIPO_FRUTA,
-                DP.CANT_KG CANTIDAD,
-                DP.PRECIO_KG PRECIO,
-                DP.COD_MONEDA MONEDA
-                FROM PEDIDO P
-                JOIN DETALLE_PEDIDO DP ON DP.ID_PEDIDO = P.ID_PEDIDO
-                JOIN CALIDAD C ON C.ID_CALIDAD = DP.ID_CALIDAD
-                JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = DP.ID_TIPO_FRUTA
-                JOIN PERSONA PV ON PV.ID_USUARIO = P.ID_VENDEDOR
-                JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
-                JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
-                WHERE P.ID_PEDIDO = ' . ($idOferta);
-                break;
-            }
-        }
-        $detalles = DB::select(DB::raw($query));
-        if (isset($_POST['detalle' . ($idOferta)])) {
-            #SI SE PRESIONA DETALLE
-            return view('/detallePedido', compact('detalles', 'idOferta', 'comprador', 'fechaCreacion', 'estado'));
-        } elseif (isset($_POST['postular' . ($idOferta)])) {
-            #SI SE PRESIONA POSTULAR
-            $postulacion = null;
-            $idOfertaPostulacion = $_POST['idOfertaPostulacion'];
-            foreach ($detalles as $key => $detalle) {
-                if (isset($_POST['seleccion' . ($key)])) {
-                    DB::statement(
-                        'CALL SP_CREATE_POSTULACION(?,?,?,?,?,?,@RES);',
-                        array(
-                            $idOfertaPostulacion,
-                            $_SESSION['usuario'],
-                            $detalle->TIPO_FRUTA,
-                            $detalle->CALIDAD,
-                            $_POST['cantidadPostulacion' . ($key)],
-                            $_POST['precioPostulacion' . ($key)]
-                        )
-                    );
-                    $postulacion = DB::select('SELECT @RES AS RES');
-                    if (is_array($postulacion) || is_object($postulacion)) {
-                        $numero = null;
-                        foreach ($postulacion as $n) {
-                            $numero = $n->RES;
-                            break;
-                        }
-                        if ($postulacion == null) {
-                            $postulacion = $numero;
-                        } else {
-                            $postulacion = ($postulacion) . (',') . ($numero);
-                        }
-                    }
-                }
-            }
-            if ($postulacion != null) {
-                return view('/postulacionCompleta', compact('postulacion', 'idOfertaPostulacion'));
-            } else {
-                return view('/postulacionCompleta', compact('idOfertaPostulacion'));
-            }
-        }
-        return view('/ofertas', compact('ofertas', 'estados', 'fechaInicioSelected', 'fechaFinSelected', 'estadoFiltroSelected'));
-    }
     public function deleteCart($id)
     {
         if (!isset($_SESSION)) {
@@ -458,8 +359,9 @@ class pedidoController extends Controller
             session_start();
         }
         if (isset($_SESSION['nCompra'])) {
+            $nCompra = $_SESSION['nCompra'];
             unset($_SESSION['nCompra']);
-            return view('compraErronea');
+            return view('compraErronea',compact('nCompra'));
         }
     }
     public function carrito()
@@ -528,12 +430,84 @@ class pedidoController extends Controller
 
         return view('PublicarPedido', compact('frutas', 'calidades'));
     }
+    public function pedidoExterno()
+    {
+        if(!isset($_SESSION)){
+            session_start();
+        }
+        if(!isset($_SESSION['usuario'])){
+            return redirect()->route('/');
+        }else{
+            if($_SESSION['tipo_usuario'] != 4){
+                return redirect()->route('/');
+            }
+        }
+        $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()');
+        $calidades = DB::select('CALL SP_GET_CALIDAD()');
+        if(isset($_POST['add']) || isset($_POST['publicar'])){
+            if(isset($_SESSION['pedidoExt'])){
+                foreach($_SESSION['pedidoExt'] as $key=>$row){
+                    $_SESSION['pedidoExt'][$key]['tipo_fruta'] = $_POST['tipo_fruta'.($key)];
+                    $_SESSION['pedidoExt'][$key]['calidad'] = $_POST['calidad'.($key)];
+                    $_SESSION['pedidoExt'][$key]['cantidad'] = $_POST['cantidad'.($key)];
+                    $_SESSION['pedidoExt'][$key]['refrigerado'] = $_POST['refrigerado'.($key)];
+                    $_SESSION['pedidoExt'][$key]['metodo_viaje'] = $_POST['metodo_viaje'.($key)];
+                }
+                $next = count($_SESSION['pedidoExt'])+1;
+            }else{
+                $next = 1;
+            }
+            if(isset($_POST['tipo_fruta']) && isset($_POST['calidad']) && isset($_POST['cantidad']) && isset($_POST['refrigerado'])){
+                if($_POST['tipo_fruta'] != null && $_POST['calidad'] != null && $_POST['cantidad'] != null && $_POST['refrigerado'] != null){
+                    $_SESSION['pedidoExt'][$next]['tipo_fruta'] = $_POST['tipo_fruta'];
+                    $_SESSION['pedidoExt'][$next]['calidad'] = $_POST['calidad'];
+                    $_SESSION['pedidoExt'][$next]['cantidad'] = $_POST['cantidad'];
+                    $_SESSION['pedidoExt'][$next]['refrigerado'] = $_POST['refrigerado'];
+                    $_SESSION['pedidoExt'][$next]['metodo_viaje'] = $_POST['metodo_viaje'];
+                }
+            }                    
+        }elseif(isset($_POST['limpiar'])){
+            if(isset($_SESSION['pedidoExt'])){
+                unset($_SESSION['pedidoExt']);
+            }
+        }else{
+            if(isset($_SESSION['pedidoExt'])){
+                unset($_SESSION['pedidoExt']);
+            }
+        }
+        if(isset($_POST['publicar'])){
+            if(!isset($_SESSION['pedidoExt'])){
+                return back()->with('error', "No se agregaron productos para el nuevo pedido");
+            }
+            $json = null;
+            $numero = null;
+            $json = json_encode($_SESSION['pedidoExt']);
+            //ARMAR JSON CON EL ARREGLO, QUE CONTENGA LOS DATOS NECESARIOS PARA DETALLE PEDIDO
+            DB::statement('CALL SP_CREATE_PEDIDO_EXTRANJERO(?,?,@res);', array($_SESSION['usuario'], $json));
+            $_SESSION['nCompra'] = DB::select('SELECT @RES AS RES');
+            if (is_array($_SESSION['nCompra']) || is_object($_SESSION['nCompra'])) {
+                
+                foreach ($_SESSION['nCompra'] as $n) {
+                    $numero = $n->RES;
+                    break;
+                }
+            }
+            if ($numero == null) {
+                if(isset($_SESSION['pedidoExt'])){
+                    unset($_SESSION['pedidoExt']);
+                }
+                return back()->with('error', "Error al publicar tu pedido");
+            } else {
+                return back()->with('success', "Se ha enviado la solicitud de publicacion para el pedido N°".($numero));
+            }
+        }
+        return view('PublicarPedidoExt', compact('frutas', 'calidades'));
+    }
 
     public function CargarVentasExternas()
     {
         $VentasExt = DB::select('CALL SP_GET_VENTA_EXTERNA()');
         $Estados = DB::select('CALL SP_GET_ESTADOS()');
-
         return view('VentasExternas', compact('VentasExt', 'Estados'));
     }
 
@@ -561,13 +535,5 @@ class pedidoController extends Controller
         }
 
         return back()->with('status', "Se ha actualizado el pedido con id {$id_pedido} satisfactoriamente!");
-    }
-
-    public function CargarDatosB()
-    {
-        $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()');
-        $calidades = DB::select('CALL SP_GET_CALIDAD()');
-
-        return view('PublicarPedidoExt', compact('frutas', 'calidades'));
     }
 }

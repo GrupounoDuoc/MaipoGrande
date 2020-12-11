@@ -77,6 +77,8 @@ Route::post('/pedidos', [
 ]);
 Route::get('addCart/{id}', 'App\Http\Controllers\UserController@AddCart');
 
+Route::get('deleteCart/{id}', 'App\Http\Controllers\pedidoController@deleteCart');
+
 Route::get('/descripcion', function () {
     return view('descripcion');
 });
@@ -96,9 +98,10 @@ Route::get('/maipogrande', function () {
 });
 Route::get('/registro', 'App\Http\Controllers\userController@CargarComuna');
 
-Route::get('/PublicarProducto', 'App\Http\Controllers\pedidoController@CargarDatos');
 
-Route::get('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@CargarDatosB');
+Route::get('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@pedidoExterno')->name('PublicarPedidoExt');
+
+Route::post('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@pedidoExterno');
 
 Route::get('/administrador', function () {
     return view('paneladministrador');

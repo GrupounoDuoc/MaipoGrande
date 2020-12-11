@@ -117,7 +117,7 @@
         </tr>
         @endforeach
         <tr>
-            <td>
+            <td colspan="7">
                 Subtotal : ${{$subtotal}}
             </td>
         </tr>
