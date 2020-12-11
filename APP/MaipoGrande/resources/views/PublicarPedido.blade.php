@@ -84,7 +84,7 @@
     </div>
     @endif
 
-    <div class="contenedor seccion contenido-centrado">
+    <div class="contenedor seccion contenido-centrado" style="text-align: center; justify-items:center;">
         <h1 class="centrar-texto">Publicar pedido</h1>
 
         <form action="{{ route('PublicarVenta') }}" method="POST" autocomplete="on" action="">
@@ -92,6 +92,7 @@
             @csrf
             <fieldset>
                 <p class="font-weight-bold">Ingresa los datos de tu publicación...</p>
+                <br>
                 <div class="form-group">
 
                     @if (isset($_SESSION['id_usuario']))
@@ -135,14 +136,15 @@
 
     <fieldset>
         <div class="container-boton">
-            <input type="submit" name="" value="Publicar">
+            <input class="btn btn-success" type="submit" name="" value="Publicar" style="display:flex;">
         </div>
     </fieldset>
     </form>
     </div>
 
+    
     <!--Footer-->
-    <footer class="footer2">  <!-- style="position: absolute; bottom: 0; width: 100%; height: 130px;" -->
+    <footer class="footer2" style="position: absolute; bottom: 0; width: 100%; height: 130px;">  <!-- style="position: absolute; bottom: 0; width: 100%; height: 130px;" -->
          <div class="contenedor">
             <div class="d-flex p-2 justify-content-center">
                 <div class="copyright">

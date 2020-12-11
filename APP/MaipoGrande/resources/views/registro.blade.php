@@ -141,7 +141,7 @@
     <br>
     <footer>
         <div class="contenedor">
-            <div class="d-flex p-2 justify-content-center">
+            <div class="d-flex p-2 justify-content-center" style="text-align: center;">
                 <div class="copyright">
                     © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
                 </div>

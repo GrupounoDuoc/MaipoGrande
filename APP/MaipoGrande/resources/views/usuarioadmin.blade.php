@@ -6,7 +6,7 @@
     <div>
         <br>
         <a href="#prueba" data-toggle="modal"><button class="btn btn-success" style="justify-content:center;"><span class="material-icons">person_add</span>Usuario</button></a>
-        <a href="verpdf"><button class="btn btn-outline-info" style="justify-content:center;"><span class="material-icons">person_add</span>Generar PDF</button></a>
+        <a href="verpdf"><button class="btn btn-outline-info" style="justify-content:center;"><span class="material-icons">add</span>Generar PDF</button></a>
     </div>
     <br>
     <h2>Lista de usuarios registrados</h2>
@@ -75,7 +75,7 @@
     </table>
 </div>
 {{$personas->links()}}
-{{$personas->total()}}
+{{$personas->total()}} Total de usuarios registrados
 
 
 <div class="modal" id="prueba" tabindex="-1" role="dialog">

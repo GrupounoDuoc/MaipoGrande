@@ -113,6 +113,9 @@
                 </ul>
             </nav>
         </div>
+
+    
+
         @if(isset($_SESSION['status']))
         <div class="alert alert-danger" role="alert">
             {{ $_SESSION['status'] }}

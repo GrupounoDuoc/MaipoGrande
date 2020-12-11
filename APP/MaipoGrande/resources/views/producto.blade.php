@@ -62,6 +62,7 @@
     </table>
 </div>
 {{$frutas->links()}}
+{{$frutas->total()}} Total de productos cargados
 
 <div class="modal" id="producto" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

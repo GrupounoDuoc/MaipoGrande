@@ -58,7 +58,7 @@
 
         <img src="imagenes/manzana.png" class="img-logo">
         <h2 class="logo">Maipo Grande</h2>
-        <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
+        <img src="imagenes/menu.png" class="icon-menu" onclick="mostrarMenu()">
         <nav>
             <ul id="lista-principal">
                 @if (empty($_SESSION['usuario']))
@@ -108,63 +108,102 @@
             @endif
         </ul>
     </div>
-    <div class="menu-lateralResponsive" id="menu-responsive">
-        <nav class="nav-responsive">
-            <ul>
-                @if (empty($_SESSION['usuario']))
 
-                <li><a href="login">Entrar</a></li>
-                <li><a href="registro">Registrarse</a></li>
-                <li><a href="admin">Administrador</a></li>
-                <li><a href="catalogo">Catálogo</a></li>
-                @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] == 5)
-                <li><a href="Reportes">Reportes</a></li>
-                @elseif($_SESSION['tipo_usuario'] == 4)
-                <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
-                @elseif($_SESSION['tipo_usuario'] == 2)
-                <li><a href="PublicarProducto">Publicar producto</a></li>
-                @endif
-                @endif
-                <ul class="subMenu-usuario" id="submenu-perfil">
-                    <li><a href="">Perfil</a></li>
-                    <li><a href="logout">Cerrar sesión</a></li>
+    <style>
+        .x-wrapper {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            float: right;
+        }
+
+        .x-sidebar-container {
+            position: absolute;
+            z-index: 2;
+            height: 100%;
+        }
+
+        .x-sidebar {
+            width: 300px;
+            display: inline-block;
+            color: white;
+            margin-left: 0px;
+            transition: margin 0.5s;
+        }
+
+        .x-sidebar.active {
+            margin-left: -300px;
+        }
+    </style>
+
+    <div class="x-wrapper">
+        <div class="x-sidebar-container">
+            <div class="x-sidebar" id="x-sidebar">
+                <ul class="list-group"> 
+                    @if (empty($_SESSION['usuario']))
+
+                    <li class="list-group-item"><a href="login">Entrar</a></li>
+                    <li class="list-group-item"><a href="registro">Registrarse</a></li>
+                    <li class="list-group-item"><a href="admin">Administrador</a></li>
+                    <li class="list-group-item"><a href="catalogo">Catálogo</a></li>
+                    @if (isset($_SESSION['usuario']))
+                    @if($_SESSION['tipo_usuario'] == 5)
+                    <li class="list-group-item"><a href="Reportes">Reportes</a></li>
+                    @elseif($_SESSION['tipo_usuario'] == 4)
+                    <li class="list-group-item"><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
+                    @elseif($_SESSION['tipo_usuario'] == 2)
+                    <li class="list-group-item"><a href="PublicarProducto">Publicar producto</a></li>
+                    @endif
+                    @endif
+                    <ul class="subMenu-usuario" id="submenu-perfil">
+                        <li class="list-group-item"><a href="">Perfil</a></li>
+                        <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    </ul>
+                    <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
+                    @if(isset($_SESSION['totalCart']))
+                    <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+                    @else
+                    <p class="cantidad">0</p>
+                    @endif
+                    @else
+                    <li class="list-group-item" class="li-perfilUsuario">
+                        <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                    </li>
+                    <li class="list-group-item"><a href="catalogo">Catálogo</a></li>
+                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    @if (isset($_SESSION['usuario']))
+                    @if($_SESSION['tipo_usuario'] == 3)
+                    <li class="list-group-item"><a href="pedidos">Pedidos</a></li>
+                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    @endif
+                    @endif
+                    @if (isset($_SESSION['usuario']))
+                    @if($_SESSION['tipo_usuario'] == 4)
+                    <li class="list-group-item"><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
+                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    @endif
+                    @endif
+                    <ul class="subMenu-usuario" id="submenu-perfil">
+                        <li class="list-group-item"><a href="">Perfil</a></li>
+                        <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
+                            @if(isset($_SESSION['totalCart']))
+                            <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+                            @else
+                            <p class="cantidad">0</p>
+                            @endif
+                            @endif
+                        </li>
+                    </ul>
                 </ul>
-                <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-                @if(isset($_SESSION['totalCart']))
-                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-                @else
-                <p class="cantidad">0</p>
-                @endif
-                @else
-                <li class="li-perfilUsuario">
-                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                </li>
-                <li><a href="catalogo">Catálogo</a></li>
-                @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] == 3)
-                <li><a href="pedidos">Pedidos</a></li>
-                @endif
-                @endif
-                @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] == 4)
-                <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
-                @endif
-                @endif
-                <ul class="subMenu-usuario" id="submenu-perfil">
-                    <li><a href="">Perfil</a></li>
-                    <li><a href="logout">Cerrar sesión</a></li>
-                </ul>
-                <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-                @if(isset($_SESSION['totalCart']))
-                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-                @else
-                <p class="cantidad">0</p>
-                @endif
-                @endif
-            </ul>
-        </nav>
+            </div>
+        </div>
     </div>
+
+
 
     <div class="container-inicio">
         <div class="slider-wrapper theme-mi-slider">
@@ -230,7 +269,7 @@
     <!--Footer-->
     <footer>
         <div class="contenedor">
-            <div class="d-flex p-2 justify-content-center">
+            <div class="d-flex p-2 justify-content-center" style="text-align: center;">
                 <div class="copyright">
                     © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
                 </div>
@@ -246,6 +285,22 @@
     <script src="js/buscar.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/aparecerIcono.js"></script>
+
+    <script>
+        $(window).on('resize', function() {
+            $('#x-sidebar').removeClass('active')
+        })
+
+        function mostrarMenu() {
+
+            if (!$('#x-sidebar').hasClass('active')) {
+                $('#x-sidebar').addClass('active')
+
+            } else {
+                $('#x-sidebar').removeClass('active')
+            }
+        }
+    </script>
 </body>
 
 </html>
