@@ -88,6 +88,5 @@ INSERT INTO `maipo_grande`.`historico_stock`(`ID_PROVEEDOR`,`ID_TIPO_FRUTA`,`ID_
 INSERT INTO `maipo_grande`.`historico_stock`(`ID_PROVEEDOR`,`ID_TIPO_FRUTA`,`ID_CALIDAD`,`FECHA_REGISTRO`,`CANT_KG`,`PRECIO_X_KG`) VALUES (2,2,1,sysdate(),121,1400);
 INSERT INTO `maipo_grande`.`historico_stock`(`ID_PROVEEDOR`,`ID_TIPO_FRUTA`,`ID_CALIDAD`,`FECHA_REGISTRO`,`CANT_KG`,`PRECIO_X_KG`) VALUES (6,2,2,sysdate(),181.56,2500);
 
-#TIPO_TRANSPORTE
-INSERT INTO `maipo_grande`.`tipo_transporte`(`ID_TIPO_TRANSPORTE`,`NOMBRE`,`VIA_TRANSPORTE`,`REFRIGERADO`,`TON_MAX`,`DESCRIPCION`)VALUES(1,'Camion 3/4','Tierra',1,100,'Camion 3/4 de para transporte de cortas distancias');
+
 

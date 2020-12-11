@@ -89,12 +89,12 @@
     </div>
     @if($postulacion != null)
         <h1>Postulacion realizada</h1>
-        <h3>Se recibio la postulacion para el pedido N°{{$idPedidoPostulacion}}, con el siguiente correlativo: {{postulaciones}}</h3>
+        <h3>Se recibio la postulacion para el pedido N°{{$idPedidoPostulacion}}, con el siguiente correlativo: {{$postulacion}}</h3>
     @else
     <h1>Postulacion erronea</h1>
         <h3>No se ha podido realizar la postulacion al pedido N°{{$idPedidoPostulacion}}</h3>
     @endif
-    <a href="/">Volver al inicio</a>
+    <a href="/pedidos">Volver al inicio</a>
 <!--Footer-->
     <footer>
         <div class="contenedor">
