@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +33,6 @@
                 <?php
                 if (empty($_SESSION['datos'])) { ?>
                     <li><a href="/">Inicio</a></li>
-
                 <?php } else { ?>
                     <li><a href="/">Inicio</a></li>
                     <li class="li-perfilUsuario">
@@ -85,7 +84,7 @@
     @endif
 
     <div class="contenedor seccion contenido-centrado">
-        <h1 class="centrar-texto">Publicar pedido</h1>
+        <h1 class="centrar-texto">Publicar Productos</h1>
 
         <form action="{{ route('PublicarVenta') }}" method="POST" autocomplete="on" action="">
             <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
@@ -125,25 +124,19 @@
                                 <input type="number" min=1 max=9999 class="form-control" name=precioxkg placeholder="Precio por KG" required>
                             </div>
                         </div>
+                        <div class="container-boton">
+                            <input type="submit" name="" value="Publicar">
+                        </div>
                     </div>
                 </div>
             </fieldset>
         </form>
     </div>
 
-
-
-    <fieldset>
-        <div class="container-boton">
-            <input type="submit" name="" value="Publicar">
-        </div>
-    </fieldset>
-    </form>
-    </div>
-
     <!--Footer-->
-    <footer class="footer2">  <!-- style="position: absolute; bottom: 0; width: 100%; height: 130px;" -->
-         <div class="contenedor">
+    <footer class="footer2">
+        <!-- style="position: absolute; bottom: 0; width: 100%; height: 130px;" -->
+        <div class="contenedor">
             <div class="d-flex p-2 justify-content-center">
                 <div class="copyright">
                     © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>

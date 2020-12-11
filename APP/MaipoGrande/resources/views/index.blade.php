@@ -65,8 +65,10 @@
                 <li><a href="/">Inicio</a></li>
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
-                <li><a href="admin">Administrador</a></li>
                 @else
+                @if($_SESSION['tipo_usuario'] == 1)
+                <li><a href="admin">Administrador</a></li>
+                @endif
                 <li><a href="/">Inicio</a></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
@@ -112,13 +114,14 @@
         <nav class="nav-responsive">
             <ul>
                 @if (empty($_SESSION['usuario']))
-
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
-                <li><a href="admin">Administrador</a></li>
                 <li><a href="catalogo">Catálogo</a></li>
-                @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] == 5)
+                @endif
+                @if(isset($_SESSION['usuario']))
+                @if($_SESSION['tipo_usuario'] == 1)
+                <li><a href="admin">Administrador</a></li>
+                @elseif($_SESSION['tipo_usuario'] == 5)
                 <li><a href="Reportes">Reportes</a></li>
                 @elseif($_SESSION['tipo_usuario'] == 4)
                 <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
@@ -130,26 +133,13 @@
                     <li><a href="">Perfil</a></li>
                     <li><a href="logout">Cerrar sesión</a></li>
                 </ul>
-                <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-                @if(isset($_SESSION['totalCart']))
-                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-                @else
-                <p class="cantidad">0</p>
-                @endif
-                @else
-                <li class="li-perfilUsuario">
-                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                </li>
-                <li><a href="catalogo">Catálogo</a></li>
                 @if (isset($_SESSION['usuario']))
+                <li><a href="logout">Cerrar sesión</a></li>
                 @if($_SESSION['tipo_usuario'] == 3)
-                <li><a href="pedidos">Pedidos</a></li>
+                <li><a href="catalogo">Catálogo</a></li>
                 @endif
                 @endif
                 @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] == 4)
-                <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
-                @endif
                 @endif
                 <ul class="subMenu-usuario" id="submenu-perfil">
                     <li><a href="">Perfil</a></li>
@@ -161,8 +151,9 @@
                 @else
                 <p class="cantidad">0</p>
                 @endif
-                @endif
-            </ul>
+                <li class="li-perfilUsuario">
+                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
+                </li>
         </nav>
     </div>
 
