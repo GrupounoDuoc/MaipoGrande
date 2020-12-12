@@ -78,7 +78,7 @@
             </ul>
         </nav>
     </header>
-    <div class="sub-menu">
+    <!-- <div class="sub-menu">
         <ul class="lista-submenu">
             @if (isset($_SESSION['usuario']))
             @if($_SESSION['tipo_usuario'] == 3)
@@ -109,7 +109,7 @@
             <p class="cantidad">0</p>
             @endif
         </ul>
-    </div>
+    </div> -->
 
     <style>
         .x-wrapper {
