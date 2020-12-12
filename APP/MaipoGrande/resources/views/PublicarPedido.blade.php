@@ -1,4 +1,4 @@
-
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,22 +126,12 @@
                             </div>
                         </div>
                         <div class="container-boton">
-                            <input type="submit" name="" value="Publicar">
+                        <input class="btn btn-success" type="submit" name="" value="Publicar" style="display:flex;">
                         </div>
                     </div>
                 </div>
             </fieldset>
         </form>
-    </div>
-
-
-
-    <fieldset>
-        <div class="container-boton">
-            <input class="btn btn-success" type="submit" name="" value="Publicar" style="display:flex;">
-        </div>
-    </fieldset>
-    </form>
     </div>
 
     

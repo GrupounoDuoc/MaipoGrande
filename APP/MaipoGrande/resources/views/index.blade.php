@@ -99,7 +99,7 @@
                 @elseif($_SESSION['tipo_usuario'] == 4)
                 <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
                 @elseif($_SESSION['tipo_usuario'] == 2)
-                <li><a href="PublicarProducto">Publicar producto</a></li>
+                <li><a href="PublicarPedido">Publicar producto</a></li>
                 @endif
                 @endif
             </ul>
@@ -154,7 +154,7 @@
                     @elseif($_SESSION['tipo_usuario'] == 4)
                     <li class="list-group-item"><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
                     @elseif($_SESSION['tipo_usuario'] == 2)
-                    <li class="list-group-item"><a href="PublicarProducto">Publicar producto</a></li>
+                    <li class="list-group-item"><a href="PublicarPedido">Publicar producto</a></li>
                     @endif
                     @endif
                     <ul class="subMenu-usuario" id="submenu-perfil">
@@ -179,7 +179,7 @@
                     @endif
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 2)
-                    <li class="list-group-item"><a href="PublicarProducto">Publicar Producto</a></li>
+                    <li class="list-group-item"><a href="PublicarPedido">Publicar Producto</a></li>
                     <li class="list-group-item"><a href="pedidos">Pedidos</a></li>
                     <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
                     @endif

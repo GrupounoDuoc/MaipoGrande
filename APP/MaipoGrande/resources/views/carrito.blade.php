@@ -137,11 +137,11 @@
         </div>
         <div class="comya13">
             @if (empty($_SESSION['usuario']))
-            <a href="comprar" id="btn-comprar">
+            <a href="login" id="btn-comprar">
                 <h5>Logueate para finalizar la compra</h5>
             </a>
             @else
-            <a href="login" id="btn-comprar">
+            <a href="comprar" id="btn-comprar">
                 <h5>¡Compra ahora!</h5>
             </a>
             @endif

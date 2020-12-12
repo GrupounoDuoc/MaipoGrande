@@ -105,6 +105,8 @@ Route::get('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@pedidoEx
 
 Route::post('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@pedidoExterno');
 
+Route::get('/PublicarPedido', 'App\Http\Controllers\pedidoController@CargarDatos');
+
 Route::get('/administrador', function () {
     return view('paneladministrador');
 });
