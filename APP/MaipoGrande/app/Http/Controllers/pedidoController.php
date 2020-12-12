@@ -273,7 +273,7 @@ class pedidoController extends Controller
             foreach ($detalles as $key => $detalle) {
                 if (isset($_POST['seleccion' . ($key)])) {
                     DB::statement(
-                        'CALL SP_CREATE_POSTULACION_VENDEDOR((?,?,?,?,?,?,@RES);',
+                        'CALL SP_CREATE_POSTULACION_VENDEDOR(?,?,?,?,?,?,@RES);',
                         array(
                             $detalle->ID_DETALLE_PEDIDO,
                             $_SESSION['usuario'],
@@ -547,6 +547,9 @@ class pedidoController extends Controller
         );
         if ($nuevo_estado == 2) {
             Mail::to($correo)->send(new SendNotification());
+        }
+        elseif($nuevo_estado == 3){
+            DB::statement('CALL SP_FINALIZACION_POSTULACION_VENDEDOR(?,@res);', array($id_pedido));
         }
 
         return back()->with('status', "Se ha actualizado el pedido con id {$id_pedido} satisfactoriamente!");
