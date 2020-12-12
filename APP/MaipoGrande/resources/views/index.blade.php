@@ -94,7 +94,7 @@
                 <li><a href="">Perfil</a></li>
                 <li><a href="logout">Cerrar sesión</a></li>
                 @if (isset($_SESSION['usuario']))
-                @if($_SESSION['tipo_usuario'] == 5)
+                @if($_SESSION['tipo_usuario'] == 6)
                 <li><a href="Reportes">Reportes</a></li>
                 @elseif($_SESSION['tipo_usuario'] == 4)
                 <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
@@ -197,7 +197,7 @@
                     @endif
                     @endif
                     @if (isset($_SESSION['usuario']))
-                    @if($_SESSION['tipo_usuario'] == 5)
+                    @if($_SESSION['tipo_usuario'] == 6)
                     <li class="list-group-item"><a href="admin">Reporte usuarios y producto</a></li>
                     <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
                     @endif
