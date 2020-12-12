@@ -65,6 +65,7 @@
                 <li><a href="/">Inicio</a></li>
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
+                <li><a href="catalogo">Catalogo</a></li>
                 @else
                 @if($_SESSION['tipo_usuario'] == 1)
                 <li><a href="admin">Administrador</a></li>
@@ -78,7 +79,7 @@
             </ul>
         </nav>
     </header>
-    <!-- <div class="sub-menu">
+    <div class="sub-menu">
         <ul class="lista-submenu">
             @if (isset($_SESSION['usuario']))
             @if($_SESSION['tipo_usuario'] == 3)
@@ -109,7 +110,7 @@
             <p class="cantidad">0</p>
             @endif
         </ul>
-    </div> -->
+    </div>
 
     <style>
         .x-wrapper {
@@ -143,7 +144,6 @@
             <div class="x-sidebar" id="x-sidebar">
                 <ul class="list-group"> 
                     @if (empty($_SESSION['usuario']))
-
                     <li class="list-group-item"><a href="login">Entrar</a></li>
                     <li class="list-group-item"><a href="registro">Registrarse</a></li>
                     <li class="list-group-item"><a href="admin">Administrador</a></li>
@@ -168,14 +168,25 @@
                     <p class="cantidad">0</p>
                     @endif
                     @else
-                    <li class="list-group-item" class="li-perfilUsuario">
+                    <!-- <li class="list-group-item" class="li-perfilUsuario">
                         <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                    </li>
-                    <li class="list-group-item"><a href="catalogo">Catálogo</a></li>
+                    </li> -->
+                    @if (isset($_SESSION['usuario']))
+                    @if($_SESSION['tipo_usuario'] == 1)
+                    <li class="list-group-item"><a href="administrador">Administrador</a></li>
                     <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    @endif
+                    @endif
+                    @if (isset($_SESSION['usuario']))
+                    @if($_SESSION['tipo_usuario'] == 2)
+                    <li class="list-group-item"><a href="PublicarProducto">Publicar Producto</a></li>
+                    <li class="list-group-item"><a href="pedidos">Pedidos</a></li>
+                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    @endif
+                    @endif
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 3)
-                    <li class="list-group-item"><a href="pedidos">Pedidos</a></li>
+                    <li class="list-group-item"><a href="catalogo">Catalogo</a></li>
                     <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif
@@ -185,11 +196,19 @@
                     <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif
+                    @if (isset($_SESSION['usuario']))
+                    @if($_SESSION['tipo_usuario'] == 5)
+                    <li class="list-group-item"><a href="admin">Reporte usuarios y producto</a></li>
+                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    @endif
+                    @endif
+
+
                     <ul class="subMenu-usuario" id="submenu-perfil">
                         <li class="list-group-item"><a href="">Perfil</a></li>
                         <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
                     </ul>
-                    <ul class="list-group">
+                    <!-- <ul class="list-group">
                         <li class="list-group-item">
                             <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
                             @if(isset($_SESSION['totalCart']))
@@ -199,7 +218,7 @@
                             @endif
                             @endif
                         </li>
-                    </ul>
+                    </ul> -->
                 </ul>
             </div>
         </div>
