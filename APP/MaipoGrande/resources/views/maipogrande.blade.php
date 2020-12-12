@@ -46,7 +46,7 @@
 <body>
     <header id="cabecera">
         <img src="imagenes/manzana.png" class="img-logo"> 
-        <h1 class="logo"><a href="index.html">Maipo Grande</a></h1>
+        <h1 class="logo"><a href="/">Maipo Grande</a></h1>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
         <nav>
             <div class="container-buscador" id="contenido">

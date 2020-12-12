@@ -28,7 +28,7 @@
         <header id="cabecera">
 
             <img src="imagenes/manzana.png" class="img-logo">
-            <h2 class="logo">Maipo Grande</h2>
+            <h2 class="logo"><a href="/">Maipo Grande</a></h2>
             <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <ul id="lista-principal">
@@ -36,7 +36,7 @@
                     <li><a href="/">Inicio</a></li>
                     <li><a href="login">Entrar</a></li>
                     <li><a href="registro">Registrarse</a></li>
-                    <li><a href="admin">Administrador</a></li>
+            
 
                     @else
                     <li><a href="/">Inicio</a></li>

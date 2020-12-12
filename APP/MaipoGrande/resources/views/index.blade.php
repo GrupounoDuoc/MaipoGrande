@@ -144,69 +144,73 @@
             <div class="x-sidebar" id="x-sidebar">
                 <ul class="list-group"> 
                     @if (empty($_SESSION['usuario']))
-                    <li class="list-group-item"><a href="login">Entrar</a></li>
-                    <li class="list-group-item"><a href="registro">Registrarse</a></li>
-                    <li class="list-group-item"><a href="admin">Administrador</a></li>
-                    <li class="list-group-item"><a href="catalogo">Catálogo</a></li>
+                    <li class="list-group-item"><a class="nav-link"  href="login">Entrar</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="registro">Registrarse</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="catalogo">Catálogo</a></li>
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 5)
-                    <li class="list-group-item"><a href="Reportes">Reportes</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="Reportes">Reportes</a></li>
                     @elseif($_SESSION['tipo_usuario'] == 4)
-                    <li class="list-group-item"><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="PublicarPedidoExt">Pedidos Internacionales</a></li>
                     @elseif($_SESSION['tipo_usuario'] == 2)
-                    <li class="list-group-item"><a href="PublicarPedido">Publicar producto</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="PublicarPedido">Publicar producto</a></li>
                     @endif
                     @endif
                     <ul class="subMenu-usuario" id="submenu-perfil">
-                        <li class="list-group-item"><a href="">Perfil</a></li>
-                        <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                        <li class="list-group-item"><a class="nav-link" href="">Perfil</a></li>
+                        <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     </ul>
-                    <a href="carrito" class="href-carrito"><span class="icon-cart"></span></a>
-                    @if(isset($_SESSION['totalCart']))
-                    <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
-                    @else
-                    <p class="cantidad">0</p>
-                    @endif
-                    @else
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a class="nav-link" href="carrito" class="href-carrito" style="justify-content: center; display:flex;"><span class="icon-cart"></span></a>
+                            @if(isset($_SESSION['totalCart']))
+                            <p class="cantidad" style="justify-content: center; display:flex;">{{ $_SESSION['totalCart'] }}</p>
+                            @else
+                            <p class="cantidad" style="justify-content: center; display:flex;">0</p>
+                            @endif
+                            @else
+                        </li>
+                    </ul>
+                    
                     <!-- <li class="list-group-item" class="li-perfilUsuario">
                         <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                     </li> -->
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 1)
-                    <li class="list-group-item"><a href="administrador">Administrador</a></li>
-                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="administrador">Administrador</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 2)
-                    <li class="list-group-item"><a href="PublicarPedido">Publicar Producto</a></li>
-                    <li class="list-group-item"><a href="pedidos">Pedidos</a></li>
-                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="PublicarPedido">Publicar Producto</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="pedidos">Pedidos</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 3)
-                    <li class="list-group-item"><a href="catalogo">Catalogo</a></li>
-                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="catalogo">Catalogo</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 4)
-                    <li class="list-group-item"><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
-                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="PublicarPedidoExt">Pedidos Internacionales</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 5)
-                    <li class="list-group-item"><a href="admin">Reporte usuarios y producto</a></li>
-                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="admin">Reporte usuarios y producto</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif
 
 
                     <ul class="subMenu-usuario" id="submenu-perfil">
-                        <li class="list-group-item"><a href="">Perfil</a></li>
-                        <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                        <li class="list-group-item"><a class="nav-link" href="">Perfil</a></li>
+                        <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     </ul>
                     <!-- <ul class="list-group">
                         <li class="list-group-item">

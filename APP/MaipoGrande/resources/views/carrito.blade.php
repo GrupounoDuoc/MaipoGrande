@@ -49,7 +49,7 @@
 <body>
     <header id="cabecera">
         <img src="imagenes/manzana.png" class="img-logo">
-        <h1 class="logo">Maipo Grande</h1>
+        <h1 class="logo"><a href="/">Maipo Grande</a></h1>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu" style="cursor:pointer;">
         <nav>
             <ul id="lista-principal">
@@ -73,16 +73,17 @@
     </header>
     <div class="menu-lateralResponsive" id="menu-responsive">
         <nav class="nav-responsive">
-            <ul>
-                <li><a href="login.html">Entrar</a></li>
-                <li><a href="registrarse.html">Registrarse</a></li>
+            <ul class="list-group">
+                <li class="list-group-item"><a class="nav-link" href="/">Inicio</a></li>
+                <li class="list-group-item"><a class="nav-link" href="login">Entrar</a></li>
+                <li class="list-group-item"><a class="nav-link" href="registro">Registrarse</a></li>
 
                 <li><a href=""></a></li>
             </ul>
         </nav>
     </div>
     <!--Inicio del carrito de compras-->
-
+<br>
     <div class="container" style="min-height: 100vh;">
         <br>
         <h3 style="text-align: center;">Carro de compra</h3>
@@ -228,6 +229,9 @@
     <script src="js/buscar.js"></script>
     <script src="js/ventanaComprar.js"></script>
     <script src="js/aparecerIcono.js"></script>
+    <script src="js/menu.js"></script>
 </body>
+
+
 
 </html>
