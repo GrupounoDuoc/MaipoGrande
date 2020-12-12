@@ -109,7 +109,7 @@
                     <td>
                         <p>{{ $item->TIPO_FRUTA }}</p>
                     </td>
-        
+
                     <td>
                         <img src="{{Storage::url($item->FOTO)}}" width="60px" height="50px">
                     </td>
@@ -136,9 +136,15 @@
             </table>
         </div>
         <div class="comya13">
+            @if (empty($_SESSION['usuario']))
             <a href="comprar" id="btn-comprar">
+                <h5>Logueate para finalizar la compra</h5>
+            </a>
+            @else
+            <a href="login" id="btn-comprar">
                 <h5>¡Compra ahora!</h5>
             </a>
+            @endif
         </div>
         @else
         <h2 style="text-align: center;">Sin productos en el carrito</h2>
