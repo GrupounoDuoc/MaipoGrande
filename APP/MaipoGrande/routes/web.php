@@ -62,6 +62,8 @@ Route::get('/comprar', 'App\Http\Controllers\pedidoController@comprar');
 
 Route::get('/compraErronea', 'App\Http\Controllers\pedidoController@compraErronea');
 
+Route::get('/compraExitosa', 'App\Http\Controllers\pedidoController@compraExitosa');
+
 Route::get('/catalogo', 'App\Http\Controllers\pedidoController@catalogo');
 
 Route::post('/catalogo', [
