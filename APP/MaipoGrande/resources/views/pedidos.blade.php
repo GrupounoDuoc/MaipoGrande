@@ -45,8 +45,6 @@
     </header>
     <div class="sub-menu">
         <ul class="lista-submenu">
-            @if (isset($_SESSION['usuario']))
-            <li><a href="catalogo">Catálogo</a></li>
             <li><a href="pedidos">Pedidos</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li>
@@ -68,7 +66,6 @@
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
                 <li><a href="administrador">Administrador</a></li>
-                <li><a href="catalogo">Catálogo</a></li>
                 <li><a href="maipogrande.html">Calidad Fruta</a></li>
                 <ul class="subMenu-usuario" id="submenu-perfil">
                     <li><a href="">Perfil</a></li>
@@ -77,7 +74,6 @@
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                 </li>
-                <li><a href="catalogo">Catálogo</a></li>
                 <li><a href="maipogrande.html">Pedidos</a></li>
                 <ul class="subMenu-usuario" id="submenu-perfil">
                     <li><a href="">Perfil</a></li>
@@ -93,78 +89,73 @@
     </div>
     @endif
 
+    <form action="/pedidos" method="POST">
+        @csrf
+        <div class="container-fluid" style="min-height: 100vh;">
+            <div class="row">
+                <div class="col-lg-3 p-5">
+                        <h3>Filtros pedidos</h3>
+                        <hr>
+                        <h4>Estado de pedidos</h4>
+                        @foreach ($estados as $estado)
+                            <div class="form-check">
+                                <input class="form-check-input" onclick="this.form.submit();" type="radio" name="estado" value="{{ $estado->NOMBRE}}" @if( $estado->NOMBRE == $estadoFiltroSelected)checked @endif>
+                                <label class="form-check-label" for="{{ $estado->NOMBRE}}">{{ ucfirst(strtolower($estado->NOMBRE))}}
+                                </label>
+                            </div>
+                        @endforeach
+                        <hr>
 
-    <div class="container-fluid" style="min-height: 100vh;">
-        <div class="row">
-            <div class="col-lg-3 p-5">
-                <form action="/pedidos" method="POST">
-                    @csrf
-                    <h3>Filtros pedidos</h3>
-                    <hr>
-                    <h4>Estado de pedidos</h4>
-                    @foreach ($estados as $estado)
+                        <h4>Rango de fecha</h4>
+                        <div class="form-group">
+                            <label for="fechaInicio">Fecha desde</label>
+                            <input onchange="this.form.submit();" type="date" id="fechaInicio" name="fechaInicio" value="{{$fechaInicioSelected}}" min="2000/01/01" max="{{date('d/m/Y h:i:s')}}" class="form-control">
 
-                    <div class="form-check">
-                        <input class="form-check-input" onclick="this.form.submit();" type="radio" name="estado" value="{{ $estado->NOMBRE}}" @if( $estado->NOMBRE == $estadoFiltroSelected)
-                        checked @endif>
-                        <label class="form-check-label" for="{{ $estado->NOMBRE}}">{{ ucfirst(strtolower($estado->NOMBRE))}}
-                        </label>
-                    </div>
-                    @endforeach
-                    <hr>
-
-                    <h4>Rango de fecha</h4>
-                    <div class="form-group">
-                        <label for="fechaInicio">Fecha desde</label>
-                        <input onchange="this.form.submit();" type="date" id="fechaInicio" name="fechaInicio" value="{{$fechaInicioSelected}}" min="2000/01/01" max="{{date('d/m/Y h:i:s')}}" class="form-control">
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="fechaFin">Fecha hasta</label>
-                        <input onchange="this.form.submit();" type="date" id="fechaFin" name="fechaFin" value="{{$fechaFinSelected}}" min="2000/01/01" max="{{date('d/m/Y h:i:s')}}" class="form-control">
-
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input type="submit" class="btn btn-secondary btn-block" name="Limpiar" value="Limpiar">
                         </div>
-                        <div class="col-md-6">
-                            @if($_SESSION['tipo_usuario'] == 4)
-                            <button class="btn btn-success  btn-block" name="crearPedido">Crear pedido</button>
-                            <!-- <input type="submit" name="crearPedido" value="Crear nuevo pedido"> -->
+
+                        <div class="form-group">
+                            <label for="fechaFin">Fecha hasta</label>
+                            <input onchange="this.form.submit();" type="date" id="fechaFin" name="fechaFin" value="{{$fechaFinSelected}}" min="2000/01/01" max="{{date('d/m/Y h:i:s')}}" class="form-control">
+
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-secondary btn-block" name="Limpiar" value="Limpiar">
+                            </div>
+                            <div class="col-md-6">
+                                @if($_SESSION['tipo_usuario'] == 4)
+                                <button onclick="this.form.submit();" name="crearPedido" class="btn btn-success btn-block">Crear pedido</button>
+                                <!-- <input type="submit" name="crearPedido" value="Crear nuevo pedido"> -->
+                                @endif
+                            </div>
+                        </div>
+
+                    
+                </div>
+                <div class="col-md-9 p-5">
+                    @foreach ($pedidos as $pedido)
+                    <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
+                        <div class="card-body">
+                            <h5 class="card-title">Comprador: {{ $pedido->NOMBRE_COMPRADOR}}</h5>
+                            <p class="card-text">Fecha publicacion: {{ $pedido->FECHA}}</p>
+                            <p class="card-text">Estado: {{ ucfirst(strtolower($pedido->ESTADO))}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <input type="hidden" id="id" name="id" value="{{$pedido->ID}}">
+                        </ul>
+                        <div class="card-body">
+                            <input type="submit" class="card-link btn btn-secondary" name="detalle{{$pedido->ID}}" value="Ver detalles" />
+                            @if($_SESSION['tipo_usuario'] == 4 && ($pedido->ESTADO == 'DESPACHO' || $pedido->ESTADO == 'ENTREGADO'))
+                            <input type="submit" class="card-link btn btn-secondary" name="seguimiento{{$pedido->ID}}" value="Seguimiento" />
                             @endif
                         </div>
                     </div>
-
-                </form>
-            </div>
-            <div class="col-md-9 p-5">
-                @foreach ($pedidos as $pedido)
-                <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Comprador: {{ $pedido->NOMBRE_COMPRADOR}}</h5>
-                        <p class="card-text">Fecha publicacion: {{ $pedido->FECHA}}</p>
-                        <p class="card-text">Estado: {{ ucfirst(strtolower($pedido->ESTADO))}}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <input type="hidden" id="id" name="id" value="{{$pedido->ID}}">
-                    </ul>
-                    <div class="card-body">
-                        <input type="submit" class="card-link btn btn-secondary" name="detalle{{$pedido->ID}}" value="Ver detalles" />
-                        @if($pedido->ESTADO == 'DESPACHO' || $pedido->ESTADO == 'ENTREGADO')
-                        <input type="submit" class="card-link btn btn-secondary" name="seguimiento{{$pedido->ID}}" value="Seguimiento" />
-                        @endif
-                    </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
-    </div>
-
-    </div>
-    </div>
+    </form>
     <footer class="page-footer font-small" style="width: 100%; height: 140px;">
 
         <br>
