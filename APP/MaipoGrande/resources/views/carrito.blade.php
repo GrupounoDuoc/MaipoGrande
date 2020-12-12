@@ -112,7 +112,7 @@
                     </td>
 
                     <td>
-                        <img src="{{Storage::url($item->FOTO)}}" width="60px" height="50px">
+                        <img src="{{Storage::url($item->FOTO)}}" onerror="this.onerror=null;this.src='{{ asset("default/not-available.jpg")}}';" width="60px" height="50px">
                     </td>
                     <td>
                         <p> {{ $item->CALIDAD}}</p>
