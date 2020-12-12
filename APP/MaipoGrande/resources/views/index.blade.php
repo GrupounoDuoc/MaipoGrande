@@ -58,7 +58,7 @@
 
         <img src="imagenes/manzana.png" class="img-logo">
         <h2 class="logo">Maipo Grande</h2>
-        <img src="imagenes/menu.png" class="icon-menu" onclick="mostrarMenu()">
+        <img src="imagenes/menu.png" class="icon-menu" onclick="mostrarMenu()" style="cursor: pointer;">
         <nav>
             <ul id="lista-principal">
                 @if (empty($_SESSION['usuario']))

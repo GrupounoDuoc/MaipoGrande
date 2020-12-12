@@ -50,7 +50,7 @@
     <header id="cabecera">
         <img src="imagenes/manzana.png" class="img-logo">
         <h1 class="logo">Maipo Grande</h1>
-        <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
+        <img src="imagenes/menu.png" class="icon-menu" id="boton-menu" style="cursor:pointer;">
         <nav>
             <ul id="lista-principal">
                 @if (empty($_SESSION['usuario']))
@@ -131,7 +131,6 @@
                 <tr class="table-secondary">
                     <td colspan="7">
                         <p><b>Subtotal : ${{$subtotal}} CLP</b></p>
-
                     </td>
                 </tr>
             </table>
