@@ -145,102 +145,106 @@
             </ul>
         </nav>
     </div>
-    <div style="padding-left: 35%;width:90%">
-        <table class="table" style="alligment: center;width:40%;">
-            <thead>
-                <tr>
-                    <th scope="col" colspan="2">
-                        <h2 style="text-align:center">Detalles despacho</h2>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($despacho as $row)
+    @if(count($despacho)>0)
+        <div style="padding-left: 35%;width:90%">
+            <table class="table" style="alligment: center;width:40%;">
+                <thead>
                     <tr>
-                        <th scope="col" style="text-align:center" >
-                            Transportista
+                        <th scope="col" colspan="2">
+                            <h2 style="text-align:center">Detalles despacho</h2>
                         </th>
-                        <td>
-                            {{$row->NOMBRE_TRANSPORTISTA}}
-                        </td>
                     </tr>
-                    <tr>
-                        <th scope="col" style="text-align:center">
-                            Estado despacho
-                        </th>
-                        <td>
-                            {{$row->ESTADO}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="col" style="text-align:center">
-                            Fecha del despacho
-                        </th>
-                        <td>
-                            {{$row->FECHA_DESPACHO}}
-                        </td>
-                    </tr>
-                    @if($row->FECHA_RECIBIDO != NULL)
+                </thead>
+                <tbody>
+                    @foreach($despacho as $row)
                         <tr>
-                            <th scope="col" style="text-align:center">
-                                Fecha recibido
+                            <th scope="col" style="text-align:center" >
+                                Transportista
                             </th>
                             <td>
-                                {{$row->FECHA_RECIBIDO}}
+                                {{$row->NOMBRE_TRANSPORTISTA}}
                             </td>
                         </tr>
-                    @endif
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    <br>
-    <h2 style="text-align:center">Historial de actualizacion</h2>
-    <div style="padding-left: 20%;">
-        
-        <table class="table" style="width:20%">
-            <tbody>
-                @if(count($historial)>0)
-                    @foreach($historial as $key=>$item)
-                    <tr>
-                        <th scope="col">
-                            #
-                        </th>
-                        <td>
-                            {{$key+1}}
-                        </td>
-                        <th scope="col">
-                            Tipo actualización
-                        </th>
-                        <td>
-                            {{$item->ESTADO}}
-                        </td>
-                        <th scope="col">
-                            Fecha de la actualización
-                        </th>
-                        <td>
-                            {{$item->FECHA_ACTUALIZACION}}
-                        </td>
-                        <th scope="col">
-                            Detalle actualización
-                        </th>
-                        <td>
-                            {{$item->DESCRIPCION}}
-                        </td>
-                    </tr>
-                    <tr>
-                    </tr>
+                        <tr>
+                            <th scope="col" style="text-align:center">
+                                Estado despacho
+                            </th>
+                            <td>
+                                {{$row->ESTADO}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col" style="text-align:center">
+                                Fecha del despacho
+                            </th>
+                            <td>
+                                {{$row->FECHA_DESPACHO}}
+                            </td>
+                        </tr>
+                        @if($row->FECHA_RECIBIDO != NULL)
+                            <tr>
+                                <th scope="col" style="text-align:center">
+                                    Fecha recibido
+                                </th>
+                                <td>
+                                    {{$row->FECHA_RECIBIDO}}
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
-                @else
-                    <tr>
-                        <th scope="col">
-                            <h2>No hay actualizaciones del despacho</h2>
-                        </th>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <h2 style="text-align:center">Historial de actualizacion</h2>
+        <div style="padding-left: 20%;">
+            
+            <table class="table" style="width:20%">
+                <tbody>
+                    @if(count($historial)>0)
+                        @foreach($historial as $key=>$item)
+                        <tr>
+                            <th scope="col">
+                                #
+                            </th>
+                            <td>
+                                {{$key+1}}
+                            </td>
+                            <th scope="col">
+                                Tipo actualización
+                            </th>
+                            <td>
+                                {{$item->ESTADO}}
+                            </td>
+                            <th scope="col">
+                                Fecha de la actualización
+                            </th>
+                            <td>
+                                {{$item->FECHA_ACTUALIZACION}}
+                            </td>
+                            <th scope="col">
+                                Detalle actualización
+                            </th>
+                            <td>
+                                {{$item->DESCRIPCION}}
+                            </td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <th scope="col">
+                                <h2>No hay actualizaciones del despacho</h2>
+                            </th>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    @else
+        <h2>No hay registro de despacho</h2>
+    @endif
     <div style="padding: 7px;height: 50%;margin: 20px 25% 80px 25%;width: 50%;background-color: #ff9a00;border-radius: 25px;font-size: 27px;box-shadow: 0px 0px 5px;font-family: 'Encode Sans Condensed', sans-serif;">
                 <a href="pedidos" style="text-align: center;text-decoration: none;color: #ffffff;"><h5>Volver</h5></a>
         </div> 

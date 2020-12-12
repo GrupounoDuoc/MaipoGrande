@@ -119,8 +119,12 @@ class pedidoController extends Controller
         if (!isset($_SESSION)) {
             session_start();
         }
-        if (!isset($_SESSION['usuario'])) {
+        if(!isset($_SESSION['usuario'])){
             return redirect()->route('/');
+        }else{
+            if($_SESSION['tipo_usuario'] != 4 && $_SESSION['tipo_usuario'] !=2){
+                return redirect()->route('/');
+            }
         }
         #SI SE DESEA CREAR NUEVO PREDIDO SE REDIRIJE A LA PAGINA DE CREACION
         if(isset($_POST['crearPedido'])){
@@ -194,15 +198,13 @@ class pedidoController extends Controller
         FECHA_CREACION FECHA,
         E.NOMBRE ESTADO
         FROM PEDIDO P
-        JOIN PERSONA PV ON PV.ID_USUARIO = P.ID_VENDEDOR
         JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
         JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
-        JOIN USUARIO U ON U.ID_USUARIO = P.ID_VENDEDOR
         WHERE ID_TIPO_PEDIDO = 2 ';
-        if($_SESSION['tipo_usuario'] == 2 || $_SESSION['tipo_usuario'] == 5 ){
-            $query = ($query).'AND U.CORREO IN 
-            (SELECT CORREO FROM POSTULACION P 
-            JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO 
+        if($_SESSION['tipo_usuario'] == 2){
+            $query = ($query).'AND ID_VENDEDOR IN 
+            (SELECT ID_USUARIO FROM POSTULACION P 
+            JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO
             WHERE U.CORREO = \''.($_SESSION['usuario']).'\' )';
             if($_SESSION['tipo_usuario'] == 2){
                 $query = ($query).'AND E.NOMBRE IN (\'PUBLICADO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'POSTULACION ACEPTADA\',\'POSTULACION RECHAZADA\')';
@@ -239,19 +241,17 @@ class pedidoController extends Controller
                     C.NOMBRE CALIDAD,
                     TF.NOMBRE TIPO_FRUTA,
                     DP.CANT_KG CANTIDAD,
+                    REPLACE(REPLACE(REPLACE(DP.METODO_VIAJE,\'ear\',\'Terrestre\'),\'sea\',\'Maritimo\'),\'air\',\'Aereo\') METODO_VIAJE,
+                    REPLACE(REPLACE(DP.REFRIGERADO,1,\'Si\'),0,\'No\') REFRIGERADO,
                     DP.PRECIO_KG PRECIO,
                     DP.COD_MONEDA MONEDA
-                    FROM PEDIDO P
-                    JOIN DETALLE_PEDIDO DP ON DP.ID_PEDIDO = P.ID_PEDIDO
+                    FROM DETALLE_PEDIDO DP
                     JOIN CALIDAD C ON C.ID_CALIDAD = DP.ID_CALIDAD
                     JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = DP.ID_TIPO_FRUTA
-                    JOIN PERSONA PV ON PV.ID_USUARIO = P.ID_VENDEDOR
-                    JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
-                    JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
-                    WHERE P.ID_PEDIDO = ' . ($idPedido);
+                    WHERE DP.ID_PEDIDO = ' . ($idPedido);
             $detalles = DB::select(DB::raw($query));
         }
-        if (isset($_POST['detalle' . ($idPedido)])) {
+        if (isset($_POST['detalle' . ($idPedido)])){
             #SI SE PRESIONA DETALLE
             return view('/detallePedido', compact('detalles', 'idPedido', 'comprador', 'fechaCreacion', 'estado'));
         } elseif (isset($_POST['postular'])) {
@@ -442,6 +442,12 @@ class pedidoController extends Controller
                 return redirect()->route('/');
             }
         }
+        if(isset($_POST['volver'])){
+            if(isset($_SESSION['pedidoExt'])){
+                unset($_SESSION['pedidoExt']);
+            }
+            return redirect()->route('pedidos');
+        }        
         $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()');
         $calidades = DB::select('CALL SP_GET_CALIDAD()');
         if(isset($_POST['add']) || isset($_POST['publicar'])){
@@ -503,14 +509,12 @@ class pedidoController extends Controller
         }
         return view('PublicarPedidoExt', compact('frutas', 'calidades'));
     }
-
     public function CargarVentasExternas()
     {
         $VentasExt = DB::select('CALL SP_GET_VENTA_EXTERNA()');
         $Estados = DB::select('CALL SP_GET_ESTADOS()');
         return view('VentasExternas', compact('VentasExt', 'Estados'));
     }
-
     public function ActualizarEstado(Request $request)
     {
         $VentasExt = DB::select('CALL SP_GET_VENTA_EXTERNA()');

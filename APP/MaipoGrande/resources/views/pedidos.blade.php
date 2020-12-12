@@ -122,6 +122,7 @@
                         <input onchange="this.form.submit();" type="date" id="fechaFin" name="fechaFin" value="{{$fechaFinSelected}}" min="2000/01/01" max="{{date('d/m/Y h:i:s')}}" class="form-control">
 
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col-md-6">
                             <input type="submit" class="btn btn-secondary btn-block" name="Limpiar" value="Limpiar">
