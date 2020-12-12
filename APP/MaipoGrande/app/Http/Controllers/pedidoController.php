@@ -14,6 +14,7 @@ use App\Http\Gestores\CollectionHelper;
 use App\tipo_fruta;
 use App\tipo_pedido;
 use App\Mail\SendNotification;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Mail;
 
 class pedidoController extends Controller
@@ -200,6 +201,7 @@ class pedidoController extends Controller
         FROM PEDIDO P
         JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
         JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
+        JOIN USUARIO U ON U.ID_USUARIO = P.ID_COMPRADOR
         WHERE ID_TIPO_PEDIDO = 2 ';
         if($_SESSION['tipo_usuario'] == 2){
             $query = ($query).'AND ID_VENDEDOR IN 
@@ -211,6 +213,8 @@ class pedidoController extends Controller
             }elseif($_SESSION['tipo_usuario'] == 5 ){
                 $query = ($query).'AND E.NOMBRE IN (\'EN LOGISTICA\',\'DESPACHO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'POSTULACION ACEPTADA\',\'POSTULACION RECHAZADA\')';
             }
+        } elseif($_SESSION['tipo_usuario'] == 4){
+            $query = ($query).' AND U.CORREO = \''.($_SESSION['usuario']).'\' '; 
         }
         if($estadoFiltroSelected!=null){
             $query = ($query).(' AND E.NOMBRE = \''.($estadoFiltroSelected).'\'');

@@ -34,27 +34,30 @@
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
                 <li><a href="administrador">Administrador</a></li>
-
                 @else
                 <li><a href="/">Inicio</a></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                 </li>
-
                 @endif
             </ul>
         </nav>
     </header>
     <div class="sub-menu">
         <ul class="lista-submenu">
+            @if (isset($_SESSION['usuario']))
             <li><a href="catalogo">Catálogo</a></li>
             <li><a href="pedidos">Pedidos</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
-                <li><a href="">Perfil</a></li>
+                <li>
                 <li><a href="logout">Cerrar sesión</a></li>
-                <li><a href="PublicarProducto">Publicar producto</a></li>
+                @if($_SESSION['tipo_usuario'] == 2)
+                <li><a href="PublicarPedido">Publicar producto</a></li>
+                @elseif($_SESSION['tipo_usuario'] == 4)
+                <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
+                @endif
             </ul>
-
+            @endif
         </ul>
     </div>
     <div class="menu-lateralResponsive" id="menu-responsive">
@@ -129,7 +132,7 @@
                         </div>
                         <div class="col-md-6">
                             @if($_SESSION['tipo_usuario'] == 4)
-                            <button class="btn btn-success btn-block">Crear pedido</button>
+                            <button class="btn btn-success  btn-block" name="crearPedido">Crear pedido</button>
                             <!-- <input type="submit" name="crearPedido" value="Crear nuevo pedido"> -->
                             @endif
                         </div>
@@ -158,78 +161,6 @@
                 @endforeach
             </div>
         </div>
-
-
-
-
-
-        <!-- Sidebar
-                <div class="bg-light border-right" id="sidebar-wrapper">
-                    <div class="sidebar-heading">
-                        <h3>Filtros</h3>
-                    </div>
-                    <div class="list-group list-group-flush">
-                        <span>
-                            <h5>Estado pedido</h5>
-                        </span>
-                        <ul class="list-group">
-                            @foreach ($estados as $estado)
-                            @if( $estado->NOMBRE == $estadoFiltroSelected)
-                            <li class="list-group-item"><input onclick="this.form.submit();" type="radio" name="estado" checked="true" value="{{ $estado->NOMBRE}}"><label for="{{ $estado->NOMBRE}}">{{ ucfirst(strtolower($estado->NOMBRE))}}</label></li>
-                            @else
-                            <li class="list-group-item"><input onclick="this.form.submit();" type="radio" name="estado" value="{{ $estado->NOMBRE}}"><label for="{{ $estado->NOMBRE}}">{{ ucfirst(strtolower($estado->NOMBRE))}}</label></li>
-                            @endif
-                            @endforeach
-                        </ul>
-                        <li><span>
-                                <h5>Rango de fecha</h5>
-                            </span></li>
-                        <ul>
-                            <label for="fechaInicio">Fecha desde:</label>
-                            <li><input onchange="this.form.submit();" type="date" id="fechaInicio" name="fechaInicio" value="{{$fechaInicioSelected}}" min="2000/01/01" max="{{date('d/m/Y h:i:s')}}"></li>
-                            <label for="fechaFin">Hasta fecha:</label><br>
-                            <li><input onchange="this.form.submit();" type="date" id="fechaFin" name="fechaFin" value="{{$fechaFinSelected}}" min="2000/01/01" max="{{date('d/m/Y h:i:s')}}"></li>
-                        </ul>
-                        <br>
-                        <input type="submit" class="card-link btn btn-secondary" name="Limpiar" value="Limpiar">
-                        @if($_SESSION['tipo_usuario'] == 4)
-                        <input type="submit" class="card-link btn btn-success" name="crearPedido" value="Crear nuevo pedido">
-                        @endif
-
-                    </div>
-                </div> -->
-
-
-        <!-- <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="col" style="max-width:25rem;">
-                    @foreach ($pedidos as $pedido)
-                    <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
-                        <div class="card-body">
-                            <h5 class="card-title">Comprador: {{ $pedido->NOMBRE_COMPRADOR}}</h5>
-                            <p class="card-text">Fecha publicacion: {{ $pedido->FECHA}}</p>
-                            <p class="card-text">Estado: {{ ucfirst(strtolower($pedido->ESTADO))}}</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <input type="hidden" id="id" name="id" value="{{$pedido->ID}}">
-                        </ul>
-                        <div class="card-body">
-                            <input type="submit" class="card-link btn btn-secondary" name="detalle{{$pedido->ID}}" value="Ver detalles" />
-                            @if($pedido->ESTADO == 'DESPACHO' || $pedido->ESTADO == 'ENTREGADO')
-                            <input type="submit" class="card-link btn btn-secondary" name="seguimiento{{$pedido->ID}}" value="Seguimiento" />
-                            @endif
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
- -->
-
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-
-        <!-- /#page-content-wrapper -->
     </div>
 
     </div>
