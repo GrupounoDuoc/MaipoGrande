@@ -259,7 +259,6 @@ class usuarioviewController extends Controller
 
         return back()->with('status', "Se ha creado el detalle de transporte satisfactoriamente!");
 
-
     }
 
     public function ViewPanelDetalleTransportista()

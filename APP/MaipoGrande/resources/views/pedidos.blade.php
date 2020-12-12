@@ -34,13 +34,11 @@
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
                 <li><a href="administrador">Administrador</a></li>
-
                 @else
                 <li><a href="/">Inicio</a></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                 </li>
-
                 @endif
             </ul>
         </nav>
@@ -49,11 +47,15 @@
         <ul class="lista-submenu">
             <li><a href="pedidos">Pedidos</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
-                <li><a href="">Perfil</a></li>
+                <li>
                 <li><a href="logout">Cerrar sesión</a></li>
-                <li><a href="PublicarProducto">Publicar producto</a></li>
+                @if($_SESSION['tipo_usuario'] == 2)
+                <li><a href="PublicarPedido">Publicar producto</a></li>
+                @elseif($_SESSION['tipo_usuario'] == 4)
+                <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
+                @endif
             </ul>
-
+            @endif
         </ul>
     </div>
     <div class="menu-lateralResponsive" id="menu-responsive">

@@ -197,6 +197,7 @@
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 4)
                     <li class="list-group-item"><a class="nav-link" href="PublicarPedidoExt">Pedidos Internacionales</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="pedidos">Pedidos</a></li>
                     <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif
