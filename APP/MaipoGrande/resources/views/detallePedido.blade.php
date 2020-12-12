@@ -98,7 +98,7 @@
         @if ((is_array($detalles) || is_object($detalles)))
             <table class="table">
                 <tr>
-                    @if($_SESSION['tipo_usuario'] == 2)
+                    @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
                         <th>Seleccionar</th>
                     @endif
                     <th>Tipo fruta</th>
@@ -106,14 +106,14 @@
                     <th>Metodo de transporte requerido</th>
                     <th>Requiere refrigeracion</th>
                     <th>Cantidad requerida</th>
-                    @if($_SESSION['tipo_usuario'] == 2)
+                    @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
                         <th>Precio x kilo de aporte </th>
                         <th>Cantidad de aporte</th>
                     @endif
                 </tr>
                 @foreach($detalles as $key=>$item)        
                     <tr>
-                        @if($_SESSION['tipo_usuario'] == 2)
+                        @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
                             <td><input type="checkbox" name="seleccion{{$key}}" value="true"></td>
                         @endif
                         <td><p>{{ $item->TIPO_FRUTA }}</p></td>
@@ -121,7 +121,7 @@
                         <td><p> {{ $item->METODO_VIAJE}}</p></td>
                         <td><p> {{ $item->REFRIGERADO}}</p></td>
                         <td><p> {{ $item->CANTIDAD}} Kg</p></td>
-                        @if($_SESSION['tipo_usuario'] == 2)
+                        @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
                             <td><div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">$</span>
@@ -142,16 +142,10 @@
                 @endforeach
             </table>
         @endif
-        @if($_SESSION['tipo_usuario'] != 4)
+        @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
             <div class="comya13">
                     <input type="hidden" name="postular" id="postular" value="true">
                     <a href="#" onclick="document.getElementById('pedidoForm').submit()" id="postular" name="postular"><h5>Postular a pedido</h5></a>
-            </div>
-        @endif
-        @if($_SESSION['tipo_usuario'] == 1)
-            <div class="comya13">
-                <input type="hidden" name="publicar" id="publicar" value="true">
-                <a href="#" onclick="document.getElementById('pedidoForm').submit()" id="publicar" name="publicar"><h5>Publicar pedido</h5></a>
             </div>
         @endif
         @if($_SESSION['tipo_usuario'] == 4 && $estado=='ENTREGADO')
