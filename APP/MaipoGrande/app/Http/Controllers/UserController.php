@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Mail\NotificacionCreacion;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -33,6 +35,7 @@ class UserController extends Controller
             'call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
             array($nombre, $apellido, $rut, $dv, $comuna, $codigopostal, $correo, $contrasenia, $telefono, $tipopersona, $nombrefantasia, $tipocomprador)
         );
+        Mail::to($correo)->send(new NotificacionCreacion());
 
         return back()->with('status', "Se ha creado el usuario {$correo} satisfactoriamente!");
     }

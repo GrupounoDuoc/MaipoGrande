@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +33,6 @@
                 <?php
                 if (empty($_SESSION['datos'])) { ?>
                     <li><a href="/">Inicio</a></li>
-
                 <?php } else { ?>
                     <li><a href="/">Inicio</a></li>
                     <li class="li-perfilUsuario">
@@ -125,6 +124,9 @@
                             <div class="form-group col-md-4">
                                 <input type="number" min=1 max=9999 class="form-control" name=precioxkg placeholder="Precio por KG" required>
                             </div>
+                        </div>
+                        <div class="container-boton">
+                            <input type="submit" name="" value="Publicar">
                         </div>
                     </div>
                 </div>

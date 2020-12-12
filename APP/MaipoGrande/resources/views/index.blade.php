@@ -65,8 +65,10 @@
                 <li><a href="/">Inicio</a></li>
                 <li><a href="login">Entrar</a></li>
                 <li><a href="registro">Registrarse</a></li>
-                <li><a href="admin">Administrador</a></li>
                 @else
+                @if($_SESSION['tipo_usuario'] == 1)
+                <li><a href="admin">Administrador</a></li>
+                @endif
                 <li><a href="/">Inicio</a></li>
                 <li class="li-perfilUsuario">
                     <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
