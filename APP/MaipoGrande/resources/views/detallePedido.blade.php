@@ -96,13 +96,15 @@
     @CSRF
         <input type="hidden" value="{{$idPedido}}" name="idPedidoPostulacion" id="idPedidoPostulacion">
         @if ((is_array($detalles) || is_object($detalles)))
-            <table>
+            <table class="table">
                 <tr>
-                @if($_SESSION['tipo_usuario'] == 2)
+                    @if($_SESSION['tipo_usuario'] == 2)
                         <th>Seleccionar</th>
                     @endif
                     <th>Tipo fruta</th>
                     <th>Calidad requerida</th>
+                    <th>Metodo de transporte requerido</th>
+                    <th>Requiere refrigeracion</th>
                     <th>Cantidad requerida</th>
                     @if($_SESSION['tipo_usuario'] == 2)
                         <th>Precio x kilo de aporte </th>
@@ -116,6 +118,8 @@
                         @endif
                         <td><p>{{ $item->TIPO_FRUTA }}</p></td>
                         <td><p> {{ $item->CALIDAD}}</p></td>
+                        <td><p> {{ $item->METODO_VIAJE}}</p></td>
+                        <td><p> {{ $item->REFRIGERADO}}</p></td>
                         <td><p> {{ $item->CANTIDAD}} Kg</p></td>
                         @if($_SESSION['tipo_usuario'] == 2)
                             <td><div class="input-group">
