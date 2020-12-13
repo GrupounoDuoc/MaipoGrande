@@ -260,7 +260,22 @@ class pedidoController extends Controller
             }
         }
         if (isset($_POST['detalle' . ($idPedido)]) || isset($_POST['postular']) || isset($_POST['finalizar' . ($idPedido)])) {
-            $query = 'SELECT
+            if($_SESSION['tipo_usuario'] == 4){
+                $query = 'SELECT
+                        C.NOMBRE CALIDAD,
+                        TF.NOMBRE TIPO_FRUTA,
+                        DP.CANT_KG CANTIDAD,
+                        REPLACE(REPLACE(REPLACE(DP.METODO_VIAJE,\'ear\',\'Terrestre\'),\'sea\',\'Maritimo\'),\'air\',\'Aereo\') METODO_VIAJE,
+                        REPLACE(REPLACE(DP.REFRIGERADO,1,\'Si\'),0,\'No\') REFRIGERADO,
+                        DP.PRECIO_KG PRECIO,
+                        DP.COD_MONEDA MONEDA,
+                        DP.ID_DETALLE_PEDIDO
+                        FROM DETALLE_PEDIDO DP
+                        JOIN CALIDAD C ON C.ID_CALIDAD = DP.ID_CALIDAD
+                        JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = DP.ID_TIPO_FRUTA
+                        WHERE DP.ID_PEDIDO = ' . ($idPedido);
+            }elseif($_SESSION['tipo_usuario'] == 2){
+                $query = 'SELECT
                     C.NOMBRE CALIDAD,
                     TF.NOMBRE TIPO_FRUTA,
                     DP.CANT_KG CANTIDAD,
@@ -268,11 +283,20 @@ class pedidoController extends Controller
                     REPLACE(REPLACE(DP.REFRIGERADO,1,\'Si\'),0,\'No\') REFRIGERADO,
                     DP.PRECIO_KG PRECIO,
                     DP.COD_MONEDA MONEDA,
-                    DP.ID_DETALLE_PEDIDO
+                    DP.ID_DETALLE_PEDIDO,
+                    PS.KG_APORTADOS,
+                    PS.PRECIO PRECIO_APORTADO
                     FROM DETALLE_PEDIDO DP
                     JOIN CALIDAD C ON C.ID_CALIDAD = DP.ID_CALIDAD
                     JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = DP.ID_TIPO_FRUTA
+                    LEFT JOIN (SELECT DP.ID_DETALLE_PEDIDO,P.KG_APORTADOS,P.PRECIO
+						FROM POSTULACION P
+						JOIN DETALLE_PEDIDO DP ON DP.ID_DETALLE_PEDIDO = P.ID_DETALLE_PEDIDO
+						JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO
+						JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO
+						WHERE U.CORREO = \''.($_SESSION['usuario']).'\') PS ON PS.ID_DETALLE_PEDIDO = DP.ID_DETALLE_PEDIDO
                     WHERE DP.ID_PEDIDO = ' . ($idPedido);
+            }
             $detalles = DB::select(DB::raw($query));
         }
         if (isset($_POST['detalle' . ($idPedido)])){
