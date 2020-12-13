@@ -235,12 +235,6 @@
 
 </footer>
  
-
-        <!-- <footer class="page-footer font-small blue black" style="position: absolute; width: 100%; height: 130px;">
-            <div class="footer-copyright text-center py-3">
-                © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande</a>
-            </div>
-        </footer>  -->
         <script>
             if (window.history.replaceState) {
                 window.history.replaceState(null, null, window.location.href);

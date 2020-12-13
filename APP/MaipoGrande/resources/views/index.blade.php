@@ -142,9 +142,9 @@
     <div class="x-wrapper">
         <div class="x-sidebar-container">
             <div class="x-sidebar" id="x-sidebar">
-                <ul class="list-group"> 
+                <ul class="list-group">
                     @if (empty($_SESSION['usuario']))
-                    <li class="list-group-item"><a class="nav-link"  href="login">Entrar</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="login">Entrar</a></li>
                     <li class="list-group-item"><a class="nav-link" href="registro">Registrarse</a></li>
                     <li class="list-group-item"><a class="nav-link" href="catalogo">Catálogo</a></li>
                     @if (isset($_SESSION['usuario']))
@@ -171,7 +171,7 @@
                             @else
                         </li>
                     </ul>
-                    
+
                     <!-- <li class="list-group-item" class="li-perfilUsuario">
                         <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                     </li> -->
@@ -204,6 +204,10 @@
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 6)
                     <li class="list-group-item"><a href="admin">Reporte usuarios y producto</a></li>
+                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    @endif
+                    @if($_SESSION['tipo_usuario'] == 5)
+                    <li class="list-group-item"><a href="transportista">Postular a transporte</a></li>
                     <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif

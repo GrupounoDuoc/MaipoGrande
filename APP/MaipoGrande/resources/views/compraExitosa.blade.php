@@ -90,6 +90,7 @@
 
     <h1>Gracias por su compra</h1>
     <h3>Muchas gracias por su compra, se ha generado la solicitud de compra N° {{$nCompra}}, pronto sera contactado con los siguientes pasos a seguir.</h3>
+
         <a href="/">Volver al inicio</a>
 <!--Footer-->
     <footer>
@@ -97,7 +98,7 @@
             <br><div class="cont-footer">
                 <div class="alineacion">
                 <div class="copyright">
-                    © 2019 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande@ </a>
+                    © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande@ </a>
                 </div>
             </div>
         </div>

@@ -40,7 +40,12 @@ Route::put('/updateProduct', 'App\Http\Controllers\productosController\productov
 //pdf
 //Route::get('/pdf', 'PDFController@PDF')->name('descargarPDF');
 
+Route::get('/transportista', 'App\Http\Controllers\transportistaController@enLogistica')-> name('transportista');
 
+Route::post('/postulartr', 'App\Http\Controllers\transportistaController@postularTransporte')-> name('postulartr');
+
+
+Route::get('/postulartr', 'App\Http\Controllers\transportistaController@postularTransporte')-> name('postulartr');
 
 
 Route::post('/IngresarProducto', [

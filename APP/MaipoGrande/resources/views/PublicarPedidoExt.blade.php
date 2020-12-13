@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
     <script src="https://kit.fontawesome.com/5dd90ee603.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- PWA -->
     @laravelPWA
 
@@ -93,175 +96,165 @@
     <div class="contenedor seccion contenido-centrado">
         <h1 class="centrar-texto" style="justify-content: center; display:flex;">Publicar solicitud de compra internacional</h1>
 
-        <form action="/PublicarPedidoExt" method="POST" >
+        <form action="/PublicarPedidoExt" method="POST">
             <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
             @csrf
             <fieldset>
+                <select name="metodo_viaje" class="form-control">
+                    @if($metodoViajeSelected == null)
+                    <option selected disabled value="">Metodo de viaje a utilizar</option>
+                    <option value="air">Aereo</option>
+                    <option value="sea">Maritimo</option>
+                    <option value="ear">Terrestre</option>
+                    @else
+                    @if($metodoViajeSelected == 'air')
+                    <option selected value="air">Aereo</option>
+                    @else
+                    <option value="air">Aereo</option>
+                    @endif
+                    @if($metodoViajeSelected == 'sea')
+                    <option selected value="sea">Maritimo</option>
+                    @else
+                    <option value="sea">Maritimo</option>
+                    @endif
+                    @if($metodoViajeSelected == 'ear')
+                    <option selected value="ear">Terrestre</option>
+                    @else
+                    <option value="ear">Terrestre</option>
+                    @endif
+                    @endif
+                </select>
                 <p class="font-weight-bold" style="justify-content: center; display:flex;">Ingresa los datos de tu solicitud...</p>
                 <div class="form-group">
                     @if(isset($_SESSION['pedidoExt']))
-                        @foreach($_SESSION['pedidoExt'] as $key=>$row)
-                            <!--Registro-->
-                            <div class="form-group">
-                                <div class="form-row">
-                                    <div class="form-group col-md-2">
-                                        <select name="tipo_fruta{{$key}}" class="form-control">
-                                            @if(isset($row['tipo_fruta']))
-                                                @foreach($frutas as $cursorfruta)
-                                                    @if($row['tipo_fruta'] == $cursorfruta->TIPO_FRUTA)
-                                                        <option selected value="{{ $cursorfruta->TIPO_FRUTA}}">{{ $cursorfruta->TIPO_FRUTA}}</option>
-                                                    @else
-                                                        <option value="{{ $cursorfruta->TIPO_FRUTA}}">{{ $cursorfruta->TIPO_FRUTA}}</option>
-                                                    @endif
-                                                @endforeach
-                                            @else
-                                                <option selected disabled value="">Selecciona la fruta que requieres</option>
-                                                @foreach($frutas as $cursorfruta)
-                                                    <option value="{{ $cursorfruta->TIPO_FRUTA}}">{{ $cursorfruta->TIPO_FRUTA}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <select name="calidad{{$key}}" class="form-control">
-                                            @if(isset($row['calidad']))
-                                                @foreach($calidades as $cursorcalidad)
-                                                    @if($row['calidad'] == $cursorcalidad->CALIDAD)
-                                                        <option selected  value="{{ $cursorcalidad->CALIDAD}}">{{ $cursorcalidad->CALIDAD}}</option>
-                                                    @else
-                                                        <option  value="{{ $cursorcalidad->CALIDAD}}">{{ $cursorcalidad->CALIDAD}}</option>
-                                                    @endif
-                                                @endforeach
-                                            @else
-                                                <option selected disabled value="">Selecciona la calidad de la fruta requerida</option>
-                                                @foreach($calidades as $cursorcalidad)
-                                                    <option value="{{ $cursorcalidad->CALIDAD}}">{{ $cursorcalidad->CALIDAD}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        @if(isset($row['cantidad']))
-                                            <input type="number" min=1 max=9999 class="form-control" value="{{$row['cantidad']}}" name="cantidad{{$key}}" placeholder="Cantidad (en KG)" >
-                                        @else
-                                            <input type="number" min=1 max=9999 class="form-control" name="cantidad{{$key}}" placeholder="Cantidad (en KG)" >
-                                        @endif
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <select name="refrigerado{{$key}}" class="form-control">
-                                            @if(!isset($row['refrigerado']))
-                                                <option selected disabled value="">¿Requiere refrigeración?</option>
-                                                <option value="0">No</option>
-                                                <option value="1">Si</option>
-                                            @else                                            
-                                                @if($row['refrigerado'] == 0)
-                                                    <option selected  value="0">No</option>
-                                                @else
-                                                    <option value="0">No</option>
-                                                @endif
-                                                @if($row['refrigerado'] == 1)
-                                                <option selected  value="0">No</option>
-                                                @else
-                                                    <option value="1">Si</option>
-                                                @endif
-                                            @endif
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <select name="metodo_viaje{{$key}}" class="form-control">
-                                            @if(!isset($row['metodo_viaje']))
-                                                <option selected disabled value="">Metodo de viaje a utilizar</option>
-                                                <option value="air">Aereo</option>
-                                                <option value="sea">Maritimo</option>
-                                                <option value="ear">Terrestre</option>
-                                            @else                                            
-                                                @if($row['metodo_viaje'] == 'air')
-                                                    <option selected  value="air">Aereo</option>
-                                                @else
-                                                    <option value="air">Aereo</option>
-                                                @endif
-                                                @if($row['metodo_viaje'] == 'sea')
-                                                    <option selected  value="sea">Maritimo</option>
-                                                @else
-                                                    <option value="sea">Maritimo</option>
-                                                @endif
-                                                @if($row['metodo_viaje'] == 'ear')
-                                                    <option selected  value="ear">Terrestre</option>
-                                                @else
-                                                    <option value="ear">Terrestre</option>
-                                                @endif
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
+                    @foreach($_SESSION['pedidoExt'] as $key=>$row)
+                    <!--Registro-->
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <select name="tipo_fruta{{$key}}" class="form-control">
+                                    @if(isset($row['tipo_fruta']))
+                                    @foreach($frutas as $cursorfruta)
+                                    @if($row['tipo_fruta'] == $cursorfruta->TIPO_FRUTA)
+                                    <option selected value="{{ $cursorfruta->TIPO_FRUTA}}">{{ $cursorfruta->TIPO_FRUTA}}</option>
+                                    @else
+                                    <option value="{{ $cursorfruta->TIPO_FRUTA}}">{{ $cursorfruta->TIPO_FRUTA}}</option>
+                                    @endif
+                                    @endforeach
+                                    @else
+                                    <option selected disabled value="">Selecciona la fruta que requieres</option>
+                                    @foreach($frutas as $cursorfruta)
+                                    <option value="{{ $cursorfruta->TIPO_FRUTA}}">{{ $cursorfruta->TIPO_FRUTA}}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
                             </div>
-                            <!--Fin Registro-->
-                        @endforeach
+                            <div class="form-group col-md-2">
+                                <select name="calidad{{$key}}" class="form-control">
+                                    @if(isset($row['calidad']))
+                                    @foreach($calidades as $cursorcalidad)
+                                    @if($row['calidad'] == $cursorcalidad->CALIDAD)
+                                    <option selected value="{{ $cursorcalidad->CALIDAD}}">{{ $cursorcalidad->CALIDAD}}</option>
+                                    @else
+                                    <option value="{{ $cursorcalidad->CALIDAD}}">{{ $cursorcalidad->CALIDAD}}</option>
+                                    @endif
+                                    @endforeach
+                                    @else
+                                    <option selected disabled value="">Selecciona la calidad de la fruta requerida</option>
+                                    @foreach($calidades as $cursorcalidad)
+                                    <option value="{{ $cursorcalidad->CALIDAD}}">{{ $cursorcalidad->CALIDAD}}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                @if(isset($row['cantidad']))
+                                <input type="number" min=1 max=9999 class="form-control" value="{{$row['cantidad']}}" name="cantidad{{$key}}" placeholder="Cantidad (en KG)">
+                                @else
+                                <input type="number" min=1 max=9999 class="form-control" name="cantidad{{$key}}" placeholder="Cantidad (en KG)">
+                                @endif
+                            </div>
+                            <div class="form-group col-md-2">
+                                <select name="refrigerado{{$key}}" class="form-control">
+                                    @if(!isset($row['refrigerado']))
+                                    <option selected disabled value="">¿Requiere refrigeración?</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                    @else
+                                    @if($row['refrigerado'] == 0)
+                                    <option selected value="0">No</option>
+                                    @else
+                                    <option value="0">No</option>
+                                    @endif
+                                    @if($row['refrigerado'] == 1)
+                                    <option selected value="0">No</option>
+                                    @else
+                                    <option value="1">Si</option>
+                                    @endif
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Fin Registro-->
+                    @endforeach
                     @endif
                     <!--Registro-->
                     <div class="form-group">
-                                <div class="form-row">
-                                    <div class="form-group col-md-2">
-                                        <select name="tipo_fruta" class="form-control">
-                                            <option selected disabled>Selecciona la fruta que requieres</option>
-                                            @foreach($frutas as $cursorfruta)
-                                            <option value="{{ $cursorfruta->TIPO_FRUTA}}">{{ $cursorfruta->TIPO_FRUTA}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <select name="calidad" class="form-control">
-                                            <option selected disabled>Selecciona la calidad de la fruta requerida</option>
-                                            @foreach($calidades as $cursorcalidad)
-                                            <option value="{{ $cursorcalidad->CALIDAD}}">{{ $cursorcalidad->CALIDAD}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <input type="number" min=1 max=9999 class="form-control" name=cantidad placeholder="Cantidad (en KG)" >
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <select name="refrigerado" class="form-control" id="refrigerado">
-                                            <option selected disabled>¿Requiere refrigeración?</option>
-                                            <option value="0">No</option>
-                                            <option value="1">Si</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <select name="metodo_viaje" class="form-control">
-                                            <option selected disabled value="">Metodo de viaje a utilizar</option>
-                                            <option value="air">Aereo</option>
-                                            <option value="sea">Maritimo</option>
-                                            <option value="ear">Terrestre</option>
-                                        </select>
-                                    </div>
-                                </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <select name="tipo_fruta" class="form-control">
+                                    <option selected disabled>Selecciona la fruta que requieres</option>
+                                    @foreach($frutas as $cursorfruta)
+                                    <option value="{{ $cursorfruta->TIPO_FRUTA}}">{{ $cursorfruta->TIPO_FRUTA}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <!--Fin Registro-->
+                            <div class="form-group col-md-2">
+                                <select name="calidad" class="form-control">
+                                    <option selected disabled>Selecciona la calidad de la fruta requerida</option>
+                                    @foreach($calidades as $cursorcalidad)
+                                    <option value="{{ $cursorcalidad->CALIDAD}}">{{ $cursorcalidad->CALIDAD}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <input type="number" min=1 max=9999 class="form-control" name=cantidad placeholder="Cantidad (en KG)">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <select name="refrigerado" class="form-control" id="refrigerado">
+                                    <option selected disabled>¿Requiere refrigeración?</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Fin Registro-->
                 </div>
             </fieldset>
             <fieldset>
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <input class="btn btn-primary btn-block" type="submit" name="add" value="Actualizar / Añadir nuevo producto">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <input class="btn btn-primary btn-block" type="submit" name="add" value="Actualizar / Añadir nuevo producto">
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <input class="btn btn-secondary btn-block" type="submit" name="limpiar" value="Limpiar formulario">
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <input class="btn btn-success btn-block" type="submit" name="publicar" value="Publicar">
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <input class="btn btn-danger btn-block" type="submit" name="volver" value="Volver">
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <input class="btn btn-secondary btn-block" type="submit" name="limpiar" value="Limpiar formulario">
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <input class="btn btn-success btn-block" type="submit" name="publicar" value="Publicar">
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <input class="btn btn-danger btn-block" type="submit" name="volver" value="Volver">
-                </div>
-            </div>
             </fieldset>
         </form>
-        
+
         <fieldset>
-        <div class="container-boton" style="justify-content: center; display:flex;">
-            
-        </div>
+            <div class="container-boton" style="justify-content: center; display:flex;">
+
+            </div>
         </fieldset>
     </div>
 
@@ -275,7 +268,6 @@
             </div>
         </div>
     </footer>
-
     <script src="js/buscar.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/aparecerIcono.js"></script>

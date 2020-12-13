@@ -461,6 +461,10 @@ class pedidoController extends Controller
         }        
         $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()');
         $calidades = DB::select('CALL SP_GET_CALIDAD()');
+        $metodoViajeSelected = null;
+        if(isset($_POST['metodo_viaje'])){
+            $metodoViajeSelected = $_POST['metodo_viaje'];
+        }
         if(isset($_POST['add']) || isset($_POST['publicar'])){
             if(isset($_SESSION['pedidoExt'])){
                 foreach($_SESSION['pedidoExt'] as $key=>$row){
@@ -468,7 +472,7 @@ class pedidoController extends Controller
                     $_SESSION['pedidoExt'][$key]['calidad'] = $_POST['calidad'.($key)];
                     $_SESSION['pedidoExt'][$key]['cantidad'] = $_POST['cantidad'.($key)];
                     $_SESSION['pedidoExt'][$key]['refrigerado'] = $_POST['refrigerado'.($key)];
-                    $_SESSION['pedidoExt'][$key]['metodo_viaje'] = $_POST['metodo_viaje'.($key)];
+                    $_SESSION['pedidoExt'][$key]['metodo_viaje'] = $metodoViajeSelected;
                 }
                 $next = count($_SESSION['pedidoExt'])+1;
             }else{
@@ -480,7 +484,7 @@ class pedidoController extends Controller
                     $_SESSION['pedidoExt'][$next]['calidad'] = $_POST['calidad'];
                     $_SESSION['pedidoExt'][$next]['cantidad'] = $_POST['cantidad'];
                     $_SESSION['pedidoExt'][$next]['refrigerado'] = $_POST['refrigerado'];
-                    $_SESSION['pedidoExt'][$next]['metodo_viaje'] = $_POST['metodo_viaje'];
+                    $_SESSION['pedidoExt'][$next]['metodo_viaje'] = $metodoViajeSelected;
                 }
             }                    
         }elseif(isset($_POST['limpiar'])){
@@ -518,7 +522,7 @@ class pedidoController extends Controller
                 return back()->with('success', "Se ha enviado la solicitud de publicacion para el pedido N°".($numero));
             }
         }
-        return view('PublicarPedidoExt', compact('frutas', 'calidades'));
+        return view('PublicarPedidoExt', compact('frutas', 'calidades','metodoViajeSelected'));
     }
     public function CargarVentasExternas()
     {
