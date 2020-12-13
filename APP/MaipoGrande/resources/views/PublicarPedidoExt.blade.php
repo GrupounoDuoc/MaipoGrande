@@ -93,8 +93,9 @@
         {{ session('error') }}
     </div>
     @endif
-    <div class="contenedor seccion contenido-centrado">
-        <h1 class="centrar-texto" style="justify-content: center; display:flex;">Publicar solicitud de compra internacional</h1>
+    <div class="container" style="min-height: 100vh;">
+        <div class="contenedor seccion contenido-centrado">
+            <h1 class="centrar-texto" style="justify-content: center; display:flex; text-align:center;">Publicar solicitud de compra internacional</h1>
 
         <form action="/PublicarPedidoExt" method="POST">
             <!--Es una buena forma para trabajar con formularios, para validarlos con php o js-->
@@ -257,16 +258,18 @@
             </div>
         </fieldset>
     </div>
-
     <!--Footer-->
-    <footer class="footer2">
-        <div class="contenedor">
-            <div class="d-flex p-2 justify-content-center">
+    <footer class="page-footer font-small" style="bottom:0px; width: 100%; height: 140px;">
+
+        <br>
+        <div class="cont-footer" style="text-align: center; display:flex;">
+            <div class="alineacion">
+                <br>
                 <div class="copyright">
                     © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
                 </div>
             </div>
-        </div>
+
     </footer>
     <script src="js/buscar.js"></script>
     <script src="js/menu.js"></script>

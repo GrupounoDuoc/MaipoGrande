@@ -95,7 +95,8 @@
                 <li><a href="logout">Cerrar sesión</a></li>
                 @if (isset($_SESSION['usuario']))
                 @if($_SESSION['tipo_usuario'] == 6)
-                <li><a href="Reportes">Reportes</a></li>
+                <li><a href="verpdf" target="_blank">Reportes usuario</a></li>
+                <li><a href="reportesProductos" target="_blank">Reportes producto</a></li>
                 @elseif($_SESSION['tipo_usuario'] == 4)
                 <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
                 @elseif($_SESSION['tipo_usuario'] == 2)
@@ -203,7 +204,8 @@
                     @endif
                     @if (isset($_SESSION['usuario']))
                     @if($_SESSION['tipo_usuario'] == 6)
-                    <li class="list-group-item"><a href="admin">Reporte usuarios y producto</a></li>
+                    <li class="list-group-item"><a href="verpdf" target="_blank">Reportes usuario</a></li>
+                    <li class="list-group-item"><a href="reportesProductos" target="_blank">Reportes producto</a></li>
                     <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
                     @endif
                     @if($_SESSION['tipo_usuario'] == 5)

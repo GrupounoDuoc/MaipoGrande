@@ -4,7 +4,7 @@ use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\persona;
-
+use App\Models\tipo_fruta;
 
 //Routes Admin
 Route::get('/admin', 'App\Http\Controllers\adminController\adminviewController@ViewPanelAdmin')->name('admin');
@@ -258,4 +258,16 @@ Route::get('verpdf',function(){
     $pdf = PDF::loadView('prueba', $data);
 
     return $pdf->stream('usuario.pdf');
+});
+
+Route::get('reportesProductos',function(){
+
+    $frutas = tipo_fruta::all();
+    $data = [
+        'frutas' => $frutas
+    ];
+
+    $pdf = PDF::loadView('reportesProductos', $data);
+
+    return $pdf->stream('ReporteDeProductos.pdf');
 });

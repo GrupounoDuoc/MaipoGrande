@@ -45,72 +45,44 @@
         <img src="imagenes/manzana.png" class="img-logo"> 
         <h1 class="logo">Maipo Grande</h1>
         <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
-        <nav>
-            <div class="container-buscador" id="contenido">
-                <form action="" method="POST">
-                    <input type="text" id="campoBuscar" placeholder="Buscar..." name="productoBuscar">
-                    <span class="icon-search"></span>
-                </form>
-            </div>
-            <ul id="lista-principal">
-                @if (empty($_SESSION['usuario'])) 
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="login">Entrar</a></li>
-                    <li><a href="registro">Registrarse</a></li>
-                    <li><a href="contacto">Contacto</a></li>
-                    <li><span class="icon-search" id="buscador"></span></li>
-                    
-                @else
-                <li><a href="/">Inicio</a></li>
-                <li><a href="contacto">Contacto</a></li>
-                <li><span class="icon-search" id="buscador"></span></li>
-                <li class="li-perfilUsuario">
-                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                </li>
-
-                @endif
-            </ul>
-            @if (isset($_SESSION['objetoNoEncontrado']))
-                <h3 class="errorBusqueda" id="messageError"></h3>
-            @endif
-        </nav>  
-    </header>
-    <div class="menu-lateralResponsive" id="menu-responsive">
-        <nav class="nav-responsive">
-            <ul>
-                <li><a href="login.html">Entrar</a></li>
-                <li><a href="registrarse.html">Registrarse</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href=""></a></li>
-            </ul>
-        </nav>  
+    
+    <div class="container-fluid">
+        <div class="list-group col col-md-4 pt-5 justify-content-center mx-auto">
+            <h3 class="list-group-item list-group-item-action list-group-item-dark">
+                Detalles Generales
+            </h3>
+            <h3 class="list-group-item list-group-item-action">Detalle pedido N°{{$idPedido}}</h3>
+            <h3 class="list-group-item list-group-item-action">Comprador: {{ $comprador}}</h3>
+            <h3 class="list-group-item list-group-item-action">Fecha de creacion: {{ $fechaCreacion}}</h3>
+            <h3 class="list-group-item list-group-item-action" disabled>Estado: {{ucfirst(strtolower($estado))}}</h3>
+        </div>
     </div>
-    <div class="encabezado-pedido">
-        <h2>Detalle pedido N°{{$idPedido}}<h2>
-        <h3>Comprador: {{ $comprador}}</h3>
-        <h3>Fecha de creacion: {{ $fechaCreacion}}</h3>
-        <h3>Estado: {{ucfirst(strtolower($estado))}}</h3>
-    </div>
+    <hr class="pt-5">
     <!--Inicio del detalle de compra-->
     <form id="pedidoForm" action="/pedidos" method="POST">
     @CSRF
         <input type="hidden" value="{{$idPedido}}" name="idPedidoPostulacion" id="idPedidoPostulacion">
         @if ((is_array($detalles) || is_object($detalles)))
-            <table class="table">
-                <tr>
-                    @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
-                        <th>Seleccionar</th>
-                    @endif
-                    <th>Tipo fruta</th>
-                    <th>Calidad requerida</th>
-                    <th>Metodo de transporte requerido</th>
-                    <th>Requiere refrigeracion</th>
-                    <th>Cantidad requerida</th>
-                    @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
-                        <th>Precio x kilo de aporte </th>
-                        <th>Cantidad de aporte</th>
-                    @endif
-                </tr>
+        <div class="table-responsive col col-md-8 justify-content-center mx-auto">
+
+        
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
+                            <th>Seleccionar</th>
+                        @endif
+                        <th>Tipo fruta</th>
+                        <th>Calidad requerida</th>
+                        <th>Metodo de transporte requerido</th>
+                        <th>Requiere refrigeracion</th>
+                        <th>Cantidad requerida</th>
+                        @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
+                            <th>Precio x kilo de aporte </th>
+                            <th>Cantidad de aporte</th>
+                        @endif
+                    </tr>
+                </thead>
                 @foreach($detalles as $key=>$item)        
                     <tr>
                         @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
@@ -141,6 +113,7 @@
                     </tr>
                 @endforeach
             </table>
+        </div>
         @endif
         @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
             <div class="comya13">
@@ -179,6 +152,8 @@
         <div class="continuarlin">
                 <a href="pedidos"><h5>Volver</h5></a>
         </div>   
+        
+        
     </form>         
     <!--fin del carrito de compras-->
 
@@ -223,10 +198,10 @@
 
 <!--Footer-->
 <footer>
-        <div class="contenedor">
-            <br><div class="cont-footer">
+        <div class="contenedor" >
+            <br><div class="cont-footer" >
                 <div class="alineacion">
-                <div class="copyright">
+                <div class="copyright" style="text-align: center;">
                     © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande </a>
                 </div>
             </div>

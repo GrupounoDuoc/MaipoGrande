@@ -176,7 +176,7 @@
                             
                             @foreach ($ofertas as $oferta)
                             <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem; width:22rem;">
-                                <img src="{{Storage::url($oferta->FOTO)}}" class="card-img-top" alt="..." style="height:150px; width:200px;">
+                                <img src="{{Storage::url($oferta->FOTO)}}" onerror="this.onerror=null;this.src='{{ asset("default/not-available.jpg")}}';" class="card-img-top" alt="..." style="height:150px; width:200px;">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $oferta->TIPO_FRUTA}}</h5>
                                     <input type="hidden" id="tipo_fruta{{$oferta->ID}}" name="tipo_fruta{{$oferta->ID}}" value="{{ $oferta->TIPO_FRUTA}}">
