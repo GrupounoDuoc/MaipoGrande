@@ -51,7 +51,7 @@ class pedidoController extends Controller
             $calidadSelected = null;
         }
         #OPCION POR DEFECTO
-        $query = 'select CONCAT(PU.NOMBRE,\' \',PU.APELLIDO)  NOMBRE_VENDEDOR,
+        $query = 'SELECT CONCAT(PU.NOMBRE,\' \',PU.APELLIDO)  NOMBRE_VENDEDOR,
             TF.NOMBRE   TIPO_FRUTA,
             C.NOMBRE  CALIDAD,
             HS.CANT_KG,
@@ -491,8 +491,8 @@ class pedidoController extends Controller
             }else{
                 $next = 1;
             }
-            if(isset($_POST['tipo_fruta']) && isset($_POST['calidad']) && isset($_POST['cantidad']) && isset($_POST['refrigerado'])){
-                if($_POST['tipo_fruta'] != null && $_POST['calidad'] != null && $_POST['cantidad'] != null && $_POST['refrigerado'] != null){
+            if(isset($_POST['tipo_fruta']) && isset($_POST['calidad']) && isset($_POST['cantidad']) && isset($_POST['refrigerado']) && isset($_POST['metodo_viaje'])){
+                if($_POST['tipo_fruta'] != null && $_POST['calidad'] != null && $_POST['cantidad'] != null && $_POST['refrigerado'] != null && isset($_POST['metodo_viaje'])){
                     $_SESSION['pedidoExt'][$next]['tipo_fruta'] = $_POST['tipo_fruta'];
                     $_SESSION['pedidoExt'][$next]['calidad'] = $_POST['calidad'];
                     $_SESSION['pedidoExt'][$next]['cantidad'] = $_POST['cantidad'];
