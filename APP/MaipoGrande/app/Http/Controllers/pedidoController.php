@@ -138,7 +138,7 @@ class pedidoController extends Controller
                             ->get(); //Trae un objeto con los datos de la tabla.
         }elseif($_SESSION['tipo_usuario'] == 2){
             $estados = DB::table('estados')
-                            ->whereIn('NOMBRE',['PUBLICADO','RECHAZADO','PAGADO','POSTULADO','RECHAZADA','APROBADA','ENTREGADO'])
+                            ->whereIn('NOMBRE',['PUBLICADO','PAGADO','POSTULADO','RECHAZADO'])
                             ->get(); //Trae un objeto con los datos de la tabla.
         }
         $fechaInicioSelected=null;
@@ -190,40 +190,52 @@ class pedidoController extends Controller
             return view('/pedidoFinalizado', compact('idPedido', 'estado'));
         }
         #OPCION POR DEFECTO
-        $query = 'select  P.ID_PEDIDO ID,
-        CONCAT(PC.NOMBRE,\' \',PC.APELLIDO)  NOMBRE_COMPRADOR,
-        FECHA_CREACION FECHA,
-        (CASE
-        WHEN ID_PEDIDO IN (SELECT ID_PEDIDO FROM DETALLE_PEDIDO DP JOIN POSTULACION P ON P.ID_DETALLE_PEDIDO = DP.ID_DETALLE_PEDIDO
-            JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO WHERE U.CORREO = \''.($_SESSION['usuario']).'\') THEN
-			(SELECT E.NOMBRE FROM DETALLE_PEDIDO DP 
-            JOIN POSTULACION P ON P.ID_DETALLE_PEDIDO = DP.ID_DETALLE_PEDIDO
-            JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO 
-            JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO
-            WHERE U.CORREO = \''.($_SESSION['usuario']).'\')
-		ELSE
-			E.NOMBRE
-        END) ESTADO
-        FROM PEDIDO P
-        JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
-        JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
-        JOIN USUARIO U ON U.ID_USUARIO = P.ID_COMPRADOR
-        WHERE ID_TIPO_PEDIDO = 2 ';
-        if($_SESSION['tipo_usuario'] == 2){
-            $query = ($query).'OR ID_VENDEDOR IN 
-            (SELECT u.ID_USUARIO FROM POSTULACION P 
-            JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO
-            WHERE U.CORREO = \''.($_SESSION['usuario']).'\' )';
-            if($_SESSION['tipo_usuario'] == 2){
-                $query = ($query).'AND E.NOMBRE IN (\'PUBLICADO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'APROBADA\',\'RECHAZADA\')';
-            }elseif($_SESSION['tipo_usuario'] == 5 ){
-                $query = ($query).'AND E.NOMBRE IN (\'EN LOGISTICA\',\'DESPACHO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'APROBADA\',\'RECHAZADA\')';
-            }
-        } elseif($_SESSION['tipo_usuario'] == 4){
-            $query = ($query).' AND U.CORREO = \''.($_SESSION['usuario']).'\' '; 
+        if($_SESSION['tipo_usuario'] == 4){
+            $query = 'select  P.ID_PEDIDO ID,
+            CONCAT(PC.NOMBRE,\' \',PC.APELLIDO)  NOMBRE_COMPRADOR,
+            FECHA_CREACION FECHA,
+            E.NOMBRE ESTADO
+            FROM PEDIDO P
+            JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
+            JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
+            JOIN USUARIO U ON U.ID_USUARIO = P.ID_COMPRADOR
+            WHERE ID_TIPO_PEDIDO = 2';
+        }elseif($_SESSION['tipo_usuario'] == 2){
+            $query = 'SELECT DISTINCT  P.ID_PEDIDO ID,
+            CONCAT(PC.NOMBRE,\' \',PC.APELLIDO)  NOMBRE_COMPRADOR,
+            FECHA_CREACION FECHA,
+            (CASE
+				WHEN PS.ESTADO IS NULL THEN
+					E.NOMBRE
+				ELSE
+                    \'POSTULADO\'
+			END) ESTADO
+            FROM PEDIDO P
+            JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
+            JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
+            JOIN USUARIO U ON U.ID_USUARIO = P.ID_COMPRADOR
+            LEFT JOIN (SELECT DP.ID_PEDIDO,E.NOMBRE ESTADO,U.CORREO
+						FROM POSTULACION P
+						JOIN DETALLE_PEDIDO DP ON DP.ID_DETALLE_PEDIDO = P.ID_DETALLE_PEDIDO
+						JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO
+						JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO
+						WHERE U.CORREO = \''.($_SESSION['usuario']).'\') PS ON PS.ID_PEDIDO = P.ID_PEDIDO
+                        WHERE ID_TIPO_PEDIDO = 2 ';
         }
         if($estadoFiltroSelected!=null){
-            $query = ($query).(' AND E.NOMBRE = \''.($estadoFiltroSelected).'\'');
+            if($_SESSION['tipo_usuario'] == 2){
+                $query = ($query).(' AND (CASE
+                                            WHEN PS.ESTADO IS NULL THEN
+                                                E.NOMBRE
+                                            ELSE
+                                                \'POSTULADO\'
+                                            END) = \''.($estadoFiltroSelected).'\'');
+            }else{
+                $query = ($query).(' AND E.NOMBRE = \''.($estadoFiltroSelected).'\'');
+            }
+        }
+        elseif($_SESSION['tipo_usuario'] == 2){
+            $query = ($query).('AND E.NOMBRE IN (\'PUBLICADO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'APROBADA\',\'RECHAZADA\')');
         }
         if ($fechaInicioSelected != null && $fechaFinSelected != null) {
             $query = ($query) . (' AND P.FECHA_CREACION BETWEEN \'' . ($fechaInicioSelected) . '\' AND \'' . ($fechaFinSelected) . '\'');
@@ -232,6 +244,7 @@ class pedidoController extends Controller
         } elseif ($fechaFinSelected != null) {
             $query = ($query) . (' AND P.FECHA_CREACION=\'' . ($fechaFinSelected) . '\'');
         }
+        //return $query;
         $pedidos = DB::select(DB::raw($query));
         foreach ($pedidos as $pedido) {
             $idPedido = $pedido->ID;
