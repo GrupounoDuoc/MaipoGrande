@@ -1,32 +1,35 @@
 @if (!isset($_SESSION))
-        {{ session_start() }}
+{{ session_start() }}
 @endif
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gracias por su compra</title>
+    <title>Gracias por postular</title>
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/estilos.css">
+
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
     <!-- Foonts -->
     <link rel="stylesheet" href="iconos/style.css">
     <link rel="stylesheet" href="iconos/envio/style.css">
     <link rel="stylesheet" href="iconos/icon-cerrar/style.css">
+    <link rel="stylesheet" href="css/postulacion.css">
 
     <!-- Slider -->
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
     <link rel="stylesheet" type="text/css" href="css/nivo-slider.css">
     <link rel="stylesheet" type="text/css" href="css/mi-slider.css">
-    <script type="text/javascript"> 
+    <script type="text/javascript">
         $(window).on('load', function() {
-            $('#slider').nivoSlider(); 
-        }); 
+            $('#slider').nivoSlider();
+        });
     </script>
 
     <!--footer-->
@@ -39,76 +42,68 @@
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
 
     <!--carrito de compras-->
-    <link rel="stylesheet" href="css/carrito.css">
-    
-</head>
-<body>
-    <header id="cabecera">
-        <img src="imagenes/manzana.png" class="img-logo"> 
-        <h1 class="logo">Maipo Grande</h1>
-        <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
-        <nav>
-            <div class="container-buscador" id="contenido">
-                <form action="" method="POST">
-                    <input type="text" id="campoBuscar" placeholder="Buscar..." name="productoBuscar">
-                    <span class="icon-search"></span>
-                </form>
-            </div>
-            <ul id="lista-principal">
-                @if (empty($_SESSION['usuario'])) 
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="login">Entrar</a></li>
-                    <li><a href="registro">Registrarse</a></li>
-                    <li><a href="contacto">Contacto</a></li>
-                    <li><span class="icon-search" id="buscador"></span></li>
-                    
-                @else
-                <li><a href="/">Inicio</a></li>
-                <li><a href="contacto">Contacto</a></li>
-                <li><span class="icon-search" id="buscador"></span></li>
-                <li class="li-perfilUsuario">
-                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                </li>
+   
 
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="form-row pt-5">
+            <div class="card justify-content-center mx-auto col-md-10   ">
+                <div class="card-header">
+                    <div class="float-right">Ticket generado {{\Carbon\Carbon::now('America/Santiago')}}</div>
+                    @if($postulacion != null)
+                    <h3>Postulacion realizada</h3>
+                    <hr>
+                </div>
+                <div class="card-body">
+                    <p class="font-weight-bolder">
+                        Se ha recibido la postulacion! <br> La postulacion para el pedido N°{{$idPedidoPostulacion}}, con el siguiente correlativo: {{$postulacion}}
+                    </p>
+                </div>
+                @else
+                <h3>Postulacion Erronea</h3>
+                <hr>
+                <div class="card-body">
+                    <p class="font-weight-bolder">
+                        No se recibido la postulacion! <br> No se ha podido realizar la postulacion al pedido N°{{$idPedidoPostulacion}}
+                    </p>
+                </div>
                 @endif
-            </ul>
-            @if (isset($_SESSION['objetoNoEncontrado']))
-                <h3 class="errorBusqueda" id="messageError"></h3>
-            @endif
-        </nav>  
-    </header>
-    <div class="menu-lateralResponsive" id="menu-responsive">
-        <nav class="nav-responsive">
-            <ul>
-                <li><a href="login.html">Entrar</a></li>
-                <li><a href="registrarse.html">Registrarse</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href=""></a></li>
-            </ul>
-        </nav>  
-    </div>
-    @if($postulacion != null)
-        <h1>Postulacion realizada</h1>
-        <h3>Se recibio la postulacion para el pedido N°{{$idPedidoPostulacion}}, con el siguiente correlativo: {{$postulacion}}</h3>
-    @else
-    <h1>Postulacion erronea</h1>
-        <h3>No se ha podido realizar la postulacion al pedido N°{{$idPedidoPostulacion}}</h3>
-    @endif
-    <a href="/pedidos">Volver al inicio</a>
-<!--Footer-->
-    <footer>
-        <div class="contenedor">
-            <br><div class="cont-footer">
-                <div class="alineacion">
-                <div class="copyright">
-                    © 2019 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande@ </a>
+                <div class="card-footer text-center">
+                    <a href="/pedidos">
+                        <button class="btn btn-outline-info btn-sm">Regresar a pedidos</button>
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- @if($postulacion != null)
+    <h1>Postulacion realizada</h1>
+    <h3>Se recibio la postulacion para el pedido N°{{$idPedidoPostulacion}}, con el siguiente correlativo: {{$postulacion}}</h3>
+    @else
+    <h1>Postulacion erronea</h1>
+    <h3>No se ha podido realizar la postulacion al pedido N°{{$idPedidoPostulacion}}</h3>
+    @endif
+    <a href="/pedidos">Volver al inicio</a> -->
+    <!--Footer-->
+    <footer>
+        <div class="contenedor text-center">
+            <br>
+            <div class="cont-footer">
+                <div class="alineacion">
+                    <div class="copyright">
+                        © 2019 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande@ </a>
+                    </div>
+                </div>
+            </div>
     </footer>
-    
+
     <script src="js/buscar.js"></script>
     <script src="js/ventanaComprar.js"></script>
     <script src="js/aparecerIcono.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,7 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-size: cover;
+    background: url(../imagenes/postulacion.jpg) no-repeat center;
+	height: 100vh;
+  }
