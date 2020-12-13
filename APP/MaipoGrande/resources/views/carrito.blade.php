@@ -213,7 +213,7 @@
       
     </footer> -->
 
-    <footer class="page-footer font-small" style="width: 100%; bottom:0px; height: 140px;">
+    <footer class="page-footer font-small" style="width: 100%; position:absolute; height: 140px;">
 
         <br>
         <div class="cont-footer" style="text-align: center; display:flex;">

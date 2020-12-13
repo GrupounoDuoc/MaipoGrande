@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-md-6">
                             @if($_SESSION['tipo_usuario'] == 4)
-                            <button class="btn btn-success btn-block">Crear pedido</button>
+                            <button class="btn btn-success btn-block" name="crearPedido">Crear pedido</button>
                             <!-- <input type="submit" name="crearPedido" value="Crear nuevo pedido"> -->
                             @endif
                         </div>
@@ -139,8 +139,8 @@
             </div>
             <div class="col-md-9 p-5">
                 @foreach ($pedidos as $pedido)
-                <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem">
-                    <div class="card-body">
+                <div class="card" style="margin-bottom: 1.5rem; margin-top:1rem; width: 18rem; ">
+                    <div class="card-body" style="height:15rem;">
                         <h5 class="card-title">Comprador: {{ $pedido->NOMBRE_COMPRADOR}}</h5>
                         <p class="card-text">Fecha publicacion: {{ $pedido->FECHA}}</p>
                         <p class="card-text">Estado: {{ ucfirst(strtolower($pedido->ESTADO))}}</p>
