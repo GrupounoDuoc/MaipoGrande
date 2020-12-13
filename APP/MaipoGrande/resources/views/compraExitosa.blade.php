@@ -10,9 +10,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gracias por su compra</title>
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/compraexitosa.css">
     <!-- Foonts -->
     <link rel="stylesheet" href="iconos/style.css">
     <link rel="stylesheet" href="iconos/envio/style.css">
@@ -42,58 +42,33 @@
     <link rel="stylesheet" href="css/carrito.css">
     
 </head>
-<body>
-    <header id="cabecera">
-        <img src="imagenes/manzana.png" class="img-logo"> 
-        <h1 class="logo">Maipo Grande</h1>
-        <img src="imagenes/menu.png" class="icon-menu" id="boton-menu">
-        <nav>
-            <div class="container-buscador" id="contenido">
-                <form action="" method="POST">
-                    <input type="text" id="campoBuscar" placeholder="Buscar..." name="productoBuscar">
-                    <span class="icon-search"></span>
-                </form>
-            </div>
-            <ul id="lista-principal">
-                @if (empty($_SESSION['usuario'])) 
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="login">Entrar</a></li>
-                    <li><a href="registro">Registrarse</a></li>
-                    <li><a href="contacto">Contacto</a></li>
-                    <li><span class="icon-search" id="buscador"></span></li>
+<body >
+
+
+    <div class="container">
+        <div class="form-row pt-5">
+            <div class="card justify-content-center mx-auto col-md-10   ">
+                <div class="card-header">
                     
-                @else
-                <li><a href="/">Inicio</a></li>
-                <li><a href="contacto">Contacto</a></li>
-                <li><span class="icon-search" id="buscador"></span></li>
-                <li class="li-perfilUsuario">
-                    <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
-                </li>
-
-                @endif
-            </ul>
-            @if (isset($_SESSION['objetoNoEncontrado']))
-                <h3 class="errorBusqueda" id="messageError"></h3>
-            @endif
-        </nav>  
-    </header>
-    <div class="menu-lateralResponsive" id="menu-responsive">
-        <nav class="nav-responsive">
-            <ul>
-                <li><a href="login.html">Entrar</a></li>
-                <li><a href="registrarse.html">Registrarse</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href=""></a></li>
-            </ul>
-        </nav>  
+                    <div class="float-right">Ticket generado {{\Carbon\Carbon::now('America/Santiago')}}</div>
+                    <h3>¡Gracias por su compra!</h3>
+                </div>
+                <div class="card-body">
+                    <p class="font-weight-bolder">
+                    Muchas gracias por su compra. <br> Se ha generado la solicitud de compra N° {{$nCompra}}, pronto sera contactado con los siguientes pasos a seguir.
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/catalogo" >
+                        <button class="btn btn-outline-info btn-sm">Regresar</button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <h1>Gracias por su compra</h1>
-    <h3>Muchas gracias por su compra, se ha generado la solicitud de compra N° {{$nCompra}}, pronto sera contactado con los siguientes pasos a seguir.</h3>
-        <a href="/">Volver al inicio</a>
 <!--Footer-->
     <footer>
-        <div class="contenedor">
+        <div class="contenedor" style="text-align: center;">
             <br><div class="cont-footer">
                 <div class="alineacion">
                 <div class="copyright">
