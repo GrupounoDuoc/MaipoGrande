@@ -19,85 +19,83 @@ class usuarioviewController extends Controller
 
     //const PAGINACION=10;
     public function ViewPanelUsuario(Request $request)
-    
+
     {
 
 
-            $usuarios = DB::select('CALL SP_GET_USUARIO()', array());
-            $comunas = DB::select('CALL SP_GET_COMUNAS()');
-            $tipo_persona_legal = tipo_persona_legal::all();
-            $perfil = perfil::all();
+        $usuarios = DB::select('CALL SP_GET_USUARIO()', array());
+        $comunas = DB::select('CALL SP_GET_COMUNAS()');
+        $tipo_persona_legal = tipo_persona_legal::all();
+        $perfil = perfil::all();
 
-            $personas = persona::paginate(5);
+        $personas = persona::paginate(5);
 
-            if(isset($_GET['name'])){
-                $personas =  persona::where('NOMBRE','like','%'.$_GET['name'].'%')->paginate(5);
-            }
+        if (isset($_GET['name'])) {
+            $personas =  persona::where('NOMBRE', 'like', '%' . $_GET['name'] . '%')->paginate(5);
+        }
 
-            $data = [
+        $data = [
 
-                'perfil' => $perfil,
-                'tipo_persona_legal' => $tipo_persona_legal,
-                'usuarios' => $usuarios,
-                'comunas' => $comunas,
-                'personas' => $personas
-            ];
+            'perfil' => $perfil,
+            'tipo_persona_legal' => $tipo_persona_legal,
+            'usuarios' => $usuarios,
+            'comunas' => $comunas,
+            'personas' => $personas
+        ];
 
-           //return dd($usuarios);
-    
-           return view('/usuarioadmin', $data);
-   
+        //return dd($usuarios);
+
+        return view('/usuarioadmin', $data);
     }
-   
+
     public function CrearUser(Request $request)
     {
-    
-    try {    
-        $nombre = $request->get('nombre');
-        $apellido = $request->get('apellido');
-        $rut = $request->get('rut');
-        $dv = $request->get('dv');
-        $tipocomprador = $request->get('tipocomprador');
-        $tipopersona = $request->get('tipopersona');
-        $comuna = $request->get('comuna');
-        $codigopostal = $request->get('codigopostal');
-        $telefono = $request->get('telefono');
-        $nombrefantasia = $request->get('nombrefantasia');
-        $correo = $request->get('correo');
-    
 
-        //$contrasenia = md5($request->get('contrasenia'));
+        try {
+            $nombre = $request->get('nombre');
+            $apellido = $request->get('apellido');
+            $rut = $request->get('rut');
+            $dv = $request->get('dv');
+            $tipocomprador = $request->get('tipocomprador');
+            $tipopersona = $request->get('tipopersona');
+            $comuna = $request->get('comuna');
+            $codigopostal = $request->get('codigopostal');
+            $telefono = $request->get('telefono');
+            $nombrefantasia = $request->get('nombrefantasia');
+            $correo = $request->get('correo');
 
-        $contrasenia = md5($request->get('contrasenia'));
 
-        $CrearUser = DB::select(
-            'call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
-            array(
-                $nombre, $apellido, $rut, $dv, $comuna, $codigopostal, $correo,
-                $contrasenia, $telefono, $tipopersona, $nombrefantasia, $tipocomprador
-            )
-        );
+            //$contrasenia = md5($request->get('contrasenia'));
 
-        $request->session()->flash('type', 'success');
-        $request->session()->flash('message', 'Usuario Creado');
+            $contrasenia = md5($request->get('contrasenia'));
 
-    } catch (\Exception $e){
-        $request->session()->flash('type', 'danger');
-        $request->session()->flash('message', 'No se creo el usuario');
-    }
+            $CrearUser = DB::select(
+                'call SP_CREATE_USUARIO(?,?,?,?,?,?,?,?,?,?,?,?)',
+                array(
+                    $nombre, $apellido, $rut, $dv, $comuna, $codigopostal, $correo,
+                    $contrasenia, $telefono, $tipopersona, $nombrefantasia, $tipocomprador
+                )
+            );
+
+            $request->session()->flash('type', 'success');
+            $request->session()->flash('message', 'Usuario Creado');
+        } catch (\Exception $e) {
+            $request->session()->flash('type', 'danger');
+            $request->session()->flash('message', 'No se creo el usuario');
+        }
 
         //if($CrearUser){
-          //  $status = 404;
-           
+        //  $status = 404;
+
         //}else{
-          //  $status = 202;
+        //  $status = 202;
         //}
 
-       // return($status);
+        // return($status);
 
 
-    return response()->json( $CrearUser);
-       // return back()->with('status', "Se ha creado el usuario {$correo} satisfactoriamente!");
+        return response()->json($CrearUser);
+        // return back()->with('status', "Se ha creado el usuario {$correo} satisfactoriamente!");
 
 
     }
@@ -110,13 +108,10 @@ class usuarioviewController extends Controller
             'call SP_DELETE_USUARIO(?)',
             array($rut)
         );
-
-        
-        
     }
 
-    
-    
+
+
 
     public function destroyUser($rut)
     {
@@ -135,7 +130,7 @@ class usuarioviewController extends Controller
 
     public function ModificarUser(Request $request)
     {
-        $res = persona::where('RUT',$request->rut)->update([
+        $res = persona::where('RUT', $request->rut)->update([
             "NOMBRE" => $request->nombre,
             "APELLIDO" => $request->apellido,
             "NOMBRE_FANTASIA" => $request->nombrefantasia,
@@ -143,14 +138,14 @@ class usuarioviewController extends Controller
             "CODIGO_POSTAL" => $request->codigopostal,
             "TELEFONO" => $request->telefono,
         ]);
-    //$request->all() --- sirve para llamar todos los input dependiendo del nombre del form 
-         
+        //$request->all() --- sirve para llamar todos los input dependiendo del nombre del form 
+
         $res = persona::find($request->rut)->usuario; // si no especifica se busca por "id"
         $res->ID_PERFIL = $request->tipocomprador;
         $res->save();
 
         try {
-           
+
             // $nombre = $request->get('nombre_edit');
             // $apellido = $request->get('apellido_edit');
             // $rut = $request->get('rut_edit');
@@ -160,7 +155,7 @@ class usuarioviewController extends Controller
             // $comuna = $request->get('comuna_edit');
             // $codigopostal = $request->get('codigopostal_edit');
             // $telefono = $request->get('telefono_edit');
-            
+
             // //$correo = $request->get('correo');
             // //$contrasenia = $request->get('contrasenia');
 
@@ -173,29 +168,28 @@ class usuarioviewController extends Controller
                     $request->nombre, $request->apellido, $request->rut, $request->tipocomprador,
                     $request->tipopersona, $request->nombrefantasia, $request->comuna, $request->codigopostal,
                     $request->telefono,   //$correo, $contrasenia
-               )
-             );
-            
+                )
+            );
+
             //Log::info($ModificarUser[0]);
-            
+
             session()->flash('type', 'success');
             session()->flash('message', 'Usuario modificado');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             session()->flash('type', 'danger');
             //session()->flash('message', $e->getMessage());
             session()->flash('message', 'No se modifico el usuario');
-            
         }
         //return redirect('index');
-        return response()->json( $ModificarUser); 
-        
+        return response()->json($ModificarUser);
     }
 
-    public function getUserByRut(Request $request){
+    public function getUserByRut(Request $request)
+    {
         try {
             //obtener datos
             $Rut = $request->get('rut');
-            
+
 
             //obtener persona por rut
             $Persona = persona::find($Rut);
@@ -229,14 +223,59 @@ class usuarioviewController extends Controller
         //     ->select('users.id', 'contacts.phone', 'orders.price')
         //     ->get();
 
-        
-                    //SELECT ID_USUARIO,RUT, DIGITO_VERIFICADOR, NOMBRE, APELLIDO, NOMBRE_FANTASIA, CODIGO_POSTAL 
+
+        //SELECT ID_USUARIO,RUT, DIGITO_VERIFICADOR, NOMBRE, APELLIDO, NOMBRE_FANTASIA, CODIGO_POSTAL 
         //FROM persona JOIN usuario
-           // ON persona.ID_USUARIO = usuario.ID_USUARIO
+        // ON persona.ID_USUARIO = usuario.ID_USUARIO
 
         return response()->json($data);
+    }
+
+    public function CrearDetalleTransportista(Request $request)
+    {
+
+        try {
+            $id_transportista = $request->get('id_transportista');
+            $metodo_viaje = $request->get('metodo_viaje');
+            $refrigerado = $request->get('refrigerado');
+            $ton_max = $request->get('ton_max');
+            $precio_km = $request->get('precio_km');
+            $descripcion = $request->get('descripcion');
+
+
+            $CrearDetalleTransportista = DB::select(
+                'call SP_CREATE_DETALLE_TRANSPORTISTA(?,?,?,?,?,?)',
+                array(
+                    $id_transportista, $metodo_viaje, $refrigerado, $ton_max, $precio_km, $descripcion
+                )
+            );
+
+            $request->session()->flash('type', 'success');
+            $request->session()->flash('message', 'Detalle de transportista Creado');
+        } catch (\Exception $e) {
+            $request->session()->flash('type', 'danger');
+            $request->session()->flash('message', 'No se creo el detalle de transportista');
+        }
+
+        return back()->with('status', "Se ha creado el detalle de transporte satisfactoriamente!");
 
     }
+
+    public function ViewPanelDetalleTransportista()
+    {
+        $transportistas = DB::select('CALL SP_GET_DETALLE_TRANSPORTISTA()');
+        $usuarios_transportistas = DB::select('CALL SP_GET_TRANSPORTISTAS()');
+
+        return view('/Transportistas', compact('transportistas','usuarios_transportistas'));
+    }
+
+    public function destroyDetalleTransportista($id_detalle_transportista)
+    {
+        DB::select('call SP_DELETE_DETALLE_TRANSPORTISTA(?)', [$id_detalle_transportista]);
+
+        session()->flash('type', 'danger');
+        session()->flash('message', 'Detalle transportista eliminado con exito!');
+
+        return redirect('Transportistas');
+    }
 }
-
-

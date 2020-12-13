@@ -14,6 +14,7 @@ use App\Http\Gestores\CollectionHelper;
 use App\tipo_fruta;
 use App\tipo_pedido;
 use App\Mail\SendNotification;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Mail;
 
 class pedidoController extends Controller
@@ -133,15 +134,11 @@ class pedidoController extends Controller
         #SE LLENAN ARREGLOS CON CRITERIOS DE FILTRO
         if($_SESSION['tipo_usuario'] == 4){
             $estados = DB::table('estados')
-                            ->whereIn('NOMBRE',['POR APROBAR','PUBLICADO','EN LOGISTICA','DESPACHO','RECHAZADO','PAGADO'])
+                            ->whereIn('NOMBRE',['POR APROBAR','PUBLICADO','EN LOGISTICA','DESPACHO','RECHAZADO','PAGADO','ENTREGADO'])
                             ->get(); //Trae un objeto con los datos de la tabla.
         }elseif($_SESSION['tipo_usuario'] == 2){
             $estados = DB::table('estados')
-                            ->whereIn('NOMBRE',['PUBLICADO','RECHAZADO','PAGADO','POSTULADO','POSTULACION ACEPTADA','POSTULACION RECHAZADA'])
-                            ->get(); //Trae un objeto con los datos de la tabla.
-        }elseif($_SESSION['tipo_usuario'] == 5){
-            $estados = DB::table('estados')
-                            ->whereIn('NOMBRE',['EN LOGISTICA','DESPACHO','RECHAZADO','PAGADO','POSTULADO','POSTULACION ACEPTADA','POSTULACION RECHAZADA'])
+                            ->whereIn('NOMBRE',['PUBLICADO','RECHAZADO','PAGADO','POSTULADO','RECHAZADA','APROBADA','ENTREGADO'])
                             ->get(); //Trae un objeto con los datos de la tabla.
         }
         $fechaInicioSelected=null;
@@ -196,21 +193,34 @@ class pedidoController extends Controller
         $query = 'select  P.ID_PEDIDO ID,
         CONCAT(PC.NOMBRE,\' \',PC.APELLIDO)  NOMBRE_COMPRADOR,
         FECHA_CREACION FECHA,
-        E.NOMBRE ESTADO
+        (CASE
+        WHEN ID_PEDIDO IN (SELECT ID_PEDIDO FROM DETALLE_PEDIDO DP JOIN POSTULACION P ON P.ID_DETALLE_PEDIDO = DP.ID_DETALLE_PEDIDO
+            JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO WHERE U.CORREO = \''.($_SESSION['usuario']).'\') THEN
+			(SELECT E.NOMBRE FROM DETALLE_PEDIDO DP 
+            JOIN POSTULACION P ON P.ID_DETALLE_PEDIDO = DP.ID_DETALLE_PEDIDO
+            JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO 
+            JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO
+            WHERE U.CORREO = \''.($_SESSION['usuario']).'\')
+		ELSE
+			E.NOMBRE
+        END) ESTADO
         FROM PEDIDO P
         JOIN PERSONA PC ON PC.ID_USUARIO = P.ID_COMPRADOR
         JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO_PEDIDO
+        JOIN USUARIO U ON U.ID_USUARIO = P.ID_COMPRADOR
         WHERE ID_TIPO_PEDIDO = 2 ';
         if($_SESSION['tipo_usuario'] == 2){
-            $query = ($query).'AND ID_VENDEDOR IN 
-            (SELECT ID_USUARIO FROM POSTULACION P 
+            $query = ($query).'OR ID_VENDEDOR IN 
+            (SELECT u.ID_USUARIO FROM POSTULACION P 
             JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO
             WHERE U.CORREO = \''.($_SESSION['usuario']).'\' )';
             if($_SESSION['tipo_usuario'] == 2){
-                $query = ($query).'AND E.NOMBRE IN (\'PUBLICADO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'POSTULACION ACEPTADA\',\'POSTULACION RECHAZADA\')';
+                $query = ($query).'AND E.NOMBRE IN (\'PUBLICADO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'APROBADA\',\'RECHAZADA\')';
             }elseif($_SESSION['tipo_usuario'] == 5 ){
-                $query = ($query).'AND E.NOMBRE IN (\'EN LOGISTICA\',\'DESPACHO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'POSTULACION ACEPTADA\',\'POSTULACION RECHAZADA\')';
+                $query = ($query).'AND E.NOMBRE IN (\'EN LOGISTICA\',\'DESPACHO\',\'RECHAZADO\',\'PAGADO\',\'POSTULADO\',\'APROBADA\',\'RECHAZADA\')';
             }
+        } elseif($_SESSION['tipo_usuario'] == 4){
+            $query = ($query).' AND U.CORREO = \''.($_SESSION['usuario']).'\' '; 
         }
         if($estadoFiltroSelected!=null){
             $query = ($query).(' AND E.NOMBRE = \''.($estadoFiltroSelected).'\'');
@@ -244,7 +254,8 @@ class pedidoController extends Controller
                     REPLACE(REPLACE(REPLACE(DP.METODO_VIAJE,\'ear\',\'Terrestre\'),\'sea\',\'Maritimo\'),\'air\',\'Aereo\') METODO_VIAJE,
                     REPLACE(REPLACE(DP.REFRIGERADO,1,\'Si\'),0,\'No\') REFRIGERADO,
                     DP.PRECIO_KG PRECIO,
-                    DP.COD_MONEDA MONEDA
+                    DP.COD_MONEDA MONEDA,
+                    DP.ID_DETALLE_PEDIDO
                     FROM DETALLE_PEDIDO DP
                     JOIN CALIDAD C ON C.ID_CALIDAD = DP.ID_CALIDAD
                     JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = DP.ID_TIPO_FRUTA
@@ -262,9 +273,9 @@ class pedidoController extends Controller
             foreach ($detalles as $key => $detalle) {
                 if (isset($_POST['seleccion' . ($key)])) {
                     DB::statement(
-                        'CALL SP_CREATE_POSTULACION(?,?,?,?,?,?,@RES);',
+                        'CALL SP_CREATE_POSTULACION_VENDEDOR(?,?,?,?,?,?,@RES);',
                         array(
-                            $idPedidoPostulacion,
+                            $detalle->ID_DETALLE_PEDIDO,
                             $_SESSION['usuario'],
                             $detalle->TIPO_FRUTA,
                             $detalle->CALIDAD,
@@ -536,6 +547,9 @@ class pedidoController extends Controller
         );
         if ($nuevo_estado == 2) {
             Mail::to($correo)->send(new SendNotification());
+        }
+        elseif($nuevo_estado == 3){
+            DB::statement('CALL SP_FINALIZACION_POSTULACION_VENDEDOR(?,@res);', array($id_pedido));
         }
 
         return back()->with('status', "Se ha actualizado el pedido con id {$id_pedido} satisfactoriamente!");

@@ -13,11 +13,15 @@ Route::get('/admin', 'App\Http\Controllers\adminController\adminviewController@V
 
 Route::get('/usuario', 'App\Http\Controllers\usuariosController\usuarioviewController@ViewPanelUsuario')->name('usuario');
 
+Route::get('/Transportistas', 'App\Http\Controllers\usuariosController\usuarioviewController@ViewPanelDetalleTransportista')->name('Transportistas');
+
 Route::post('/crearUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@CrearUser')->name('CrearUsuario');
 
 Route::post('/eliminarUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@EliminarUser')->name('EliminarUsuario');
 
 Route::get('deleteUser/{rut}', 'App\Http\Controllers\usuariosController\usuarioviewController@destroyUser');
+
+Route::get('destroyDetalleTransportista/{id_detalle_transportista}', 'App\Http\Controllers\usuariosController\usuarioviewController@destroyDetalleTransportista');
 
 Route::post('/modificarUsuario', 'App\Http\Controllers\usuariosController\usuarioviewController@ModificarUser')->name('ModificarUsuario');// ruta es = Modificar Usuario
 
@@ -165,6 +169,11 @@ Route::post('/EliminarUsuario', [
 Route::post('/CrearUsuario', [
     'uses' => 'App\Http\Controllers\AdminController@CrearUser',
     'as' => 'CrearUser'
+]);
+
+Route::post('/Transportistas', [
+    'uses' => 'App\Http\Controllers\usuariosController\usuarioviewController@CrearDetalleTransportista',
+    'as' => 'CrearDetalleTransportista'
 ]);
 
 Route::post('/IngresarProducto', [
