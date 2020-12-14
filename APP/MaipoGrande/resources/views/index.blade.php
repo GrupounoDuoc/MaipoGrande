@@ -82,17 +82,18 @@
     <div class="sub-menu">
         <ul class="lista-submenu">
             @if(isset($_SESSION['usuario']))
-            @if($_SESSION['tipo_usuario'] == 3)
+                @if($_SESSION['tipo_usuario'] == 3)
+                <li><a href="catalogo">Catálogo</a></li>
+                @endif
+                @if($_SESSION['tipo_usuario'] == 5)
+                <li><a href="transportista">Postular a transporte</a></li>
+                @endif
+                @if($_SESSION['tipo_usuario'] == 2 || $_SESSION['tipo_usuario'] == 4)
+                <li><a href="pedidos">Pedidos</a></li>
+                @endif
+            @else
             <li><a href="catalogo">Catálogo</a></li>
             @endif
-            @if($_SESSION['tipo_usuario'] == 5)
-            <li><a href="transportista">Postular a transporte</a></li>
-            @endif
-            @if($_SESSION['tipo_usuario'] == 2)
-            <li><a href="pedidos">Pedidos</a></li>
-            @endif
-            @endif
-            <li><a href="catalogo">Catálogo</a></li>
             <ul class="subMenu-usuario" id="submenu-perfil">
                 <li><a href="">Perfil</a></li>
                 <li><a href="logout">Cerrar sesión</a></li>
