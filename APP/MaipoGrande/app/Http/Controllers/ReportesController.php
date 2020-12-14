@@ -17,7 +17,7 @@ class ReportesController extends Controller
     public function CargarReporte() //int $rol)
     {
         $reportes = DB::select('CALL SP_GET_REPORTES()');
-        return view('reportes', compact('reportes'));
+        return view('reportesVentas', compact('reportes'));
 
         /* $comunas= comuna::select('NombreComuna','nombre')->get();
         return view('id_comuna',compact('comunas')); */
@@ -31,7 +31,7 @@ class ReportesController extends Controller
             $pdf = \PDF::loadView('Reportes')->setPaper('a4', 'landscape');
             return $pdf->download('reporte.pdf');
         }
-        return view('reportes', compact('reportes'));
+        return view('reportesVentas', compact('reportes'));
     }
     
 

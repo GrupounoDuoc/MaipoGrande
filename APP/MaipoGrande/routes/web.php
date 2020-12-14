@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\persona;
 use App\Models\tipo_fruta;
+use Composer\DependencyResolver\Request;
 
 //Routes Admin
 Route::get('/admin', 'App\Http\Controllers\adminController\adminviewController@ViewPanelAdmin')->name('admin');
@@ -265,4 +266,17 @@ Route::get('reportesProductos',function(){
     $pdf = PDF::loadView('reportesProductos', $data);
 
     return $pdf->stream('ReporteDeProductos.pdf');
+});
+
+Route::get('reportesVentas',function(Request $request){
+    // $frutas = tipo_fruta::all();
+    // $data = [
+    //     'frutas' => $frutas
+    // ];
+    $reportes = DB::select('CALL SP_GET_REPORTES()');
+        view()->share('reportes',$reportes);
+        
+    $pdf = PDF::loadView('reportesVentas', $reportes);
+
+    return $pdf->stream('ReporteDeVentas.pdf');
 });

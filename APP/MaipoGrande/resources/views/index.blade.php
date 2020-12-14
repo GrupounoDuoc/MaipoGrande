@@ -206,6 +206,7 @@
                     @if($_SESSION['tipo_usuario'] == 6)
                     <li class="list-group-item"><a href="verpdf" target="_blank">Reportes usuario</a></li>
                     <li class="list-group-item"><a href="reportesProductos" target="_blank">Reportes producto</a></li>
+                    <li class="list-group-item"><a href="reportesVentas" target="_blank">Reportes Ventas</a></li>
                     <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif

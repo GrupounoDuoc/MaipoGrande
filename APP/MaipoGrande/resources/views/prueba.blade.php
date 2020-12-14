@@ -11,34 +11,38 @@
 <h1>Maipo Grande</h1>
 <br><br>
 <h3>Reporte de usuario</h3>
-<table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Rut</th>
-                <th scope="col">Dv</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Perfil</th>
-            </tr>
-        </thead>
-        <tbody>   
-            @foreach($personas as $key => $persona)
-            <tr>
-                <td>{{$persona->ID_USUARIO}}</td>
-                <td>{{$persona->RUT}}</td>
-                <td>{{$persona->DIGITO_VERIFICADOR}}</td>
-                <td>{{$persona->NOMBRE}}</td>
-                <td>{{$persona->APELLIDO}}</td>
-                <td>{{$persona->usuario->CORREO}}</td>
-                <td>
-                    <b>
-                        {{$persona->usuario->profile->NOMBRE}}
-                    </b>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+<hr>
+    <div class="row d-flex justify-content-center">
+        <table class="table table-striped" style="text-align: center;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Rut</th>
+                    <th scope="col">Dv</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Perfil</th>
+                </tr>
+            </thead>
+            <tbody>   
+                @foreach($personas as $key => $persona)
+                    <tr>
+                        <td>{{$persona->ID_USUARIO}}</td>
+                        <td>{{$persona->RUT}}</td>
+                        <td>{{$persona->DIGITO_VERIFICADOR}}</td>
+                        <td>{{$persona->NOMBRE}}</td>
+                        <td>{{$persona->APELLIDO}}</td>
+                        <td>{{$persona->usuario->CORREO}}</td>
+                        <td>
+                            <b>
+                                {{$persona->usuario->profile->NOMBRE}}
+                            </b>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
