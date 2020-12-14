@@ -59,7 +59,7 @@ if (!isset($_SESSION)) {
         <form action="postulartr" id="postulartransporteform" method="POST">
             @csrf
             <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table class="table table-hover table-dark">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Id Pedido</th>
@@ -117,7 +117,7 @@ if (!isset($_SESSION)) {
 
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="table table-hover table-dark">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Id Pedido</th>
@@ -171,13 +171,10 @@ if (!isset($_SESSION)) {
             </button>
         </div>
         @endif
-
-
-
         <form action="{{ route('ActualizarEstado') }}" id="actualizarForm" method="POST">
             @csrf
             <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table class="table table-hover table-dark">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Id Pedido</th>
@@ -215,7 +212,59 @@ if (!isset($_SESSION)) {
         </form>
 
     </div>
-    <a href="pedidos" class="btn btn-danger col-sm-12 col-xs-12 col-md-2 btn-form  mx-2 my-5"><i class="fas fa-backspace"></i> Volver</a>
+
+    <div class="container my-5">
+        <br>
+        <h2>Pedidos históricos</h2>
+        <hr>
+
+        @if(Session::has('message'))
+        <div class="alert alert-{{ Session::get('type') }} alert-dismissable fade show text-center" role="alert">
+            {{ Session::get('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+        <form action="{{ route('ActualizarEstado') }}" id="actualizarForm" method="POST">
+            @csrf
+            <div class="table-responsive">
+                <table class="table table-hover table-dark">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Id Pedido</th>
+                            <th scope="col">Correo Solicitante</th>
+                            <th scope="col">Medio de transporte</th>
+                            <th scope="col">Refrigeración</th>
+                            <th scope="col">Peso de carga</th>
+                            <th scope="col">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div class="container">
+                          
+                            <tr>
+                                <td>fghfghfgh</td>
+                                <td>fghfgh</td>
+                                <td>fghfgh</td>
+                                <td>
+                                    fghfghfgh
+                                </td>
+                                <td>fghfghfh</td>
+                                <td>fghfghfgh</td>
+                                <td>
+                                    Actualizar Estado
+                                </td>
+                            </tr>
+                           
+                    </tbody>
+                </table>
+            </div>
+        </form>
+
+    </div>
+
+    <a href="pedidos" class="btn btn-danger col-sm-12 col-xs-12 col-md-2 btn-form my-2"><i class="fas fa-backspace"></i> Volver</a>
 </div>
 
 
