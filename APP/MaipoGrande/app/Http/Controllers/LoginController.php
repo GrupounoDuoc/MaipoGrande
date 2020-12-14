@@ -28,11 +28,10 @@ class LoginController extends Controller
                     $_SESSION['usuario'] = $record -> CORREO;
                     $_SESSION['tipo_usuario'] = $record -> ID_PERFIL;
                     $_SESSION['id_usuario'] = $record -> ID_USUARIO;
-                    return view('index');
+                    return redirect()->route('/');
             }
         }else{
-            $_SESSION['incorrecto'] = true;
-            return redirect()->back();
+            return back()->with('status', "Las credenciales ingresadas son incorrectas");
         }
     }
     public function logout(){

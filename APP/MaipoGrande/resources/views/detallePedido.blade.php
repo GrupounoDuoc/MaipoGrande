@@ -77,7 +77,7 @@
                         <th>Metodo de transporte requerido</th>
                         <th>Requiere refrigeracion</th>
                         <th>Cantidad requerida</th>
-                        @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
+                        @if($_SESSION['tipo_usuario'] == 2 && ($estado=='PUBLICADO' || $estado=='POSTULADO'))
                             <th>Precio x kilo de aporte </th>
                             <th>Cantidad de aporte</th>
                         @endif
@@ -94,21 +94,13 @@
                         <td><p> {{ $item->REFRIGERADO}}</p></td>
                         <td><p> {{ $item->CANTIDAD}} Kg</p></td>
                         @if($_SESSION['tipo_usuario'] == 2 && $estado=='PUBLICADO')
-                            <td><div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">$</span>
-                                </div>
-                                <input type="number" step="1" class="form-control" id="precioPostulacion{{$key}}" name="precioPostulacion{{$key}}" value="1"  min="1">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">{{$item->MONEDA}}</span>
-                                </div>
-                            </div></td>
-                            <td><div class="input-group">
-                                <input type="number" step="0.1" class="form-control" id="cantidadPostulacion{{$key}}" name="cantidadPostulacion{{$key}}" value="1"  min="1" max="{{ $item->CANTIDAD}}">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Kg</span>
-                                </div>
-                            </div></td>
+                            <td>$<input type="number" step="1" class="form-control" id="precioPostulacion{{$key}}" name="precioPostulacion{{$key}}" value="1"  min="1"> CLP</td>
+                            <td>
+                                <input type="number" step="0.1" class="form-control" id="cantidadPostulacion{{$key}}" name="cantidadPostulacion{{$key}}" value="1"  min="1" max="{{ $item->CANTIDAD}}"> Kg
+                                </td>
+                        @elseif($_SESSION['tipo_usuario'] == 2 && $estado=='POSTULADO')
+                            <td>${{$item->PRECIO_APORTADO}} CLP</td>
+                            <td>{{ $item->KG_APORTADOS}} Kg</td>
                         @endif
                     </tr>
                 @endforeach

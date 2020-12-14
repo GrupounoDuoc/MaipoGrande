@@ -72,7 +72,7 @@
             <br><div class="cont-footer">
                 <div class="alineacion">
                 <div class="copyright">
-                    © 2019 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande@ </a>
+                    © 2020 Todos los derechos reservados | Diseñado por <a href="/"> Maipo Grande@ </a>
                 </div>
             </div>
         </div>

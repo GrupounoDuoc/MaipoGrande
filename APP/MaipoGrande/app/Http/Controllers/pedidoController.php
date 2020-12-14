@@ -51,7 +51,7 @@ class pedidoController extends Controller
             $calidadSelected = null;
         }
         #OPCION POR DEFECTO
-        $query = 'select CONCAT(PU.NOMBRE,\' \',PU.APELLIDO)  NOMBRE_VENDEDOR,
+        $query = 'SELECT CONCAT(PU.NOMBRE,\' \',PU.APELLIDO)  NOMBRE_VENDEDOR,
             TF.NOMBRE   TIPO_FRUTA,
             C.NOMBRE  CALIDAD,
             HS.CANT_KG,
@@ -260,7 +260,22 @@ class pedidoController extends Controller
             }
         }
         if (isset($_POST['detalle' . ($idPedido)]) || isset($_POST['postular']) || isset($_POST['finalizar' . ($idPedido)])) {
-            $query = 'SELECT
+            if($_SESSION['tipo_usuario'] == 4){
+                $query = 'SELECT
+                        C.NOMBRE CALIDAD,
+                        TF.NOMBRE TIPO_FRUTA,
+                        DP.CANT_KG CANTIDAD,
+                        REPLACE(REPLACE(REPLACE(DP.METODO_VIAJE,\'ear\',\'Terrestre\'),\'sea\',\'Maritimo\'),\'air\',\'Aereo\') METODO_VIAJE,
+                        REPLACE(REPLACE(DP.REFRIGERADO,1,\'Si\'),0,\'No\') REFRIGERADO,
+                        DP.PRECIO_KG PRECIO,
+                        DP.COD_MONEDA MONEDA,
+                        DP.ID_DETALLE_PEDIDO
+                        FROM DETALLE_PEDIDO DP
+                        JOIN CALIDAD C ON C.ID_CALIDAD = DP.ID_CALIDAD
+                        JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = DP.ID_TIPO_FRUTA
+                        WHERE DP.ID_PEDIDO = ' . ($idPedido);
+            }elseif($_SESSION['tipo_usuario'] == 2){
+                $query = 'SELECT
                     C.NOMBRE CALIDAD,
                     TF.NOMBRE TIPO_FRUTA,
                     DP.CANT_KG CANTIDAD,
@@ -268,11 +283,20 @@ class pedidoController extends Controller
                     REPLACE(REPLACE(DP.REFRIGERADO,1,\'Si\'),0,\'No\') REFRIGERADO,
                     DP.PRECIO_KG PRECIO,
                     DP.COD_MONEDA MONEDA,
-                    DP.ID_DETALLE_PEDIDO
+                    DP.ID_DETALLE_PEDIDO,
+                    PS.KG_APORTADOS,
+                    PS.PRECIO PRECIO_APORTADO
                     FROM DETALLE_PEDIDO DP
                     JOIN CALIDAD C ON C.ID_CALIDAD = DP.ID_CALIDAD
                     JOIN TIPO_FRUTA TF ON TF.ID_TIPO_FRUTA = DP.ID_TIPO_FRUTA
+                    LEFT JOIN (SELECT DP.ID_DETALLE_PEDIDO,P.KG_APORTADOS,P.PRECIO
+						FROM POSTULACION P
+						JOIN DETALLE_PEDIDO DP ON DP.ID_DETALLE_PEDIDO = P.ID_DETALLE_PEDIDO
+						JOIN ESTADOS E ON E.ID_ESTADO = P.ID_ESTADO
+						JOIN USUARIO U ON U.ID_USUARIO = P.ID_USUARIO
+						WHERE U.CORREO = \''.($_SESSION['usuario']).'\') PS ON PS.ID_DETALLE_PEDIDO = DP.ID_DETALLE_PEDIDO
                     WHERE DP.ID_PEDIDO = ' . ($idPedido);
+            }
             $detalles = DB::select(DB::raw($query));
         }
         if (isset($_POST['detalle' . ($idPedido)])){
@@ -474,6 +498,10 @@ class pedidoController extends Controller
         }        
         $frutas = DB::select('CALL SP_GET_TIPO_FRUTA()');
         $calidades = DB::select('CALL SP_GET_CALIDAD()');
+        $metodoViajeSelected = null;
+        if(isset($_POST['metodo_viaje'])){
+            $metodoViajeSelected = $_POST['metodo_viaje'];
+        }
         if(isset($_POST['add']) || isset($_POST['publicar'])){
             if(isset($_SESSION['pedidoExt'])){
                 foreach($_SESSION['pedidoExt'] as $key=>$row){
@@ -481,19 +509,19 @@ class pedidoController extends Controller
                     $_SESSION['pedidoExt'][$key]['calidad'] = $_POST['calidad'.($key)];
                     $_SESSION['pedidoExt'][$key]['cantidad'] = $_POST['cantidad'.($key)];
                     $_SESSION['pedidoExt'][$key]['refrigerado'] = $_POST['refrigerado'.($key)];
-                    $_SESSION['pedidoExt'][$key]['metodo_viaje'] = $_POST['metodo_viaje'.($key)];
+                    $_SESSION['pedidoExt'][$key]['metodo_viaje'] = $metodoViajeSelected;
                 }
                 $next = count($_SESSION['pedidoExt'])+1;
             }else{
                 $next = 1;
             }
-            if(isset($_POST['tipo_fruta']) && isset($_POST['calidad']) && isset($_POST['cantidad']) && isset($_POST['refrigerado'])){
-                if($_POST['tipo_fruta'] != null && $_POST['calidad'] != null && $_POST['cantidad'] != null && $_POST['refrigerado'] != null){
+            if(isset($_POST['tipo_fruta']) && isset($_POST['calidad']) && isset($_POST['cantidad']) && isset($_POST['refrigerado']) && isset($_POST['metodo_viaje'])){
+                if($_POST['tipo_fruta'] != null && $_POST['calidad'] != null && $_POST['cantidad'] != null && $_POST['refrigerado'] != null && isset($_POST['metodo_viaje'])){
                     $_SESSION['pedidoExt'][$next]['tipo_fruta'] = $_POST['tipo_fruta'];
                     $_SESSION['pedidoExt'][$next]['calidad'] = $_POST['calidad'];
                     $_SESSION['pedidoExt'][$next]['cantidad'] = $_POST['cantidad'];
                     $_SESSION['pedidoExt'][$next]['refrigerado'] = $_POST['refrigerado'];
-                    $_SESSION['pedidoExt'][$next]['metodo_viaje'] = $_POST['metodo_viaje'];
+                    $_SESSION['pedidoExt'][$next]['metodo_viaje'] = $metodoViajeSelected;
                 }
             }                    
         }elseif(isset($_POST['limpiar'])){
@@ -531,7 +559,7 @@ class pedidoController extends Controller
                 return back()->with('success', "Se ha enviado la solicitud de publicacion para el pedido N°".($numero));
             }
         }
-        return view('PublicarPedidoExt', compact('frutas', 'calidades'));
+        return view('PublicarPedidoExt', compact('frutas', 'calidades','metodoViajeSelected'));
     }
     public function CargarVentasExternas()
     {

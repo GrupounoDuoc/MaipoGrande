@@ -143,9 +143,9 @@
     <div class="x-wrapper">
         <div class="x-sidebar-container">
             <div class="x-sidebar" id="x-sidebar">
-                <ul class="list-group"> 
+                <ul class="list-group">
                     @if (empty($_SESSION['usuario']))
-                    <li class="list-group-item"><a class="nav-link"  href="login">Entrar</a></li>
+                    <li class="list-group-item"><a class="nav-link" href="login">Entrar</a></li>
                     <li class="list-group-item"><a class="nav-link" href="registro">Registrarse</a></li>
                     <li class="list-group-item"><a class="nav-link" href="catalogo">Catálogo</a></li>
                     @if (isset($_SESSION['usuario']))
@@ -172,7 +172,7 @@
                             @else
                         </li>
                     </ul>
-                    
+
                     <!-- <li class="list-group-item" class="li-perfilUsuario">
                         <img src="imagenes/usuario.png" class="img-usuario" id="img-perfil">
                     </li> -->
@@ -207,6 +207,10 @@
                     <li class="list-group-item"><a href="verpdf" target="_blank">Reportes usuario</a></li>
                     <li class="list-group-item"><a href="reportesProductos" target="_blank">Reportes producto</a></li>
                     <li class="list-group-item"><a href="reportesVentas" target="_blank">Reportes Ventas</a></li>
+                    <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
+                    @endif
+                    @if($_SESSION['tipo_usuario'] == 5)
+                    <li class="list-group-item"><a href="transportista">Postular a transporte</a></li>
                     <li class="list-group-item"><a href="logout">Cerrar sesión</a></li>
                     @endif
                     @endif
