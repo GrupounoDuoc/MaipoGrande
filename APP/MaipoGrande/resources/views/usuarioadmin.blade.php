@@ -40,7 +40,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
             <div class="container">
             @foreach($personas as $key => $persona)
             <tr>

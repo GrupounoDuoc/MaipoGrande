@@ -10,30 +10,23 @@ use DB;
 class transportistaController extends Controller
 {
 
-    public function enLogistica() //int $rol)
-    {
-        $VentasExt = DB::select('CALL SP_GET_VENTA_EXTERNA()', array());
-
-        $VentasExt3 = DB::select('CALL SP_GET_VENTA_EXTERNA3()', array());
-
-        $Estados = DB::select('CALL SP_GET_ESTADOS()', array());
-
-        $datosdespacho = DB::select('CALL SP_GET_DESPACHOS()', array());
-        
-        if(!isset($_SESSION)){
+    public function enLogistica()
+    {  
+        #SE VERFICA SI SE HA CREADO UNA SESION
+        if (!isset($_SESSION)) {
             session_start();
         }
-
         if(!isset($_SESSION['usuario'])){
             return redirect()->route('/');
         }else{
-
             if($_SESSION['tipo_usuario'] != 5){
-            return redirect()->route('/');
+                return redirect()->route('/');
             }
         }
+        $Disponibles = DB::select('CALL SP_GET_VENTAS_EXTERNAS_TRANSPORTE(?)', array($_SESSION['usuario']));
+        $Historicos = DB::select('CALL SP_GET_VENTAS_EXTERNAS_HISTORICO(?)', array($_SESSION['usuario']));
 
-        return view('PedidosLogistica', compact('VentasExt', 'VentasExt3','Estados','datosdespacho'));
+        return view('PedidosLogistica', compact('Disponibles','Historicos'));
     }
     
 
