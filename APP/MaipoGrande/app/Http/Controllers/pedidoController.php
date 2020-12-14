@@ -409,7 +409,7 @@ class pedidoController extends Controller
               $comprador = $ventaIntComp->CORREO_COMPRADOR;
               $cantidad = $ventaIntComp->CANTIDAD_COMPRADA;
   
-              Mail::to($vendedor)->send(new MaiToVendedores($pedido,$producto,$comprador,$cantidad)); 
+              Mail::to($vendedor)->send(new MailToVendedores($pedido,$producto,$comprador,$cantidad)); 
             }
 
             return view('compraExitosa', compact('nCompra'));
