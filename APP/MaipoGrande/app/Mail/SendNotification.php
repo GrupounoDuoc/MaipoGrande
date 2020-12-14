@@ -13,9 +13,11 @@ class SendNotification extends Mailable
 
     public $SendMail;
 
-    public function __construct()
+    public $id_pedido;
+    
+    public function __construct($id_pedido)
     {
-
+        $this->id_pedido = $id_pedido;
     }
 
     public function build()

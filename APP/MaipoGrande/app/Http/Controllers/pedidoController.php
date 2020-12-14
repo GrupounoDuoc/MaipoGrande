@@ -398,7 +398,22 @@ class pedidoController extends Controller
         if (isset($_SESSION['nCompra'])) {
             $nCompra = $_SESSION['nCompra'];
             unset($_SESSION['nCompra']);
+
+            $ventasIntComp = DB::select('CALL SP_MAIL_VENTA_INTERNA(?);', array($nCompra));
+           
+            foreach($ventasIntComp as $key => $ventaIntComp){
+  
+              $pedido = $ventaIntComp->ID_PEDIDO;            
+              $vendedor = $ventaIntComp->CORREO_VENDEDOR;
+              $producto = $ventaIntComp->NOMBRE_FRUTA;
+              $comprador = $ventaIntComp->CORREO_COMPRADOR;
+              $cantidad = $ventaIntComp->CANTIDAD_COMPRADA;
+  
+              Mail::to($vendedor)->send(new MaiToVendedores($pedido,$producto,$comprador,$cantidad)); 
+            }
+
             return view('compraExitosa', compact('nCompra'));
+
         }
     }
     public function compraErronea()
@@ -587,7 +602,7 @@ class pedidoController extends Controller
             )
         );
         if ($nuevo_estado == 2) {
-            Mail::to($correo)->send(new SendNotification());
+            Mail::to($correo)->send(new SendNotification($id_pedido));
         }
         elseif($nuevo_estado == 3){
             DB::statement('CALL SP_FINALIZACION_POSTULACION_VENDEDOR(?,@res);', array($id_pedido));

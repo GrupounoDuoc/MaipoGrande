@@ -7,7 +7,7 @@
 </head>
 <body>
     <p>Hola! te escribimos de la empresa Maipo Grande.</p>
-    <p>Solo queremos avisarte que tu pedido ha sido aprobado por la administración y ya se encuentra publicado!</p>
+    <p>Solo queremos avisarte que tu pedido <b>N° {{ $id_pedido }}</b> ha sido aprobado por la administración y ya se encuentra publicado!</p>
     <p>Pronto tendrás novedades sobre tu pedido, Felicidades!</p>
     <p>Maipo Grande.</p>
 </body>
