@@ -62,9 +62,6 @@ Route::get('/', function () {
 Route::get('/contacto', function () {
     return view('contacto');
 });
-Route::get('/administrador', function () {
-    return view('administrador');
-});
 
 Route::get('/carrito', 'App\Http\Controllers\pedidoController@carrito');
 
@@ -117,9 +114,6 @@ Route::post('/PublicarPedidoExt', 'App\Http\Controllers\pedidoController@pedidoE
 
 Route::get('/PublicarPedido', 'App\Http\Controllers\pedidoController@CargarDatos');
 
-Route::get('/administrador', function () {
-    return view('paneladministrador');
-});
 
 // Route::get('/usuario', function () {
 //     return view('usuario');
