@@ -97,6 +97,7 @@
                 @if($_SESSION['tipo_usuario'] == 6)
                 <li><a href="verpdf" target="_blank">Reportes usuario</a></li>
                 <li><a href="reportesProductos" target="_blank">Reportes producto</a></li>
+                <li><a href="reportesVentas" target="_blank">Reportes ventas</a></li>
                 @elseif($_SESSION['tipo_usuario'] == 4)
                 <li><a href="PublicarPedidoExt">Pedidos Internacionales</a></li>
                 @elseif($_SESSION['tipo_usuario'] == 2)
