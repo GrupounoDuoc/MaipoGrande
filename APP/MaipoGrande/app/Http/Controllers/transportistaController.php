@@ -25,8 +25,9 @@ class transportistaController extends Controller
         }
         $Disponibles = DB::select('CALL SP_GET_VENTAS_EXTERNAS_TRANSPORTE(?)', array($_SESSION['usuario']));
         $Historicos = DB::select('CALL SP_GET_VENTAS_EXTERNAS_HISTORICO(?)', array($_SESSION['usuario']));
+        $Postulaciones = DB::select('CALL SP_GET_VENTAS_EXT_POSTULADAS_TR(?)', array($_SESSION['usuario']));
 
-        return view('PedidosLogistica', compact('Disponibles','Historicos'));
+        return view('PedidosLogistica', compact('Disponibles','Historicos','Postulaciones'));
     }
     
 

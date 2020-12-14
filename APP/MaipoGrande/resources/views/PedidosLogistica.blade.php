@@ -67,7 +67,7 @@ if (!isset($_SESSION)) {
                         <th scope="col">Correo Solicitante</th>
                         <th scope="col">Medio de transporte</th>
                         <th scope="col">Refrigeración</th>
-                        <th scope="col">Peso Máx.</th>
+                        <th scope="col">Peso de carga</th>
                         <th scope="col">Acción</th>
                     </tr>
                 </thead>
@@ -78,9 +78,14 @@ if (!isset($_SESSION)) {
                             <td>{{$VentasDisponibles->ID_PEDIDO}}</td>
                             <td>{{$VentasDisponibles->CORREO_COMPRADOR}}</td>
                             <td>{{$VentasDisponibles->METODO_VIAJE}}</td>
-                            <td>{{$VentasDisponibles->REFRIGERADO}}</td>
+                            <td>
+                                @if($VentasDisponibles->REFRIGERADO == 0)
+                                No
+                                @elseif($VentasDisponibles->REFRIGERADO == 1)
+                                Si
+                                @endif
+                            </td>
                             <td>{{$VentasDisponibles->CANT_KG_TOTAL}}</td>
-                            <td>{{$VentasDisponibles->ESTADO}}</td>
                             <td>
                                 <input class="btn btn-success my-2 my-sm-0" type="submit" name="Postular{{$VentasDisponibles->ID_PEDIDO}}" value="Postular">
                             </td>
@@ -91,6 +96,58 @@ if (!isset($_SESSION)) {
         </div>
     </form>
 </div>
+
+<div class="contenedor">
+    <br>
+    <h2>Postulaciones</h2>
+    <br>
+
+    @if(Session::has('message'))
+    <div class="alert alert-{{ Session::get('type') }} alert-dismissable fade show text-center" role="alert">
+        {{ Session::get('message') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+
+
+    <div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id Pedido</th>
+                    <th scope="col">Correo Solicitante</th>
+                    <th scope="col">Medio de transporte</th>
+                    <th scope="col">Refrigeración</th>
+                    <th scope="col">Peso de carga</th>
+                    <th scope="col">Estado del pedido</th>
+                </tr>
+            </thead>
+            <tbody>
+                <div class="container">
+                    @foreach($Postulaciones as $key => $Postulados)
+                    <tr>
+                        <td>{{$Postulados->ID_PEDIDO}}</td>
+                        <td>{{$Postulados->CORREO_COMPRADOR}}</td>
+                        <td>{{$Postulados->METODO_VIAJE}}</td>
+                        <td>
+                            @if($Postulados->REFRIGERADO == 0)
+                            No
+                            @elseif($Postulados->REFRIGERADO == 1)
+                            Si
+                            @endif
+                        </td>
+                        <td>{{$Postulados->CANT_KG_TOTAL}}</td>
+                        <td>{{$Postulados->ESTADO}}</td>
+                    </tr>
+                    @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 
 
 
@@ -123,7 +180,7 @@ if (!isset($_SESSION)) {
                         <th scope="col">Correo Solicitante</th>
                         <th scope="col">Medio de transporte</th>
                         <th scope="col">Refrigeración</th>
-                        <th scope="col">Peso Máx.</th>
+                        <th scope="col">Peso de carga</th>
                         <th scope="col">Acción</th>
                     </tr>
                 </thead>
@@ -134,7 +191,13 @@ if (!isset($_SESSION)) {
                             <td>{{$vHistorico->ID_PEDIDO}}</td>
                             <td>{{$vHistorico->CORREO_COMPRADOR}}</td>
                             <td>{{$vHistorico->METODO_VIAJE}}</td>
-                            <td>{{$vHistorico->REFRIGERADO}}</td>
+                            <td>
+                                @if($vHistorico->REFRIGERADO == 0)
+                                No
+                                @elseif($vHistorico->REFRIGERADO == 1)
+                                Si
+                                @endif
+                            </td>
                             <td>{{$vHistorico->CANT_KG_TOTAL}}</td>
                             <td>{{$vHistorico->ESTADO}}</td>
                             <td>
