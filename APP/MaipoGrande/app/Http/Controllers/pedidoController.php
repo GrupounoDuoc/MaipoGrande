@@ -592,6 +592,9 @@ class pedidoController extends Controller
         elseif($nuevo_estado == 3){
             DB::statement('CALL SP_FINALIZACION_POSTULACION_VENDEDOR(?,@res);', array($id_pedido));
         }
+        elseif($nuevo_estado == 4){
+            DB::statement('CALL SP_FINALIZACION_POSTULACION_TRANSPORTISTA(?,@res);', array($id_pedido));
+        }
 
         return back()->with('status', "Se ha actualizado el pedido con id {$id_pedido} satisfactoriamente!");
     }
