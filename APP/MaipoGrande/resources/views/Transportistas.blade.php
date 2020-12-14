@@ -46,17 +46,23 @@
                     <td>{{$transportista->ID_DETALLE_TRANSPORTISTA}}</td>
                     <td>{{$transportista->CORREO}}</td>
                     <td>{{$transportista->METODO_VIAJE}}</td>
-                    <td>{{$transportista->REFRIGERADO}}</td>
-                    <td>{{$transportista->TON_MAX}}</td>
-                    <td>{{$transportista->PRECIO_KM}}</td>
+                    <td>
+                    @if($transportista->REFRIGERADO == 0)
+                    No
+                    @elseif($transportista->REFRIGERADO == 1)
+                    Si    
+                    @endif
+                    </td>
+                    <td>{{$transportista->TON_MAX}}Kg</td>
+                    <td>${{$transportista->PRECIO_KM}}</td>
                     <td>{{$transportista->DESCRIPCION}}
                     <td>
                         <!-- <button class="btn btn-warning" data-toggle="modal" data-target="#editarModal"> -->
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#editarModal" onclick="ConsultaUserbyRut('{{$transportista->ID_DETALLE_TRANSPORTISTA}}')">
+                        <!-- <button class="btn btn-warning" data-toggle="modal" data-target="#editarModal" onclick="ConsultaUserbyRut('{{$transportista->ID_DETALLE_TRANSPORTISTA}}')">
                             Editar Tipo de Transportista
                             <input type="hidden" value="{{$transportista->ID_DETALLE_TRANSPORTISTA}}">
                             <i class="material-icons"></i> &#128397;&#65039;</a>
-                        </button>
+                        </button> -->
                         <a href='destroyDetalleTransportista/{{ $transportista->ID_DETALLE_TRANSPORTISTA }}' role="button" class="btn btn-danger">Eliminar detalle transporista<i class="material-icons"></i> &#128465;&#65039;</a>
                     </td>
                 </tr>
