@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-<img src="https://gomommyhealthynutrition.files.wordpress.com/2018/06/plato-y-surtido-de-verduras-maduras_23-2147694064.jpg"  margin: 0; padding: 0; background-size:cover; > 
 <h1>Maipo Grande</h1>
 <br><br>
 <h3>Reporte de usuario</h3>

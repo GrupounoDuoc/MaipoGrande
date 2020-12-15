@@ -109,12 +109,24 @@
                 @endif
                 @endif
             </ul>
-            <a href="carrito"><span class="icon-cart"></span></a>
-            @if(isset($_SESSION['totalCart']))
-            <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+            @if(isset($_SESSION['usuario']))
+                @if($_SESSION['tipo_usuario'] == 3)
+                    <a href="carrito"><span class="icon-cart"></span></a>
+                    @if(isset($_SESSION['totalCart']))
+                    <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+                    @else
+                    <p class="cantidad">0</p>
+                    @endif
+                @endif
             @else
-            <p class="cantidad">0</p>
+                <a href="carrito"><span class="icon-cart"></span></a>
+                @if(isset($_SESSION['totalCart']))
+                <p class="cantidad">{{ $_SESSION['totalCart'] }}</p>
+                @else
+                <p class="cantidad">0</p>
+                @endif
             @endif
+            
         </ul>
     </div>
 
@@ -163,7 +175,6 @@
                     @endif
                     @endif
                     <ul class="subMenu-usuario" id="submenu-perfil">
-                        <li class="list-group-item"><a class="nav-link" href="">Perfil</a></li>
                         <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     </ul>
                     <ul class="list-group">
@@ -222,7 +233,6 @@
 
 
                     <ul class="subMenu-usuario" id="submenu-perfil">
-                        <li class="list-group-item"><a class="nav-link" href="">Perfil</a></li>
                         <li class="list-group-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
                     </ul>
                     <!-- <ul class="list-group">

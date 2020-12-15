@@ -9,7 +9,6 @@ use Illuminate\Queue\SerializesModels;
 
 class mailToVendedores extends Mailable
 {
-    use Queueable, SerializesModels;
 
     use Queueable, SerializesModels;
 

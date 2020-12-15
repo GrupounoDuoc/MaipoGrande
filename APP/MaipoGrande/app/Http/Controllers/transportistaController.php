@@ -24,9 +24,8 @@ class transportistaController extends Controller
             }
         }
         $Disponibles = DB::select('CALL SP_GET_VENTAS_EXTERNAS_TRANSPORTE(?)', array($_SESSION['usuario']));
-        $Historicos = DB::select('CALL SP_GET_VENTAS_EXTERNAS_HISTORICO(?)', array($_SESSION['usuario']));
+        $Historicos = DB::select('CALL SP_GET_VENTAS_EXTERNAS_HISTORICO(?)', array($_SESSION['usuario']));        
         $Postulaciones = DB::select('CALL SP_GET_VENTAS_EXT_POSTULADAS_TR(?)', array($_SESSION['usuario']));
-
         return view('PedidosLogistica', compact('Disponibles','Historicos','Postulaciones'));
     }
     
@@ -60,26 +59,22 @@ class transportistaController extends Controller
                 
                 foreach($detallePedido as $detalle)
                 {
-                    echo $detalle->ID_DETALLE_PEDIDO;
-
                     $insertarPostulacion = DB::select(
-                        'call SP_UPDATE_POSTULACIONES(?,?,?,?)',
+                        'CALL SP_CREATE_POSTULACION_TRANSPORTISTA(?,?,@res)',
                         array(
                             $detalle->ID_DETALLE_PEDIDO,
-                            2,
-                            $idTransportista,
-                            8,
+                            $idTransportista
                        )
                      );
+                     break;
                 }
 
-                $Postulados = DB::select('CALL SP_GET_POSTULADO_TR()', array());
+                $Postulados = DB::select(DB::raw('SELECT @res res'));
 
                 foreach($Postulados as $Postulado){
 
-                    $pedidoPost = $Postulado->ID_PEDIDO;
+                    $pedidoPost = $Postulado->res;
                 }
-
             }
 
         }

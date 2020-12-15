@@ -59,7 +59,6 @@
                 <ul class="subMenu-usuario" id="submenu-perfil">
                     <li><a href="">Perfil</a></li>
                     <li><a href="logout">Cerrar sesión</a></li>
-                    <li><a href="PublicarProducto">Publicar producto</a></li>
                 </ul>
                 <a href="carrito"><span class="icon-cart"></span></a>
                 @if(isset($_SESSION['totalCart']))

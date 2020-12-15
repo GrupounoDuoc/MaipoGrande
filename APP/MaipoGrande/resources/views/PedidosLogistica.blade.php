@@ -153,11 +153,6 @@ if (!isset($_SESSION)) {
 
 
 
-
-
-
-
-
     <div class="container my-5">
         <br>
         <h2>Postulaciones históricas</h2>
@@ -171,8 +166,6 @@ if (!isset($_SESSION)) {
             </button>
         </div>
         @endif
-        <form action="{{ route('ActualizarEstado') }}" id="actualizarForm" method="POST">
-            @csrf
             <div class="table-responsive">
                 <table class="table table-hover table-dark">
                     <thead class="thead-dark">
@@ -182,7 +175,6 @@ if (!isset($_SESSION)) {
                             <th scope="col">Medio de transporte</th>
                             <th scope="col">Refrigeración</th>
                             <th scope="col">Peso de carga</th>
-                            <th scope="col">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -201,16 +193,11 @@ if (!isset($_SESSION)) {
                                 </td>
                                 <td>{{$vHistorico->CANT_KG_TOTAL}}</td>
                                 <td>{{$vHistorico->ESTADO}}</td>
-                                <td>
-                                    Actualizar Estado
-                                </td>
                             </tr>
                             @endforeach
                     </tbody>
                 </table>
             </div>
-        </form>
-
     </div>
 
    

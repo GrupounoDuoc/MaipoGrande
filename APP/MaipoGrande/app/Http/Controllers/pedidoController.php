@@ -16,6 +16,7 @@ use App\tipo_pedido;
 use App\Mail\SendNotification;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\MailToVendedores;
 
 class pedidoController extends Controller
 {

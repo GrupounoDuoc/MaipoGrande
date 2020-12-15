@@ -45,7 +45,13 @@
                 <tr>
                     <td>{{$transportista->ID_DETALLE_TRANSPORTISTA}}</td>
                     <td>{{$transportista->CORREO}}</td>
-                    <td>{{$transportista->METODO_VIAJE}}</td>
+                    @if($transportista->METODO_VIAJE == 'air')
+                        <td>Aerea</td>
+                    @elseif($transportista->METODO_VIAJE == 'ear')
+                        <td>Terrestre</td>
+                    @elseif($transportista->METODO_VIAJE == 'sea')
+                        <td>Maritima</td>
+                    @endif
                     <td>
                     @if($transportista->REFRIGERADO == 0)
                     No
@@ -99,9 +105,9 @@
                                     <div class="col-md-9">
                                         <select class="form-control" name="metodo_viaje" id="metodo_viaje" required>
                                             <option selected disabled value="">Medio de transporte</option>}
-                                            <option value="AIR">Aire</option>
-                                            <option value="EAR">Tierra</option>
-                                            <option value="SEA">Mar</option>
+                                            <option value="air">Aire</option>
+                                            <option value="ear">Tierra</option>
+                                            <option value="sea">Mar</option>
                                         </select>
                                     </div>
                                 </div>
