@@ -96,8 +96,8 @@
                         <th>Vendedor</th>
                         <th>Producto</th>
                         <th>Imagen</th>
-                        <th>Precio</th>
                         <th>Calidad</th>
+                        <th>Precio</th>
                         <th>Cantidad</th>
                         <th>Eliminar</th>
                     </thead>
